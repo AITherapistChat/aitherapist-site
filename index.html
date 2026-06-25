@@ -592,11 +592,18 @@
   </div>
 </footer>
 
+<script src="https://unpkg.com/@vkid/sdk@2/dist-sdk/umd/index.js"></script>
 <script>
 /* ====================== КОНФИГ ====================== */
 const RUSTORE_URL = "https://www.rustore.ru/catalog/app/com.example.aitherapist";
 const CHAT_ENDPOINT = "https://efniwpfjdfktfczgdpxm.functions.supabase.co/chat-web";
+const AUTH_ENDPOINT = "https://efniwpfjdfktfczgdpxm.functions.supabase.co/vk-auth";
 const DEMO_LIMIT = 5;
+/* VK ID */
+const VK_APP_ID = 54652586;
+const VK_REDIRECT = "https://aitherapist.ru/";
+let session = localStorage.getItem("ait_session") || null;
+let userName = localStorage.getItem("ait_name") || null;
 
 const PERSONAS = [
   { key:"Андрей Петрович", role:"классический психолог", emoji:"🧑‍⚕️", color:"#67cdc1",
@@ -684,6 +691,7 @@ function selectPersona(i){
   inputEl.disabled = false; $("c-send").disabled = false;
   inputEl.placeholder = "Напишите, что вас беспокоит…";
   typeBubble(p.hello);
+  if(session) updateAuthUI();
 }
 
 /* ====================== СООБЩЕНИЯ ====================== */
@@ -712,18 +720,20 @@ function userCount(){ return history.filter(m=>m.role==="user").length; }
 function showLimit(){
   const n = document.createElement("div");
   n.className = "limit-note";
-  n.innerHTML = `<p>Это демо на сайте. Полный безлимитный разговор, голосовой ввод и сохранение сессий — в приложении.</p>
-    <a class="btn" href="${RUSTORE_URL}">Продолжить в RuStore →</a>`;
+  n.innerHTML = `<p>Это демо. Войдите через VK — и продолжайте общение прямо здесь, или скачайте приложение.</p>
+    <div id="vk-btn" style="display:flex;justify-content:center;margin-bottom:12px"></div>
+    <a class="btn" href="${RUSTORE_URL}">Скачать в RuStore →</a>`;
   msgsEl.appendChild(n); msgsEl.scrollTop = msgsEl.scrollHeight;
   inputEl.disabled = true; $("c-send").disabled = true;
-  inputEl.placeholder = "Демо завершено — продолжите в приложении";
+  inputEl.placeholder = "Войдите через VK, чтобы продолжить";
+  mountVk(document.getElementById("vk-btn"));
 }
 
 /* ====================== ОТПРАВКА + СТРИМ ====================== */
 async function send(){
   const text = inputEl.value.trim();
   if(!text || busy) return;
-  if(userCount() >= DEMO_LIMIT){ showLimit(); return; }
+  if(!session && userCount() >= DEMO_LIMIT){ showLimit(); return; }
   busy = true; inputEl.value = ""; autosize();
   addBubble("me", text); history.push({role:"user", content:text});
 
@@ -735,8 +745,9 @@ async function send(){
   try{
     const res = await fetch(CHAT_ENDPOINT, {
       method:"POST", headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({ persona:p.key, stream:true, messages })
+      body: JSON.stringify({ persona:p.key, stream:true, messages, session: session || undefined })
     });
+    if(res.status === 429){ if(typing.parentNode) typing.remove(); addBubble("bot","На сегодня лимит сообщений исчерпан. Возвращайтесь завтра 🙂"); return; }
     if(!res.ok) throw new Error("HTTP "+res.status);
     const reader = res.body.getReader(); const dec = new TextDecoder(); let buf = "";
     while(true){
@@ -768,7 +779,7 @@ async function send(){
     addBubble("bot","Связь прервалась. Проверьте интернет и попробуйте снова.");
   }finally{
     busy = false;
-    if(userCount() >= DEMO_LIMIT) showLimit();
+    if(!session && userCount() >= DEMO_LIMIT) showLimit();
     if(window.ym && typeof ym==="function"){ try{ ym(window.__metrikaId, "reachGoal", "demo_message"); }catch(_){ } }
   }
 }
@@ -780,6 +791,58 @@ inputEl.addEventListener("keydown", e => { if(e.key==="Enter" && !e.shiftKey){ e
 $("c-send").onclick = send;
 $("c-switch").onclick = () => { const pk=$("c-picker"); pk.hidden ? openPicker() : closePicker(); };
 $("c-pclose").onclick = closePicker;
+
+/* ====================== VK ID ВХОД ====================== */
+function updateAuthUI(){
+  if(session && PERSONAS[current]) $("c-role").textContent = PERSONAS[current].role + " · вы вошли";
+}
+function onLoggedIn(name){
+  userName = name || "Вы";
+  localStorage.setItem("ait_name", userName);
+  inputEl.disabled = false; $("c-send").disabled = false;
+  inputEl.placeholder = "Напишите, что вас беспокоит…";
+  document.querySelectorAll(".limit-note").forEach(e => e.remove());
+  updateAuthUI();
+  addBubble("bot", `Готово, вы вошли как ${userName}. Можно продолжать 💬`);
+}
+async function vkidOnSuccess(data){
+  try{
+    const token = data && (data.access_token || data.accessToken || (data.token && data.token.access_token));
+    if(!token){ console.warn("VK: нет access_token", data); addBubble("bot","Не удалось получить токен VK."); return; }
+    const r = await fetch(AUTH_ENDPOINT, {
+      method:"POST", headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ access_token: token, user_id: data.user_id })
+    });
+    const d = await r.json().catch(()=>null);
+    if(d && d.session){ session = d.session; localStorage.setItem("ait_session", session); onLoggedIn(d.name); }
+    else { addBubble("bot","Не удалось подтвердить вход через VK. Попробуйте ещё раз."); }
+  }catch(e){ addBubble("bot","Ошибка входа через VK. Попробуйте позже."); }
+}
+function vkidOnError(e){ console.warn("VK error", e); }
+let vkInited = false;
+function vkInit(){
+  if(vkInited || !window.VKID) return;
+  try{
+    VKID.Config.init({ app: VK_APP_ID, redirectUrl: VK_REDIRECT, responseMode: VKID.ConfigResponseMode.Callback });
+    vkInited = true;
+  }catch(e){ console.warn("VK init", e); }
+}
+function mountVk(container){
+  if(!container) return;
+  vkInit();
+  if(!window.VKID || !vkInited){
+    container.innerHTML = '<span style="color:var(--muted);font-size:13px">Вход через VK станет доступен после запуска на домене</span>';
+    return;
+  }
+  try{
+    const oneTap = new VKID.OneTap();
+    oneTap.render({ container, scheme:"dark", lang:0, styles:{ borderRadius:12 } })
+      .on(VKID.WidgetEvents.ERROR, vkidOnError)
+      .on(VKID.OneTapInternalEvents.LOGIN_SUCCESS, function(payload){
+        VKID.Auth.exchangeCode(payload.code, payload.device_id).then(vkidOnSuccess).catch(vkidOnError);
+      });
+  }catch(e){ console.warn("VK render", e); }
+}
 
 wireShowcase();
 selectPersona(0);
