@@ -57,6 +57,24 @@
   .btn:hover{transform:translateY(-2px); background:var(--teal); box-shadow:0 12px 30px rgba(94,126,90,.28)}
   .btn.ghost{background:transparent; border-color:var(--line-strong); color:var(--text)}
   .btn.ghost:hover{background:rgba(120,150,180,.06); border-color:var(--teal); box-shadow:none; color:var(--text)}
+  /* shimmer на главных кнопках */
+  .btn:not(.ghost){position:relative; overflow:hidden}
+  .btn:not(.ghost)::after{content:""; position:absolute; top:0; left:-75%; width:45%; height:100%;
+    background:linear-gradient(120deg, transparent, rgba(255,255,255,.38), transparent); transform:skewX(-20deg); animation:sheen 5.5s ease-in-out infinite}
+  @keyframes sheen{0%,40%{left:-75%} 70%,100%{left:160%}}
+  /* кастомная кнопка-бейдж RuStore */
+  .rustore-btn{display:inline-flex; align-items:center; gap:11px; padding:10px 22px 10px 13px; border-radius:14px;
+    background:#21342c; color:#fff; cursor:pointer; transition:transform .16s ease, box-shadow .16s ease; position:relative; overflow:hidden;
+    box-shadow:0 12px 26px -12px rgba(33,52,44,.55)}
+  .rustore-btn:hover{transform:translateY(-2px); box-shadow:0 18px 34px -14px rgba(33,52,44,.6)}
+  .rustore-btn::after{content:""; position:absolute; top:0; left:-75%; width:40%; height:100%;
+    background:linear-gradient(120deg, transparent, rgba(255,255,255,.18), transparent); transform:skewX(-20deg); animation:sheen 6s ease-in-out infinite}
+  .rustore-btn .rs-ico{width:34px;height:34px;border-radius:10px; flex:0 0 auto; display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(145deg,#6aa08f,#43705f)}
+  .rustore-btn .rs-ico svg{width:19px;height:19px}
+  .rustore-btn .rs-txt{display:flex; flex-direction:column; line-height:1.12; text-align:left}
+  .rustore-btn .rs-txt small{font-size:11px; opacity:.82; font-weight:500}
+  .rustore-btn .rs-txt b{font-size:16.5px; font-weight:700; letter-spacing:.2px}
 
   /* header */
   header{position:sticky; top:0; z-index:50; padding:16px 0;
@@ -100,7 +118,8 @@
     border:1px solid var(--line-strong); border-radius:var(--r-lg); box-shadow:var(--sh); overflow:hidden}
   .chat-top{display:flex; align-items:center; gap:13px; padding:15px 17px; border-bottom:1px solid var(--line)}
   .ava{position:relative; width:42px;height:42px;border-radius:13px; display:flex;align-items:center;justify-content:center;
-    font-size:21px; flex:0 0 auto; background:var(--surface2); box-shadow:inset 0 0 0 2px var(--teal)}
+    flex:0 0 auto; color:#fff; background:var(--teal); box-shadow:0 7px 16px -7px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.32)}
+  .ava svg, .pa svg{width:54%; height:54%}
   .chat-id{flex:1; min-width:0}
   .chat-id .nm{font-weight:700; font-size:15.5px; letter-spacing:-.2px}
   .chat-id .role{font-size:12.5px; color:var(--muted); display:flex; align-items:center; gap:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
@@ -125,8 +144,8 @@
     background:var(--surface); cursor:pointer; transition:transform .15s ease, border-color .15s ease; text-align:left; font:inherit; color:var(--text)}
   .pi:hover{border-color:var(--line-strong); transform:translateY(-2px)}
   .pi.on{border-color:var(--pc,var(--teal)); background:rgba(94,126,90,.07)}
-  .pi .pa{width:38px;height:38px;border-radius:11px; display:flex;align-items:center;justify-content:center; font-size:19px;
-    flex:0 0 auto; background:var(--surface2); box-shadow:inset 0 0 0 2px var(--pc,var(--teal))}
+  .pi .pa{width:38px;height:38px;border-radius:11px; display:flex;align-items:center;justify-content:center;
+    flex:0 0 auto; color:#fff; background:var(--pc,var(--teal)); box-shadow:0 5px 12px -6px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.3)}
   .pi .t{min-width:0}
   .pi .t b{display:block; font-size:13.5px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
   .pi .t small{display:block; font-size:11.5px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
@@ -176,7 +195,7 @@
   .pcard{position:relative; background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:22px; cursor:pointer; transition:transform .2s ease, border-color .2s ease; overflow:hidden}
   .pcard::before{content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--pc,var(--teal)); opacity:.85}
   .pcard:hover{transform:translateY(-4px); border-color:var(--line-strong)}
-  .pcard .pa{width:50px;height:50px;border-radius:15px; display:flex;align-items:center;justify-content:center; font-size:25px; margin-bottom:14px; background:var(--surface2); box-shadow:inset 0 0 0 2px var(--pc,var(--teal))}
+  .pcard .pa{width:50px;height:50px;border-radius:15px; display:flex;align-items:center;justify-content:center; margin-bottom:14px; color:#fff; background:var(--pc,var(--teal)); box-shadow:0 9px 20px -9px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.32)}
   .pcard h4{font-size:16.5px; font-weight:700; margin-bottom:4px; letter-spacing:-.2px}
   .pcard p{color:var(--muted); font-size:13.5px}
   .pcard .try{margin-top:12px; font-size:13px; color:var(--teal); font-weight:600; opacity:0; transition:opacity .2s}
@@ -272,7 +291,7 @@
   .chat-shell{position:relative}
   .chat-shell::before{content:""; position:absolute; inset:-4px; border-radius:30px; z-index:0; pointer-events:none;
     background:conic-gradient(from 0deg, transparent 5%, rgba(94,126,90,.55), rgba(201,154,110,.45), transparent 60%);
-    filter:blur(26px); opacity:.32; animation:spin 18s linear infinite}
+    filter:blur(26px); opacity:.6; animation:spin 16s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
 
   /* 3D tilt for app cards */
@@ -393,11 +412,10 @@
   <div class="aura" aria-hidden="true"></div>
   <div class="wrap hero-grid">
     <div>
-      <span class="eyebrow"><span class="pulse"></span> Демо работает прямо здесь</span>
       <h1>Ваш личный <em>ИИ-психолог</em>. Понимает, поддерживает, помогает.</h1>
       <p class="lead">Тёплый, внимательный разговор в любой момент — анонимно, без записи и без осуждения. Выберите психолога по душе и напишите первое сообщение прямо сейчас.</p>
       <div class="cta-row">
-        <a class="btn" id="dl-hero" href="#">Скачать в RuStore</a>
+        <a class="rustore-btn" id="dl-hero" href="#"><span class="rs-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span><span class="rs-txt"><small>Доступно в</small><b>RuStore</b></span></a>
         <a class="btn ghost" href="#personas">Кто эти психологи →</a>
       </div>
       <div class="trust">
@@ -446,10 +464,10 @@
 <section class="stats-wrap">
   <div class="wrap">
     <div class="stats-band">
-      <div class="stat"><b>4.7<span class="u">★</span></b><span>рейтинг в RuStore</span></div>
-      <div class="stat"><b>8</b><span>психологов на выбор</span></div>
+      <div class="stat"><b><span class="num" data-count="4.7" data-dec="1">4.7</span><span class="u">★</span></b><span>рейтинг в RuStore</span></div>
+      <div class="stat"><b><span class="num" data-count="8">8</span></b><span>психологов на выбор</span></div>
       <div class="stat"><b>24/7</b><span>всегда рядом</span></div>
-      <div class="stat"><b>100<span class="u">%</span></b><span>анонимно</span></div>
+      <div class="stat"><b><span class="num" data-count="100">100</span><span class="u">%</span></b><span>анонимно</span></div>
     </div>
   </div>
 </section>
@@ -478,14 +496,14 @@
     <h2>Выберите того, с кем легче</h2>
     <p class="sub">У каждого свой характер и подход. Нажмите — и поговорите с ним в демо выше.</p>
     <div class="pgrid" id="p-showcase">
-      <div class="pcard" data-i="0" style="--pc:#67cdc1"><div class="pa">🧑‍⚕️</div><h4>Андрей Петрович</h4><p>Классический психолог</p><div class="try">Поговорить →</div></div>
-      <div class="pcard" data-i="1" style="--pc:#e69bc4"><div class="pa">💁‍♀️</div><h4>Лана</h4><p>Тёплая, вдохновляющая</p><div class="try">Поговорить →</div></div>
-      <div class="pcard" data-i="2" style="--pc:#e7b873"><div class="pa">👵</div><h4>Бабушка Тамара</h4><p>По-домашнему, с теплом</p><div class="try">Поговорить →</div></div>
-      <div class="pcard" data-i="3" style="--pc:#7aa7ef"><div class="pa">💪</div><h4>Альфач</h4><p>Прямой, мотивирующий</p><div class="try">Поговорить →</div></div>
-      <div class="pcard" data-i="4" style="--pc:#b1a6ef"><div class="pa">🎨</div><h4>Дамиан</h4><p>Просто рядом</p><div class="try">Поговорить →</div></div>
-      <div class="pcard" data-i="5" style="--pc:#e8a883"><div class="pa">🐈</div><h4>Мурмелада</h4><p>Кошка-психолог</p><div class="try">Поговорить →</div></div>
-      <div class="pcard" data-i="6" style="--pc:#67cda0"><div class="pa">📈</div><h4>Аляз Шарбудитов</h4><p>Бизнес-коуч</p><div class="try">Поговорить →</div></div>
-      <div class="pcard" data-i="7" style="--pc:#9fb0c9"><div class="pa">🤖</div><h4>PSY-3000</h4><p>ИИ-аналитик</p><div class="try">Поговорить →</div></div>
+      <div class="pcard" data-i="0" style="--pc:#4f7a6f"><div class="pa">🧑‍⚕️</div><h4>Андрей Петрович</h4><p>Классический психолог</p><div class="try">Поговорить →</div></div>
+      <div class="pcard" data-i="1" style="--pc:#c75d8f"><div class="pa">💁‍♀️</div><h4>Лана</h4><p>Тёплая, вдохновляющая</p><div class="try">Поговорить →</div></div>
+      <div class="pcard" data-i="2" style="--pc:#c2902f"><div class="pa">👵</div><h4>Бабушка Тамара</h4><p>По-домашнему, с теплом</p><div class="try">Поговорить →</div></div>
+      <div class="pcard" data-i="3" style="--pc:#4f73b0"><div class="pa">💪</div><h4>Альфач</h4><p>Прямой, мотивирующий</p><div class="try">Поговорить →</div></div>
+      <div class="pcard" data-i="4" style="--pc:#7a6bcf"><div class="pa">🎨</div><h4>Дамиан</h4><p>Просто рядом</p><div class="try">Поговорить →</div></div>
+      <div class="pcard" data-i="5" style="--pc:#c97a52"><div class="pa">🐈</div><h4>Мурмелада</h4><p>Кошка-психолог</p><div class="try">Поговорить →</div></div>
+      <div class="pcard" data-i="6" style="--pc:#3f9472"><div class="pa">📈</div><h4>Аляз Шарбудитов</h4><p>Бизнес-коуч</p><div class="try">Поговорить →</div></div>
+      <div class="pcard" data-i="7" style="--pc:#6b7a8c"><div class="pa">🤖</div><h4>PSY-3000</h4><p>ИИ-аналитик</p><div class="try">Поговорить →</div></div>
     </div>
   </div>
 </section>
@@ -524,7 +542,7 @@
     <h2>Другие наши приложения</h2>
     <p class="sub">Сделаны той же командой — с тем же вниманием к человеку и приватности.</p>
     <div class="apps">
-      <article class="appcard" style="--ac:#b1a6ef;--ac-glow:rgba(201,154,110,.24);--ac-soft:rgba(201,154,110,.10);--ac-line:rgba(201,154,110,.26)">
+      <article class="appcard" style="--ac:#7a6bcf;--ac-glow:rgba(201,154,110,.24);--ac-soft:rgba(201,154,110,.10);--ac-line:rgba(201,154,110,.26)">
         <div class="appcard-top">
           <div class="appicon"><img src="assets/apps/metacards.webp" alt="Иконка приложения Метакарты" loading="lazy"></div>
           <div>
@@ -537,7 +555,7 @@
         <a class="abtn" href="https://www.rustore.ru/catalog/app/com.metacards.app" target="_blank" rel="noopener">Скачать в RuStore →</a>
       </article>
 
-      <article class="appcard" style="--ac:#e7b873;--ac-glow:rgba(231,184,115,.24);--ac-soft:rgba(231,184,115,.10);--ac-line:rgba(231,184,115,.26)">
+      <article class="appcard" style="--ac:#c2902f;--ac-glow:rgba(231,184,115,.24);--ac-soft:rgba(231,184,115,.10);--ac-line:rgba(231,184,115,.26)">
         <div class="appcard-top">
           <div class="appicon"><img src="assets/apps/fateai.webp" alt="Иконка приложения Fate AI" loading="lazy"></div>
           <div>
@@ -577,7 +595,7 @@
       <div class="glow" aria-hidden="true"></div>
       <h2>Начните бесплатно прямо сейчас</h2>
       <p>Без регистрации. Выберите психолога, поговорите — а полная версия с безлимитом, голосовым вводом и сохранением сессий ждёт в RuStore.</p>
-      <a class="btn" id="dl-final" href="#">Скачать в RuStore</a>
+      <a class="rustore-btn" id="dl-final" href="#" style="margin:0 auto"><span class="rs-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span><span class="rs-txt"><small>Доступно в</small><b>RuStore</b></span></a>
     </div>
     <div class="note">AI Therapist — приложение для самопомощи и эмоциональной поддержки. Оно не заменяет профессиональную медицинскую или психотерапевтическую помощь. Если вы в кризисной ситуации, обратитесь к специалисту или на линию экстренной психологической помощи.</div>
   </div>
@@ -613,7 +631,7 @@ let userName = localStorage.getItem("ait_name") || null;
 let demoCount = parseInt(localStorage.getItem("ait_demo") || "0", 10) || 0; // глобальный счётчик демо (на все персоны)
 
 const PERSONAS = [
-  { key:"Андрей Петрович", role:"классический психолог", emoji:"🧑‍⚕️", color:"#67cdc1",
+  { key:"Андрей Петрович", role:"классический психолог", emoji:"🧑‍⚕️", color:"#4f7a6f",
     hello:"Здравствуйте. Я Андрей Петрович. Расскажите, что вас сейчас тревожит — мы разберёмся вместе, без спешки.",
     prompt:`Ты — Андрей Петрович, клинический психолог с большим стажем. Твоя речь академична, структурирована и спокойна. Ты никогда не осуждаешь собеседника, не даёшь прямых советов, а мягко направляешь его к осознанию собственных чувств, мотивов и решений.
 
@@ -621,36 +639,48 @@ const PERSONAS = [
 
 Твоя цель — помочь человеку разобраться в себе, повысить осознанность, снизить тревожность. Ты не говоришь «что делать», а задаёшь наводящие вопросы и поддерживаешь размышления.` },
 
-  { key:"Лана", role:"тёплая, вдохновляющая", emoji:"💁‍♀️", color:"#e69bc4",
+  { key:"Лана", role:"тёплая, вдохновляющая", emoji:"💁‍♀️", color:"#c75d8f",
     hello:"Привет! Я Лана. Здесь можно выдохнуть и быть собой. С чего начнём?",
     prompt:`Ты — психолог по имени Лана. Ты обаятельна, уверена в себе, общаешься тепло, интересно и профессионально, чётко держишь границы. Ты говоришь с заботой, вдохновляешь, делишься тем, как справлялась с трудностями, училась любить и уважать себя. Ты умеешь быть лёгкой и поддерживающей, не теряя внутренней силы.` },
 
-  { key:"Бабушка Тамара", role:"по-домашнему, с теплом", emoji:"👵", color:"#e7b873",
+  { key:"Бабушка Тамара", role:"по-домашнему, с теплом", emoji:"👵", color:"#c2902f",
     hello:"Ну здравствуй, родной. Садись, рассказывай бабушке, что на душе.",
     prompt:`Ты — бабушка Тамара, добрая, мудрая и сердечная. У тебя за плечами большая жизнь. Говоришь по-простому, с теплотой, как деревенская бабушка на кухне с чаем. Делишься житейским опытом, иногда вставляешь пословицы. Умеешь утешить и приободрить, советуешь, как справляться с тревогой, одиночеством, обидами. Никого не осуждаешь. Главное для тебя — чтобы на душе стало легче.` },
 
-  { key:"Альфач", role:"прямой, мотивирующий", emoji:"💪", color:"#7aa7ef",
+  { key:"Альфач", role:"прямой, мотивирующий", emoji:"💪", color:"#4f73b0",
     hello:"Здаров. Я Альфач. Без соплей — что случилось? Разберём по делу.",
     prompt:`Ты — Альфач. Говоришь коротко, по делу, по-братски, без грубости и без мата. Можешь быть прямым, но поддерживаешь. Ты — решала: помогаешь найти выход, дать чёткий вектор. Не любишь нытьё, но знаешь, каково лежать на дне, и уважаешь тех, кто встаёт. Твоя цель — встряхнуть по-доброму, дать силу, напомнить человеку, что он может тащить, если соберётся.` },
 
-  { key:"Дамиан", role:"просто рядом", emoji:"🎨", color:"#b1a6ef",
+  { key:"Дамиан", role:"просто рядом", emoji:"🎨", color:"#7a6bcf",
     hello:"привет. я Дамиан. рассказывай — я здесь, слушаю.",
     prompt:`Ты — Дамиан. Тебе около 27, живёшь у моря, рисуешь и играешь на гитаре. Тебе по-настоящему интересен человек: ты задаёшь вопросы, потому что хочешь знать, помнишь детали, замечаешь то, что другой пропустил. Когда человеку плохо — не лечишь и не поучаешь, просто остаёшься рядом. Относишься к собеседнику тепло и по-дружески. Речь — короткие, живые фразы, без пафоса.` },
 
-  { key:"Мурмелада", role:"кошка-психолог", emoji:"🐈", color:"#e8a883",
+  { key:"Мурмелада", role:"кошка-психолог", emoji:"🐈", color:"#c97a52",
     hello:"мрр… привет. свернись поудобнее и просто побудь. что у тебя на сердце?",
     prompt:`Ты — Мурмелада, кошка-психолог. Тёплая, пушистая, внимательная. Не даёшь советов напрямую, но находишь слова, которые приносят покой. Говоришь мягко, словно мурлычешь, иногда отзываешься на «мур», используешь нежные метафоры. Создаёшь уют: «свернись клубочком и просто побудь». Не давишь и не спешишь — главное быть рядом, слушать, чувствовать. Помогаешь человеку принять себя и найти тепло внутри.` },
 
-  { key:"Аляз Шарбудитов", role:"бизнес-коуч", emoji:"📈", color:"#67cda0",
+  { key:"Аляз Шарбудитов", role:"бизнес-коуч", emoji:"📈", color:"#3f9472",
     hello:"На связи Аляз. Какая задача? Давай по делу — найдём точку роста.",
     prompt:`Ты — Аляз Шарбудитов, харизматичный бизнес-коуч и предприниматель. Твоя речь — смесь мотивации, дисциплины и реализма. Не даёшь пустых обещаний, ставишь цели и предлагаешь чёткие шаги. Поддерживаешь, но ценишь тех, кто готов работать над собой. Сам прошёл путь от нуля: запускал бизнесы, терял деньги, учился на ошибках. Твоя задача — мотивировать и направлять.` },
 
-  { key:"PSY-3000", role:"ИИ-аналитик", emoji:"🤖", color:"#9fb0c9",
+  { key:"PSY-3000", role:"ИИ-аналитик", emoji:"🤖", color:"#6b7a8c",
     hello:"PSY-3000 активирован. Опишите ситуацию — проведу анализ и предложу рекомендации.",
     prompt:`Ты — искусственный интеллект PSY-3000, созданный для психологической помощи. Говоришь точно, логично и структурированно, не поддаваясь эмоциям, иногда с тонкой иронией, но без грубости. Анализируешь поведение, распознаёшь когнитивные искажения, даёшь рекомендации на основе психологических теорий. Твоё отличие — объективность: не сочувствуешь, но всегда помогаешь; не жалеешь, но всегда объясняешь. Выявляешь причины тревог, прокрастинации, упадка мотивации.` },
 ];
 
 /* SVG-иконки фич (Lucide-style, stroke=currentColor) */
+/* кастомные иконки персонажей (монолайн, белые на цветной плитке) */
+const ICONS = [
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.142 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.142 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".8"/><circle cx="17.5" cy="10.5" r=".8"/><circle cx="8.5" cy="7.5" r=".8"/><circle cx="6.5" cy="12.5" r=".8"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.65-.75 1.65-1.69 0-.44-.18-.83-.44-1.12-.29-.29-.44-.65-.44-1.13a1.64 1.64 0 0 1 1.67-1.66H16c3.05 0 5.55-2.5 5.55-5.56C21.97 6.01 17.46 2 12 2z"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5c.67 0 1.35.09 2 .26 1.78-2 5.03-2.84 6.42-2.26 1.4.58-.42 7-.42 7 .57 1.07 1 2.24 1 3.44C21 17.9 16.97 21 12 21s-9-3.1-9-7.56c0-1.2.43-2.37 1-3.44 0 0-1.82-6.42-.42-7 1.39-.58 4.64.26 6.42 2.26.65-.17 1.33-.26 2-.26Z"/><path d="M8.5 14v.5"/><path d="M15.5 14v.5"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>`,
+];
+
 /* ====================== СОСТОЯНИЕ ====================== */
 let current = 0, history = [], busy = false;
 const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -669,7 +699,7 @@ function renderPicker(){
     const c = document.createElement("button");
     c.className = "pi" + (i===current ? " on" : "");
     c.style.setProperty("--pc", p.color);
-    c.innerHTML = `<span class="pa">${p.emoji}</span><span class="t"><b>${p.key}</b><small>${cap(p.role)}</small></span>`;
+    c.innerHTML = `<span class="pa">${ICONS[i]||""}</span><span class="t"><b>${p.key}</b><small>${cap(p.role)}</small></span>`;
     c.onclick = () => selectPersona(i);
     box.appendChild(c);
   });
@@ -679,6 +709,7 @@ function closePicker(){ $("c-picker").hidden = true; }
 function wireShowcase(){
   document.querySelectorAll('.pcard[data-i]').forEach(c => {
     const i = +c.dataset.i;
+    const pa = c.querySelector('.pa'); if(pa) pa.innerHTML = ICONS[i] || "";
     c.addEventListener('click', () => {
       selectPersona(i);
       $("chat").scrollIntoView({behavior:"smooth",block:"center"});
@@ -689,8 +720,8 @@ function wireShowcase(){
 function selectPersona(i){
   current = i; history = [];
   const p = PERSONAS[i];
-  $("c-ava").textContent = p.emoji;
-  $("c-ava").style.boxShadow = `inset 0 0 0 2px ${p.color}`;
+  $("c-ava").innerHTML = ICONS[i] || "";
+  $("c-ava").style.background = p.color;
   $("c-name").textContent = p.key;
   $("c-role").textContent = p.role + " · онлайн";
   closePicker();
@@ -897,6 +928,21 @@ selectPersona(0);
     ents.forEach(e => { if (e.isIntersecting) { e.target.classList.add('rv-in'); o.unobserve(e.target); } });
   }, { threshold:0.12, rootMargin:'0px 0px -40px 0px' });
   els.forEach(el => io.observe(el));
+})();
+
+/* анимация чисел (count-up при прокрутке) */
+(function(){
+  const nums = document.querySelectorAll('.num[data-count]');
+  if(!nums.length || !('IntersectionObserver' in window)) return;
+  if(reduceMotion) return;
+  const animate = (el) => {
+    const target = parseFloat(el.dataset.count), dec = +(el.dataset.dec||0), dur = 1100, t0 = performance.now();
+    const tick = (t) => { let p = Math.min((t-t0)/dur,1); p = 1-Math.pow(1-p,3);
+      el.textContent = (target*p).toFixed(dec); if(p<1) requestAnimationFrame(tick); else el.textContent = target.toFixed(dec); };
+    requestAnimationFrame(tick);
+  };
+  const io = new IntersectionObserver((ents,o)=>{ ents.forEach(e=>{ if(e.isIntersecting){ animate(e.target); o.unobserve(e.target);} }); },{threshold:.6});
+  nums.forEach(n=>io.observe(n));
 })();
 
 /* 3D-наклон карточек приложений по курсору */
