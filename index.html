@@ -38,7 +38,7 @@
     --sh-glow:0 0 0 1px rgba(103,205,193,.18), 0 14px 40px rgba(103,205,193,.12);
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth; overflow-x:hidden; max-width:100%}
   body{
     font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
     background:var(--bg); color:var(--text); line-height:1.65; font-size:16px;
@@ -76,7 +76,10 @@
   .aura::after{width:440px;height:440px; bottom:-180px; left:-100px;
     background:radial-gradient(circle, rgba(177,166,239,.22), transparent 65%); animation:breathe 11s ease-in-out infinite 1s}
   @keyframes breathe{0%,100%{transform:scale(1); opacity:.45} 50%{transform:scale(1.12); opacity:.62}}
-  .hero-grid{position:relative; z-index:1; display:grid; grid-template-columns:1.04fr 1fr; gap:52px; align-items:center}
+  .hero-grid{position:relative; z-index:1; display:grid; grid-template-columns:minmax(0,1.04fr) minmax(0,1fr); gap:52px; align-items:center}
+  .hero-grid>*{min-width:0}
+  .chat, .msgs, .composer textarea{min-width:0}
+  .hero h1{overflow-wrap:break-word}
   .eyebrow{display:inline-flex; align-items:center; gap:9px; font-size:13px; font-weight:600; color:var(--teal);
     background:rgba(103,205,193,.08); border:1px solid rgba(103,205,193,.20); padding:7px 15px; border-radius:999px; margin-bottom:24px}
   .pulse{width:7px;height:7px;border-radius:50%; background:var(--teal); box-shadow:0 0 0 0 rgba(103,205,193,.6); animation:pulse 2.4s infinite}
@@ -297,10 +300,12 @@
   .faq details p{margin:0; padding:0 0 18px; color:var(--muted); font-size:15px; line-height:1.65}
 
   @media (max-width:880px){
-    .hero-grid{grid-template-columns:1fr; gap:34px}
+    .hero-grid{grid-template-columns:minmax(0,1fr); gap:34px}
     .hero{padding:44px 0 20px}
     .chat{height:min(72vh,540px)}
     section{padding:64px 0}
+    .chat-shell::before{display:none} /* вращающийся ореол вылезает за экран на мобиле */
+    .chat-shell{overflow:visible}
   }
   @media (max-width:560px){
     .wrap{padding:0 16px}
