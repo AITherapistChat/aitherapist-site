@@ -605,6 +605,7 @@ const VK_APP_ID = 54652586;
 const VK_REDIRECT = "https://aitherapist.ru/";
 let session = localStorage.getItem("ait_session") || null;
 let userName = localStorage.getItem("ait_name") || null;
+let demoCount = parseInt(localStorage.getItem("ait_demo") || "0", 10) || 0; // глобальный счётчик демо (на все персоны)
 
 const PERSONAS = [
   { key:"Андрей Петрович", role:"классический психолог", emoji:"🧑‍⚕️", color:"#67cdc1",
@@ -693,6 +694,7 @@ function selectPersona(i){
   inputEl.placeholder = "Напишите, что вас беспокоит…";
   typeBubble(p.hello);
   if(session) updateAuthUI();
+  else if(demoCount >= DEMO_LIMIT) showLimit();
 }
 
 /* ====================== СООБЩЕНИЯ ====================== */
@@ -734,9 +736,10 @@ function showLimit(){
 async function send(){
   const text = inputEl.value.trim();
   if(!text || busy) return;
-  if(!session && userCount() >= DEMO_LIMIT){ showLimit(); return; }
+  if(!session && demoCount >= DEMO_LIMIT){ showLimit(); return; }
   busy = true; inputEl.value = ""; autosize();
   addBubble("me", text); history.push({role:"user", content:text});
+  if(!session){ demoCount++; localStorage.setItem("ait_demo", String(demoCount)); }
 
   const p = PERSONAS[current];
   const messages = [{role:"system", content:p.prompt}, ...history];
@@ -780,7 +783,7 @@ async function send(){
     addBubble("bot","Связь прервалась. Проверьте интернет и попробуйте снова.");
   }finally{
     busy = false;
-    if(!session && userCount() >= DEMO_LIMIT) showLimit();
+    if(!session && demoCount >= DEMO_LIMIT) showLimit();
     if(window.ym && typeof ym==="function"){ try{ ym(window.__metrikaId, "reachGoal", "demo_message"); }catch(_){ } }
   }
 }
