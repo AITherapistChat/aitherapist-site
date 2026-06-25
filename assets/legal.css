@@ -1,9 +1,9 @@
 /* Общий стиль юридических страниц AI Therapist — в одной палитре с лендингом */
 :root{
-  --bg:#090d15; --bg2:#0d121d; --surface:#121a28; --surface2:#172132;
-  --text:#eef2f9; --read:#ccd6e6; --muted:#8a99b4; --faint:#566481;
-  --teal:#67cdc1; --teal-deep:#4eb8ab; --lav:#b1a6ef;
-  --line:rgba(120,150,180,.13); --line-strong:rgba(120,150,180,.22);
+  --bg:#F7F4EE; --bg2:#EFEBE1; --surface:#FFFFFF; --surface2:#F7F5F0;
+  --text:#2C332E; --read:#3c463e; --muted:#56625A; --faint:#838d83;
+  --teal:#557A51; --teal-deep:#41633E; --lav:#C99A6E;
+  --line:rgba(44,51,46,.10); --line-strong:rgba(44,51,46,.17);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -12,20 +12,20 @@ body{
   background:var(--bg); color:var(--read); line-height:1.7; font-size:16px;
   -webkit-font-smoothing:antialiased;
 }
-a{color:var(--teal); text-decoration:none}
+a{color:var(--teal-deep); text-decoration:none}
 a:hover{text-decoration:underline}
-::selection{background:rgba(103,205,193,.26)}
+::selection{background:rgba(94,126,90,.22)}
 :focus-visible{outline:2px solid var(--teal); outline-offset:3px; border-radius:6px}
 svg{display:block}
 
 /* header */
 .lhead{position:sticky; top:0; z-index:20; padding:15px 0;
-  background:rgba(9,13,21,.78); backdrop-filter:blur(14px); border-bottom:1px solid var(--line)}
+  background:rgba(255,255,255,.82); backdrop-filter:blur(14px); border-bottom:1px solid var(--line)}
 .lhead .row{max-width:780px; margin:0 auto; padding:0 22px; display:flex; align-items:center; justify-content:space-between}
 .logo{display:flex; align-items:center; gap:11px; font-weight:800; font-size:17px; letter-spacing:-.3px; color:var(--text)}
 .mark{width:30px;height:30px;border-radius:9px; background:linear-gradient(150deg,var(--teal),var(--teal-deep));
   display:flex;align-items:center;justify-content:center; color:#062019}
-.logo .appmark{width:30px;height:30px;border-radius:9px; object-fit:cover; box-shadow:0 4px 12px rgba(0,0,0,.4), inset 0 0 0 1px rgba(255,255,255,.07)}
+.logo .appmark{width:30px;height:30px;border-radius:9px; object-fit:cover; box-shadow:0 4px 12px rgba(60,70,55,.18)}
 .back{display:inline-flex; align-items:center; gap:7px; color:var(--muted); font-size:14px; font-weight:600}
 .back:hover{color:var(--text); text-decoration:none}
 
@@ -34,7 +34,7 @@ svg{display:block}
 .legal h1{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:clamp(26px,4vw,36px);
   color:var(--text); letter-spacing:-.4px; line-height:1.15; margin-bottom:8px}
 .legal .date{font-size:14px; color:var(--faint); margin-bottom:30px}
-.legal h2{font-size:18px; font-weight:700; color:var(--teal); margin:34px 0 12px; letter-spacing:-.2px}
+.legal h2{font-size:18px; font-weight:700; color:var(--teal-deep); margin:34px 0 12px; letter-spacing:-.2px}
 .legal p{margin-bottom:12px}
 .legal ul{padding-left:22px; margin-bottom:14px}
 .legal li{margin-bottom:7px}
