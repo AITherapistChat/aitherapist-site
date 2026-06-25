@@ -75,6 +75,12 @@
   .rustore-btn .rs-txt{display:flex; flex-direction:column; line-height:1.12; text-align:left}
   .rustore-btn .rs-txt small{font-size:11px; opacity:.82; font-weight:500}
   .rustore-btn .rs-txt b{font-size:16.5px; font-weight:700; letter-spacing:.2px}
+  /* официальный бейдж RuStore (картинка) */
+  .rs-link{display:inline-block; line-height:0; border-radius:9px}
+  .rustore-badge{height:50px; width:auto; display:block; border-radius:9px; transition:transform .16s ease, box-shadow .16s ease, filter .16s ease}
+  .rs-link:hover .rustore-badge{transform:translateY(-2px); filter:brightness(1.07); box-shadow:0 12px 26px -12px rgba(0,0,0,.4)}
+  .rs-link.rs-sm .rustore-badge{height:38px}
+  .appcard .rs-link .rustore-badge{height:46px}
 
   /* header */
   header{position:sticky; top:0; z-index:50; padding:16px 0;
@@ -289,9 +295,11 @@
 
   /* rotating halo behind the chat */
   .chat-shell{position:relative}
-  .chat-shell::before{content:""; position:absolute; inset:-4px; border-radius:30px; z-index:0; pointer-events:none;
-    background:conic-gradient(from 0deg, transparent 5%, rgba(94,126,90,.55), rgba(201,154,110,.45), transparent 60%);
-    filter:blur(26px); opacity:.6; animation:spin 16s linear infinite}
+  @property --ang{syntax:"<angle>"; inherits:false; initial-value:0deg}
+  .chat-shell::before{content:""; position:absolute; inset:-5px; border-radius:30px; z-index:0; pointer-events:none;
+    background:conic-gradient(from var(--ang,0deg), transparent 4%, rgba(94,126,90,.6), rgba(201,154,110,.5), rgba(94,126,90,.6), transparent 62%);
+    filter:blur(24px); opacity:.6; animation:auroraSpin 14s linear infinite}
+  @keyframes auroraSpin{to{--ang:360deg}}
   @keyframes spin{to{transform:rotate(360deg)}}
 
   /* 3D tilt for app cards */
@@ -323,8 +331,7 @@
     .hero{padding:44px 0 20px}
     .chat{height:min(72vh,540px)}
     section{padding:64px 0}
-    .chat-shell::before{display:none} /* вращающийся ореол вылезает за экран на мобиле */
-    .chat-shell{overflow:visible}
+    /* ореол теперь крутит градиент (не элемент) — за экран не вылезает, работает и на мобиле */
   }
   @media (max-width:560px){
     .wrap{padding:0 16px}
@@ -403,7 +410,7 @@
       <img class="appmark" src="assets/apps/aitherapist.webp" alt="" width="34" height="34">
       AI Therapist
     </div>
-    <a class="btn header-cta" id="dl-top" href="#">Скачать</a>
+    <a class="rs-link rs-sm" id="dl-top" href="#"><img class="rustore-badge" src="assets/vendor/rustore-logo-color-dark.svg" alt="Скачайте AI Therapist из RuStore" width="111" height="40"></a>
   </div>
 </header>
 
@@ -415,7 +422,7 @@
       <h1>Ваш личный <em>ИИ-психолог</em>. Понимает, поддерживает, помогает.</h1>
       <p class="lead">Тёплый, внимательный разговор в любой момент — анонимно, без записи и без осуждения. Выберите психолога по душе и напишите первое сообщение прямо сейчас.</p>
       <div class="cta-row">
-        <a class="rustore-btn" id="dl-hero" href="#"><span class="rs-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span><span class="rs-txt"><small>Доступно в</small><b>RuStore</b></span></a>
+        <a class="rs-link" id="dl-hero" href="#"><img class="rustore-badge" src="assets/vendor/rustore-logo-color-dark.svg" alt="Скачайте AI Therapist из RuStore" width="111" height="40"></a>
         <a class="btn ghost" href="#personas">Кто эти психологи →</a>
       </div>
       <div class="trust">
@@ -552,7 +559,7 @@
         </div>
         <p class="appdesc">Метафорические ассоциативные карты и ИИ-проводник для самопознания и рефлексии. Практики под любой запрос — эмоции, отношения, страхи, цели. Четыре колоды с авторскими иллюстрациями и дневник сессий.</p>
         <div class="appchips"><span class="appchip">МАК-карты</span><span class="appchip">4 колоды</span><span class="appchip">Дневник</span><span class="appchip">Без регистрации</span></div>
-        <a class="abtn" href="https://www.rustore.ru/catalog/app/com.metacards.app" target="_blank" rel="noopener">Скачать в RuStore →</a>
+        <a class="rs-link" href="https://www.rustore.ru/catalog/app/com.metacards.app" target="_blank" rel="noopener"><img class="rustore-badge" src="assets/vendor/rustore-logo-color-dark.svg" alt="Скачать Метакарты из RuStore" width="111" height="40"></a>
       </article>
 
       <article class="appcard" style="--ac:#c2902f;--ac-glow:rgba(231,184,115,.24);--ac-soft:rgba(231,184,115,.10);--ac-line:rgba(231,184,115,.26)">
@@ -565,7 +572,7 @@
         </div>
         <p class="appdesc">Таро, гороскопы, сонник и натальная карта — нового поколения. Четыре ИИ-проводника: таролог с раскладами, гадалка, астролог и толкователь снов. Можно задавать уточняющие вопросы вживую.</p>
         <div class="appchips"><span class="appchip">Таро</span><span class="appchip">Гороскоп</span><span class="appchip">Натальная карта</span><span class="appchip">Сонник</span></div>
-        <a class="abtn" href="https://www.rustore.ru/catalog/app/com.fateai.app" target="_blank" rel="noopener">Скачать в RuStore →</a>
+        <a class="rs-link" href="https://www.rustore.ru/catalog/app/com.fateai.app" target="_blank" rel="noopener"><img class="rustore-badge" src="assets/vendor/rustore-logo-color-dark.svg" alt="Скачать Fate AI из RuStore" width="111" height="40"></a>
       </article>
     </div>
   </div>
@@ -595,7 +602,7 @@
       <div class="glow" aria-hidden="true"></div>
       <h2>Начните бесплатно прямо сейчас</h2>
       <p>Без регистрации. Выберите психолога, поговорите — а полная версия с безлимитом, голосовым вводом и сохранением сессий ждёт в RuStore.</p>
-      <a class="rustore-btn" id="dl-final" href="#" style="margin:0 auto"><span class="rs-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span><span class="rs-txt"><small>Доступно в</small><b>RuStore</b></span></a>
+      <a class="rs-link" id="dl-final" href="#" style="display:inline-block"><img class="rustore-badge" src="assets/vendor/rustore-logo-color-dark.svg" alt="Скачайте AI Therapist из RuStore" width="111" height="40"></a>
     </div>
     <div class="note">AI Therapist — приложение для самопомощи и эмоциональной поддержки. Оно не заменяет профессиональную медицинскую или психотерапевтическую помощь. Если вы в кризисной ситуации, обратитесь к специалисту или на линию экстренной психологической помощи.</div>
   </div>
