@@ -598,6 +598,7 @@
 const RUSTORE_URL = "https://www.rustore.ru/catalog/app/com.example.aitherapist";
 const CHAT_ENDPOINT = "https://efniwpfjdfktfczgdpxm.functions.supabase.co/chat-web";
 const AUTH_ENDPOINT = "https://efniwpfjdfktfczgdpxm.functions.supabase.co/vk-auth";
+const PAY_ENDPOINT = "https://efniwpfjdfktfczgdpxm.functions.supabase.co/pay-web";
 const DEMO_LIMIT = 5;
 /* VK ID */
 const VK_APP_ID = 54652586;
@@ -747,7 +748,7 @@ async function send(){
       method:"POST", headers:{ "Content-Type":"application/json" },
       body: JSON.stringify({ persona:p.key, stream:true, messages, session: session || undefined })
     });
-    if(res.status === 429){ if(typing.parentNode) typing.remove(); addBubble("bot","На сегодня лимит сообщений исчерпан. Возвращайтесь завтра 🙂"); return; }
+    if(res.status === 429){ if(typing.parentNode) typing.remove(); showPremiumOffer(); return; }
     if(!res.ok) throw new Error("HTTP "+res.status);
     const reader = res.body.getReader(); const dec = new TextDecoder(); let buf = "";
     while(true){
@@ -819,6 +820,33 @@ async function vkidOnSuccess(data){
   }catch(e){ addBubble("bot","Ошибка входа через VK. Попробуйте позже."); }
 }
 function vkidOnError(e){ console.warn("VK error", e); }
+/* ====================== ОПЛАТА (Robokassa, для вошедших) ====================== */
+async function startPay(tariff){
+  if(!session){ return; }
+  try{
+    const r = await fetch(PAY_ENDPOINT, { method:"POST", headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ session, tariff: tariff || "MONTHLY" }) });
+    const d = await r.json().catch(()=>null);
+    if(d && d.url){ window.location.href = d.url; }
+    else { addBubble("bot","Не удалось создать оплату. Попробуйте позже."); }
+  }catch(e){ addBubble("bot","Ошибка оплаты. Попробуйте позже."); }
+}
+function showPremiumOffer(){
+  const n = document.createElement("div");
+  n.className = "limit-note";
+  n.innerHTML = `<p>На сегодня бесплатный лимит исчерпан. Оформите Премиум — и общайтесь без ограничений.</p>
+    <button class="btn" id="pay-btn">Оформить Премиум</button>`;
+  msgsEl.appendChild(n); msgsEl.scrollTop = msgsEl.scrollHeight;
+  inputEl.disabled = true; $("c-send").disabled = true;
+  const pb = document.getElementById("pay-btn"); if(pb) pb.onclick = () => startPay("MONTHLY");
+}
+/* возврат с оплаты Robokassa */
+(function(){
+  const q = new URLSearchParams(location.search);
+  if(q.get("paid") === "success"){
+    setTimeout(()=>{ addBubble("bot","Оплата получена! Премиум активируется в течение минуты. Если лимит ещё держится — обновите страницу."); inputEl.disabled=false; $("c-send").disabled=false; }, 500);
+  }
+})();
 let vkInited = false;
 function vkInit(){
   if(vkInited || !window.VKID) return;
