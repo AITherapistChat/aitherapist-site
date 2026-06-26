@@ -130,6 +130,11 @@
   .chat-id .nm{font-weight:700; font-size:15.5px; letter-spacing:-.2px}
   .chat-id .role{font-size:12.5px; color:var(--muted); display:flex; align-items:center; gap:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
   .chat-id .role .on{width:6px;height:6px;border-radius:50%; background:var(--teal); flex:0 0 auto}
+  .planbar{display:flex; align-items:center; justify-content:center; gap:7px; padding:8px 14px;
+    font-size:12.5px; font-weight:600; color:var(--muted); background:var(--bg2); border-bottom:1px solid var(--line)}
+  .planbar.trial{color:var(--teal-deep); background:rgba(85,122,81,.10)}
+  .planbar.premium{color:#9a6a1f; background:rgba(201,154,110,.18)}
+  .planbar b{font-weight:700; font-variant-numeric:tabular-nums}
   .switch{font-size:13px; color:var(--muted); background:transparent; border:1px solid var(--line-strong); padding:8px 13px;
     border-radius:11px; cursor:pointer; white-space:nowrap; transition:.16s; display:flex; align-items:center; gap:6px}
   .switch:hover{border-color:var(--teal); color:var(--text)}
@@ -445,6 +450,7 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
       </div>
+      <div class="planbar" id="c-planbar" hidden></div>
       <div class="chat-body">
         <div class="msgs" id="c-msgs"></div>
         <div class="picker" id="c-picker" hidden>
@@ -638,6 +644,12 @@ if(window.VKIDSDK && !window.VKID){ window.VKID = window.VKIDSDK; }
 let session = localStorage.getItem("ait_session") || null;
 let userName = localStorage.getItem("ait_name") || null;
 let demoCount = parseInt(localStorage.getItem("ait_demo") || "0", 10) || 0; // глобальный счётчик демо (на все персоны)
+/* статус тарифа (индикатор в шапке) */
+let planPremiumUntil = parseInt(localStorage.getItem("ait_premium_until") || "0", 10) || 0; // ms
+let planTrialUntil   = parseInt(localStorage.getItem("ait_trial_until")   || "0", 10) || 0; // ms
+let planRemaining    = localStorage.getItem("ait_remaining"); // "5".."0" | "trial" | "premium" | null
+let planFlag         = null;  // живой хинт из X-Remaining: "trial" | "premium" | null
+let planTimer        = null;
 
 const PERSONAS = [
   { key:"Андрей Петрович", role:"классический психолог", emoji:"🧑‍⚕️", color:"#4f7a6f",
@@ -799,11 +811,12 @@ async function send(){
     if(res.status === 429){ if(typing.parentNode) typing.remove(); showPremiumOffer(); return; }
     if(res.status === 401){ // сессия протухла/учётка удалена → войти заново
       if(typing.parentNode) typing.remove();
-      session = null; localStorage.removeItem("ait_session");
+      session = null; localStorage.removeItem("ait_session"); clearPlan();
       addBubble("bot","Сессия устарела. Войдите через VK ещё раз, чтобы продолжить.");
       showLimit(); return;
     }
     if(!res.ok) throw new Error("HTTP "+res.status);
+    applyRemaining(res);
     const reader = res.body.getReader(); const dec = new TextDecoder(); let buf = "";
     while(true){
       const {value, done} = await reader.read(); if(done) break;
@@ -848,8 +861,63 @@ $("c-switch").onclick = () => { const pk=$("c-picker"); pk.hidden ? openPicker()
 $("c-pclose").onclick = closePicker;
 
 /* ====================== VK ID ВХОД ====================== */
+/* --- индикатор тарифа (триал / премиум / бесплатно) --- */
+function pad2(n){ return String(n).padStart(2,"0"); }
+function fmtDur(ms){
+  if(ms < 0) ms = 0;
+  const s = Math.floor(ms/1000);
+  return `${pad2(Math.floor(s/3600))}:${pad2(Math.floor(s%3600/60))}:${pad2(s%60)}`;
+}
+function fmtDate(ms){ return new Date(ms).toLocaleDateString("ru-RU",{day:"2-digit",month:"2-digit",year:"numeric"}); }
+function setPlan(d){
+  d = d || {};
+  if("premium_until" in d){ planPremiumUntil = d.premium_until ? new Date(d.premium_until).getTime() : 0; localStorage.setItem("ait_premium_until", String(planPremiumUntil)); }
+  if("trial_until"   in d){ planTrialUntil   = d.trial_until   ? new Date(d.trial_until).getTime()   : 0; localStorage.setItem("ait_trial_until",   String(planTrialUntil)); }
+  renderPlan();
+}
+function renderPlan(){
+  const el = $("c-planbar"); if(!el) return;
+  if(!session){ el.hidden = true; if(planTimer){ clearInterval(planTimer); planTimer = null; } return; }
+  const now = Date.now();
+  el.classList.remove("trial","premium");
+  let ticking = false;
+  if(planPremiumUntil > now){
+    el.classList.add("premium");
+    el.innerHTML = `⭐ Премиум до <b>${fmtDate(planPremiumUntil)}</b>`;
+  } else if(planFlag === "premium"){
+    el.classList.add("premium");
+    el.innerHTML = `⭐ <b>Премиум активен</b>`;
+  } else if(planTrialUntil > now){
+    el.classList.add("trial");
+    el.innerHTML = `🎁 Пробный период · без ограничений · осталось <b>${fmtDur(planTrialUntil - now)}</b>`;
+    ticking = true;
+  } else if(planFlag === "trial"){
+    el.classList.add("trial");
+    el.innerHTML = `🎁 <b>Пробный период</b> · без ограничений`;
+  } else {
+    const left = (planRemaining != null && planRemaining !== "trial" && planRemaining !== "premium") ? planRemaining : "5";
+    el.innerHTML = `💬 Бесплатно · осталось <b>${left}</b> из 5 сегодня`;
+  }
+  el.hidden = false;
+  if(ticking){ if(!planTimer) planTimer = setInterval(renderPlan, 1000); }
+  else if(planTimer){ clearInterval(planTimer); planTimer = null; }
+}
+function clearPlan(){
+  planPremiumUntil = 0; planTrialUntil = 0; planRemaining = null; planFlag = null;
+  ["ait_premium_until","ait_trial_until","ait_remaining"].forEach(k => localStorage.removeItem(k));
+  renderPlan();
+}
+/* обновляем статус из заголовка ответа chat-web */
+function applyRemaining(res){
+  const xr = res.headers.get("X-Remaining");
+  if(xr == null) return;
+  if(xr === "premium" || xr === "trial"){ planFlag = xr; }
+  else { planFlag = null; planRemaining = xr; localStorage.setItem("ait_remaining", xr); }
+  renderPlan();
+}
 function updateAuthUI(){
   if(session && PERSONAS[current]) $("c-role").textContent = PERSONAS[current].role + " · вы вошли";
+  renderPlan();
 }
 function onLoggedIn(name){
   userName = name || "Вы";
@@ -869,7 +937,7 @@ async function vkidOnSuccess(data){
       body: JSON.stringify({ access_token: token, user_id: data.user_id })
     });
     const d = await r.json().catch(()=>null);
-    if(d && d.session){ session = d.session; localStorage.setItem("ait_session", session); onLoggedIn(d.name); }
+    if(d && d.session){ session = d.session; localStorage.setItem("ait_session", session); setPlan(d); onLoggedIn(d.name); }
     else { addBubble("bot","Не удалось подтвердить вход через VK. Попробуйте ещё раз."); }
   }catch(e){ addBubble("bot","Ошибка входа через VK. Попробуйте позже."); }
 }
@@ -886,6 +954,7 @@ async function startPay(tariff){
   }catch(e){ addBubble("bot","Ошибка оплаты. Попробуйте позже."); }
 }
 function showPremiumOffer(){
+  planFlag = null; planRemaining = "0"; localStorage.setItem("ait_remaining","0"); renderPlan();
   const n = document.createElement("div");
   n.className = "limit-note";
   n.innerHTML = `<p>На сегодня бесплатный лимит исчерпан. Оформите Премиум — и общайтесь без ограничений.</p>
@@ -898,6 +967,7 @@ function showPremiumOffer(){
 (function(){
   const q = new URLSearchParams(location.search);
   if(q.get("paid") === "success"){
+    if(session){ planFlag = "premium"; renderPlan(); } // оптимистично, подтвердит X-Remaining
     setTimeout(()=>{ addBubble("bot","Оплата получена! Премиум активируется в течение минуты. Если лимит ещё держится — обновите страницу."); inputEl.disabled=false; $("c-send").disabled=false; }, 500);
   }
 })();
