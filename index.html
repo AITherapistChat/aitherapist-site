@@ -623,6 +623,7 @@
     <div class="flinks">
       <a href="privacy.html">Конфиденциальность</a>
       <a href="terms.html">Соглашение</a>
+      <a href="oferta.html">Оферта</a>
       <a href="https://t.me/AI_Therapist_APP" target="_blank" rel="noopener">Поддержка</a>
     </div>
   </div>
@@ -960,7 +961,8 @@ function showPremiumOffer(){
   const n = document.createElement("div");
   n.className = "limit-note";
   n.innerHTML = `<p>На сегодня бесплатный лимит исчерпан. Оформите Премиум — и общайтесь без ограничений.</p>
-    <button class="btn" id="pay-btn">Оформить Премиум</button>`;
+    <button class="btn" id="pay-btn">Оформить Премиум</button>
+    <p style="font-size:11.5px;margin-top:10px;margin-bottom:0">Оформляя оплату, вы принимаете <a href="oferta.html" target="_blank" rel="noopener" style="color:var(--teal-deep)">оферту</a> и <a href="privacy.html" target="_blank" rel="noopener" style="color:var(--teal-deep)">политику конфиденциальности</a>.</p>`;
   msgsEl.appendChild(n); msgsEl.scrollTop = msgsEl.scrollHeight;
   inputEl.disabled = true; $("c-send").disabled = true;
   const pb = document.getElementById("pay-btn"); if(pb) pb.onclick = () => startPay("MONTHLY");
