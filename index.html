@@ -739,18 +739,33 @@ function wireShowcase(){
     });
   });
 }
+/* --- история чата: хранится в браузере (localStorage), как в приложении --- */
+const HIST_CAP = 300;
+function histKey(i){ return "ait_hist_" + PERSONAS[i].key; }
+function loadHistory(i){
+  try{ const j = localStorage.getItem(histKey(i)); const a = j ? JSON.parse(j) : []; return Array.isArray(a) ? a : []; }
+  catch(_){ return []; }
+}
+function saveHistory(){
+  try{ localStorage.setItem(histKey(current), JSON.stringify(history.slice(-HIST_CAP))); }catch(_){ }
+}
+function renderHistory(){
+  msgsEl.innerHTML = "";
+  history.forEach(m => addBubble(m.role === "user" ? "me" : "bot", m.content));
+  msgsEl.scrollTop = msgsEl.scrollHeight;
+}
 function selectPersona(i){
-  current = i; history = [];
+  current = i; history = loadHistory(i);
   const p = PERSONAS[i];
   $("c-ava").innerHTML = ICONS[i] || "";
   $("c-ava").style.background = p.color;
   $("c-name").textContent = p.key;
   $("c-role").textContent = p.role + " · онлайн";
   closePicker();
-  msgsEl.innerHTML = "";
   inputEl.disabled = false; $("c-send").disabled = false;
   inputEl.placeholder = "Напишите, что вас беспокоит…";
-  typeBubble(p.hello);
+  if(history.length){ renderHistory(); }
+  else { msgsEl.innerHTML = ""; typeBubble(p.hello); }
   if(session) updateAuthUI();
   else if(demoCount >= DEMO_LIMIT) showLimit();
 }
@@ -796,7 +811,7 @@ async function send(){
   if(!text || busy) return;
   if(!session && demoCount >= DEMO_LIMIT){ showLimit(); return; }
   busy = true; inputEl.value = ""; autosize();
-  addBubble("me", text); history.push({role:"user", content:text});
+  addBubble("me", text); history.push({role:"user", content:text}); saveHistory();
   if(!session){ demoCount++; localStorage.setItem("ait_demo", String(demoCount)); }
 
   const p = PERSONAS[current];
@@ -842,7 +857,7 @@ async function send(){
     if(typing.parentNode) typing.remove();
     acc = acc.replace(/<END>\s*$/,"").trim();
     if(!acc){ if(!bubble) addBubble("bot","Хм, не получилось ответить. Попробуйте ещё раз."); }
-    else { if(!bubble) addBubble("bot",acc); else bubble.textContent = acc; history.push({role:"assistant", content:acc}); }
+    else { if(!bubble) addBubble("bot",acc); else bubble.textContent = acc; history.push({role:"assistant", content:acc}); saveHistory(); }
   }catch(e){
     if(typing.parentNode) typing.remove();
     addBubble("bot","Связь прервалась. Проверьте интернет и попробуйте снова.");
