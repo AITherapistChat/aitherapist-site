@@ -1026,6 +1026,16 @@ function applyRemaining(res){
   }
   renderPlan();
 }
+/* Спросить статус у сервера (без DeepSeek/без траты лимита) → обновить чип/блокировки */
+async function refreshStatus(){
+  if(!session) return false;
+  try{
+    const { res } = await apiFetch(CHAT_DIRECT, JSON.stringify({ session, status:true }), 5000);
+    if(res.status === 401){ session = null; localStorage.removeItem("ait_session"); clearPlan(); return false; }
+    if(res.ok){ applyRemaining(res); if(!$("c-picker").hidden) renderPicker(); return true; }
+  }catch(_){}
+  return false;
+}
 function updateAuthUI(){
   if(session && PERSONAS[current]) $("c-role").textContent = PERSONAS[current].role + " · вы вошли";
   renderPlan();
@@ -1076,7 +1086,15 @@ function showPremiumOffer(){
   const q = new URLSearchParams(location.search);
   // Возврат с оплаты: Robokassa добавляет InvId к SuccessURL/FailURL (legacy: ?paid=success)
   if(q.get("InvId") || q.get("paid") === "success"){
-    setTimeout(()=>{ addBubble("bot","Спасибо! Если оплата прошла — премиум активируется в течение минуты. Обновите страницу или напишите сообщение, и статус подтянется."); inputEl.disabled=false; $("c-send").disabled=false; }, 500);
+    inputEl.disabled=false; $("c-send").disabled=false;
+    addBubble("bot","Спасибо за оплату! Проверяю активацию премиума…");
+    let tries = 0;
+    const poll = setInterval(async ()=>{
+      tries++;
+      await refreshStatus();
+      if(isPremiumNow()){ clearInterval(poll); addBubble("bot","Премиум активирован! Все психологи открыты ✨"); if(!$("c-picker").hidden) renderPicker(); }
+      else if(tries >= 12){ clearInterval(poll); addBubble("bot","Если оплата прошла, премиум активируется в течение минуты. Обновите страницу — статус подтянется."); }
+    }, 2500);
   }
 })();
 let vkInited = false;
@@ -1108,6 +1126,7 @@ function mountVk(container){
 wireShowcase();
 selectPersona(0);
 probeDirect(); // фоновая проба прямого доступа — решит «прямой/прокси» до первого сообщения
+refreshStatus(); // свежий статус с сервера на загрузке (чип/блокировки точны без первого сообщения)
 if(FORCE_PROXY){ addBubble("bot","🔧 Тестовый режим: все запросы идут через резервный Яндекс-прокси (открой консоль F12 — увидишь «[net] через Яндекс-прокси»)."); }
 
 /* scroll-reveal — прогрессивно и с уважением к reduced-motion */
