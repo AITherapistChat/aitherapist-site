@@ -18,14 +18,18 @@
 <link rel="icon" type="image/webp" href="../assets/apps/aitherapist.webp">
 <link rel="stylesheet" href="../assets/legal.css">
 <style>
-  .posts{max-width:780px; margin:0 auto; display:flex; flex-direction:column; gap:16px}
-  .post-card{display:block; background:var(--surface,#fff); border:1px solid var(--line-strong,rgba(44,51,46,.17)); border-radius:16px;
-    padding:22px 24px; text-decoration:none; color:inherit; transition:border-color .15s ease, transform .15s ease}
-  .post-card:hover{border-color:var(--teal,#557A51); transform:translateY(-2px)}
-  .post-card h2{font-size:19px; margin:0 0 7px; line-height:1.3}
-  .post-card p{margin:0; color:var(--muted,#56625A); font-size:14.5px; line-height:1.6}
-  .post-card .tag{display:inline-block; font-size:12px; font-weight:700; color:var(--teal-deep,#41633E);
-    text-transform:uppercase; letter-spacing:.6px; margin-bottom:9px}
+  .posts{max-width:760px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:18px}
+  .post-card{display:flex; flex-direction:column; background:var(--surface,#fff);
+    border:1px solid var(--line-strong,rgba(44,51,46,.17)); border-radius:20px; padding:24px 24px 21px;
+    color:var(--text,#2C332E); transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease}
+  .post-card, .post-card:hover, .post-card *{text-decoration:none}
+  .post-card:hover{border-color:var(--teal,#557A51); transform:translateY(-4px); box-shadow:0 16px 44px rgba(94,126,90,.14)}
+  .post-card .tag{align-self:flex-start; font-size:11px; font-weight:700; letter-spacing:.7px; text-transform:uppercase;
+    color:var(--teal-deep,#41633E); background:rgba(201,154,110,.18); padding:4px 10px; border-radius:8px; margin-bottom:14px}
+  .post-card h2{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:20.5px; line-height:1.25; letter-spacing:-.2px; margin:0 0 9px}
+  .post-card p{margin:0 0 16px; color:var(--muted,#56625A); font-size:14px; line-height:1.6; flex:1}
+  .post-card .more{font-weight:700; font-size:14px; color:var(--teal-deep,#41633E); display:inline-flex; align-items:center; gap:6px; transition:gap .18s ease}
+  .post-card:hover .more{gap:10px}
 </style>
 </head>
 <body>
@@ -46,6 +50,7 @@
       <span class="tag">Тревога</span>
       <h2>Как справиться с тревогой: 8 техник, которые реально помогают</h2>
       <p>Дыхание, заземление, работа с тревожными мыслями по КПТ и другие приёмы, которые можно применить прямо сейчас — и когда стоит обратиться к специалисту.</p>
+      <span class="more">Читать →</span>
     </a>
   </div>
 </main>

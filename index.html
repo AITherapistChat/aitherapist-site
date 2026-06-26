@@ -361,6 +361,26 @@
   .faq details[open] summary::after{content:"\2212"}
   .faq details p{margin:0; padding:0 0 18px; color:var(--muted); font-size:15px; line-height:1.65}
 
+  /* Блог / статьи */
+  .blog-grid{display:flex; flex-wrap:wrap; gap:18px; justify-content:center}
+  .bcard{flex:1 1 300px; max-width:362px; display:flex; flex-direction:column; text-align:left;
+    background:var(--surface); border:1px solid var(--line-strong); border-radius:20px; padding:24px 24px 21px;
+    text-decoration:none; color:var(--text); transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease}
+  .bcard:hover{transform:translateY(-4px); border-color:var(--teal); box-shadow:var(--sh-glow); text-decoration:none}
+  .bcard .btag{align-self:flex-start; font-size:11px; font-weight:700; letter-spacing:.7px; text-transform:uppercase;
+    color:var(--teal-deep); background:rgba(201,154,110,.18); padding:4px 10px; border-radius:8px; margin-bottom:14px}
+  .bcard h3{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:20.5px; line-height:1.25; letter-spacing:-.2px; margin-bottom:9px}
+  .bcard p{color:var(--muted); font-size:13.8px; line-height:1.6; margin:0 0 16px; flex:1}
+  .bcard .more{font-weight:700; font-size:14px; color:var(--teal-deep); display:inline-flex; align-items:center; gap:6px; transition:gap .18s ease}
+  .bcard:hover .more{gap:10px}
+  .blog-all{display:inline-flex; align-items:center; gap:7px; margin-top:24px; font-weight:700; color:var(--teal-deep); font-size:15px; transition:gap .18s ease}
+  .blog-all:hover{gap:11px}
+  /* ссылка «Блог» в шапке */
+  .nav-right{display:flex; align-items:center; gap:18px}
+  .navlink{font-weight:600; font-size:14.5px; color:var(--muted); white-space:nowrap; transition:color .15s ease}
+  .navlink:hover{color:var(--teal-deep)}
+  @media(max-width:440px){ .navlink{display:none} }
+
   @media (max-width:880px){
     .hero-grid{grid-template-columns:minmax(0,1fr); gap:34px}
     .hero{padding:44px 0 20px}
@@ -445,7 +465,10 @@
       <img class="appmark" src="assets/apps/aitherapist.webp" alt="" width="34" height="34">
       AI Therapist
     </div>
-    <a class="rs-link rs-sm" id="dl-top" href="#"><img class="rustore-badge" src="assets/vendor/rustore-logo-color-dark.svg" alt="Скачайте AI Therapist из RuStore" width="111" height="40"></a>
+    <div class="nav-right">
+      <a class="navlink" href="blog/">Блог</a>
+      <a class="rs-link rs-sm" id="dl-top" href="#"><img class="rustore-badge" src="assets/vendor/rustore-logo-color-dark.svg" alt="Скачайте AI Therapist из RuStore" width="111" height="40"></a>
+    </div>
   </div>
 </header>
 
@@ -611,6 +634,24 @@
         <a class="abtn" href="https://www.rustore.ru/catalog/app/com.fateai.app" target="_blank" rel="noopener">Скачать в RuStore →</a>
       </article>
     </div>
+  </div>
+</section>
+
+<!-- БЛОГ -->
+<section id="blog-teaser">
+  <div class="wrap">
+    <div class="seclabel">Блог</div>
+    <h2>Статьи о ментальном здоровье</h2>
+    <p class="sub">Простые техники самопомощи и доказательные подходы — понятным языком.</p>
+    <div class="blog-grid">
+      <a class="bcard" href="blog/kak-spravitsya-s-trevogoy.html">
+        <span class="btag">Тревога</span>
+        <h3>Как справиться с тревогой: 8 техник, которые помогают</h3>
+        <p>Дыхание, заземление, работа с тревожными мыслями по КПТ — приёмы, которые можно применить прямо сейчас.</p>
+        <span class="more">Читать →</span>
+      </a>
+    </div>
+    <div style="text-align:center"><a class="blog-all" href="blog/">Все статьи →</a></div>
   </div>
 </section>
 
