@@ -910,8 +910,10 @@ function clearPlan(){
 /* обновляем статус из заголовка ответа chat-web */
 function applyRemaining(res){
   const xr = res.headers.get("X-Remaining");
+  const until = res.headers.get("X-Plan-Until"); // дата окончания триала/премиума
   if(xr == null) return;
-  if(xr === "premium" || xr === "trial"){ planFlag = xr; }
+  if(xr === "premium"){ planFlag = "premium"; if(until){ setPlan({premium_until: until}); return; } }
+  else if(xr === "trial"){ planFlag = "trial"; if(until){ setPlan({trial_until: until}); return; } }
   else { planFlag = null; planRemaining = xr; localStorage.setItem("ait_remaining", xr); }
   renderPlan();
 }
