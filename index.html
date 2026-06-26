@@ -1045,9 +1045,9 @@ function showPremiumOffer(){
 /* возврат с оплаты Robokassa */
 (function(){
   const q = new URLSearchParams(location.search);
-  if(q.get("paid") === "success"){
-    if(session){ planFlag = "premium"; renderPlan(); } // оптимистично, подтвердит X-Remaining
-    setTimeout(()=>{ addBubble("bot","Оплата получена! Премиум активируется в течение минуты. Если лимит ещё держится — обновите страницу."); inputEl.disabled=false; $("c-send").disabled=false; }, 500);
+  // Возврат с оплаты: Robokassa добавляет InvId к SuccessURL/FailURL (legacy: ?paid=success)
+  if(q.get("InvId") || q.get("paid") === "success"){
+    setTimeout(()=>{ addBubble("bot","Спасибо! Если оплата прошла — премиум активируется в течение минуты. Обновите страницу или напишите сообщение, и статус подтянется."); inputEl.disabled=false; $("c-send").disabled=false; }, 500);
   }
 })();
 let vkInited = false;
