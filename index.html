@@ -160,6 +160,9 @@
   .pi .t{min-width:0}
   .pi .t b{display:block; font-size:13.5px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
   .pi .t small{display:block; font-size:11.5px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .pi.locked{opacity:.6}
+  .pi.locked .pa{filter:grayscale(.65)}
+  .pi.locked .t small{color:var(--lav); font-weight:600}
 
   .msgs{flex:1; overflow-y:auto; padding:20px 17px; display:flex; flex-direction:column; gap:11px; scrollbar-width:thin}
   .msgs::-webkit-scrollbar{width:6px}
@@ -722,16 +725,35 @@ const msgsEl = $("c-msgs"), inputEl = $("c-input");
 function hexA(hex,a){ const n=parseInt(hex.slice(1),16); return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`; }
 function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
 
+/* Доступ к персонажам (как в приложении):
+   • демо (не вошёл) и триал и премиум → все открыты;
+   • free (вошёл, триал истёк, не премиум) → только Андрей Петрович (i=0). */
+function isPremiumNow(){ return planPremiumUntil > Date.now() || planFlag === "premium"; }
+function isTrialNow(){ return planTrialUntil > Date.now() || planFlag === "trial"; }
+function hasAllPersonas(){ return !session || isPremiumNow() || isTrialNow(); }
+function personaLocked(i){ return i !== 0 && !hasAllPersonas(); }
 function renderPicker(){
   const box = $("c-pgrid"); box.innerHTML = "";
   PERSONAS.forEach((p,i) => {
+    const locked = personaLocked(i);
     const c = document.createElement("button");
-    c.className = "pi" + (i===current ? " on" : "");
+    c.className = "pi" + (i===current ? " on" : "") + (locked ? " locked" : "");
     c.style.setProperty("--pc", p.color);
-    c.innerHTML = `<span class="pa">${ICONS[i]||""}</span><span class="t"><b>${p.key}</b><small>${cap(p.role)}</small></span>`;
+    c.innerHTML = `<span class="pa">${locked ? "🔒" : (ICONS[i]||"")}</span><span class="t"><b>${p.key}</b><small>${locked ? "Премиум" : cap(p.role)}</small></span>`;
     c.onclick = () => selectPersona(i);
     box.appendChild(c);
   });
+}
+function showPersonaLock(i){
+  closePicker();
+  const p = PERSONAS[i];
+  document.querySelectorAll(".limit-note").forEach(e => e.remove());
+  const n = document.createElement("div");
+  n.className = "limit-note";
+  n.innerHTML = `<p>🔒 <b>${p.key}</b> доступен в Премиуме. Оформите подписку — и откроются все психологи.</p>
+    <button class="btn" id="lock-pay">Оформить Премиум</button>`;
+  msgsEl.appendChild(n); msgsEl.scrollTop = msgsEl.scrollHeight;
+  const b = document.getElementById("lock-pay"); if(b) b.onclick = () => startPay("MONTHLY");
 }
 function openPicker(){ renderPicker(); $("c-picker").hidden = false; }
 function closePicker(){ $("c-picker").hidden = true; }
@@ -762,6 +784,7 @@ function renderHistory(){
   msgsEl.scrollTop = msgsEl.scrollHeight;
 }
 function selectPersona(i){
+  if(personaLocked(i)){ showPersonaLock(i); return; } // free после триала → только Андрей
   current = i; history = loadHistory(i);
   const p = PERSONAS[i];
   $("c-ava").innerHTML = ICONS[i] || "";
