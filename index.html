@@ -633,9 +633,14 @@
 <script>
 /* ====================== КОНФИГ ====================== */
 const RUSTORE_URL = "https://www.rustore.ru/catalog/app/com.example.aitherapist";
-const CHAT_ENDPOINT = "https://efniwpfjdfktfczgdpxm.functions.supabase.co/chat-web";
-const AUTH_ENDPOINT = "https://efniwpfjdfktfczgdpxm.functions.supabase.co/vk-auth";
-const PAY_ENDPOINT = "https://efniwpfjdfktfczgdpxm.functions.supabase.co/pay-web";
+/* Бэкенд: сначала прямой Supabase (со стримингом), при сетевой недоступности
+   (в РФ доступ к *.supabase.co нестабилен) — через Яндекс-прокси */
+const SUPA_BASE = "https://efniwpfjdfktfczgdpxm.functions.supabase.co";
+const CHAT_DIRECT = SUPA_BASE + "/chat-web";
+const AUTH_DIRECT = SUPA_BASE + "/vk-auth";
+const PAY_DIRECT  = SUPA_BASE + "/pay-web";
+const YANDEX_PROXY = "https://functions.yandexcloud.net/d4enpb1jd6ok1i1p6ffd";
+let preferProxy = false; // станет true, если прямой доступ к Supabase не прошёл (на сессию)
 const DEMO_LIMIT = 5;
 /* VK ID */
 const VK_APP_ID = 54652586;
@@ -806,6 +811,37 @@ function showLimit(){
 }
 
 /* ====================== ОТПРАВКА + СТРИМ ====================== */
+/* Запрос к бэкенду: прямой Supabase → при сетевой ошибке/таймауте уходим на
+   Яндекс-прокси. HTTP-ошибки (4xx/5xx) — это валидный ответ сервера, прокси
+   не нужен. Если прямой раз не прошёл — на сессию помним и сразу идём прокси. */
+async function apiFetch(directUrl, bodyStr, timeoutMs){
+  timeoutMs = timeoutMs || 6000;
+  if(!preferProxy){
+    const ac = new AbortController();
+    const t = setTimeout(()=>ac.abort(), timeoutMs);
+    try{
+      const res = await fetch(directUrl, { method:"POST", headers:{ "Content-Type":"application/json" }, body: bodyStr, signal: ac.signal });
+      clearTimeout(t);
+      return { res, viaProxy:false };
+    }catch(_){ clearTimeout(t); preferProxy = true; } // сеть/таймаут/блокировка → прокси
+  }
+  const res = await fetch(YANDEX_PROXY + "?t=" + encodeURIComponent(directUrl), {
+    method:"POST", headers:{ "Content-Type":"application/json" }, body: bodyStr
+  });
+  return { res, viaProxy:true };
+}
+/* Печать ответа по символам — когда ответ пришёл целиком (через прокси, без SSE) */
+async function fakeStream(text){
+  const b = addBubble("bot","");
+  if(reduceMotion){ b.textContent = text; return b; }
+  let i = 0;
+  while(i < text.length){
+    i += 3; b.textContent = text.slice(0, i);
+    msgsEl.scrollTop = msgsEl.scrollHeight;
+    await new Promise(r => setTimeout(r, 24));
+  }
+  b.textContent = text; return b;
+}
 async function send(){
   const text = inputEl.value.trim();
   if(!text || busy) return;
@@ -820,10 +856,8 @@ async function send(){
   let acc = "", bubble = null;
 
   try{
-    const res = await fetch(CHAT_ENDPOINT, {
-      method:"POST", headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({ persona:p.key, stream:true, messages, session: session || undefined })
-    });
+    const reqBody = JSON.stringify({ persona:p.key, stream:true, messages, session: session || undefined });
+    const { res, viaProxy } = await apiFetch(CHAT_DIRECT, reqBody);
     if(res.status === 429){ if(typing.parentNode) typing.remove(); showPremiumOffer(); return; }
     if(res.status === 401){ // сессия протухла/учётка удалена → войти заново
       if(typing.parentNode) typing.remove();
@@ -833,31 +867,42 @@ async function send(){
     }
     if(!res.ok) throw new Error("HTTP "+res.status);
     applyRemaining(res);
-    const reader = res.body.getReader(); const dec = new TextDecoder(); let buf = "";
-    while(true){
-      const {value, done} = await reader.read(); if(done) break;
-      buf += dec.decode(value, {stream:true});
-      const parts = buf.split("\n\n"); buf = parts.pop();
-      for(const part of parts){
-        const line = part.split("\n").find(l => l.startsWith("data:"));
-        if(!line) continue;
-        const data = line.slice(5).trim();
-        if(data === "[DONE]") continue;
-        try{
-          const j = JSON.parse(data);
-          const delta = j.choices?.[0]?.delta?.content || "";
-          if(delta){
-            if(!bubble){ typing.remove(); bubble = addBubble("bot",""); }
-            acc += delta; bubble.textContent = acc.replace(/<END>\s*$/,"").trimEnd();
-            msgsEl.scrollTop = msgsEl.scrollHeight;
-          }
-        }catch(_){}
+    if(viaProxy){
+      // прокси отдаёт ответ целиком (DeepSeek JSON) — печатаем по символам
+      const j = await res.json().catch(()=>null);
+      let txt = j && j.choices && j.choices[0] && j.choices[0].message ? (j.choices[0].message.content || "") : "";
+      txt = txt.replace(/<END>\s*$/,"").trim();
+      if(typing.parentNode) typing.remove();
+      if(!txt){ addBubble("bot","Хм, не получилось ответить. Попробуйте ещё раз."); }
+      else { await fakeStream(txt); history.push({role:"assistant", content:txt}); saveHistory(); }
+    } else {
+      // прямой Supabase — живой SSE-стрим
+      const reader = res.body.getReader(); const dec = new TextDecoder(); let buf = "";
+      while(true){
+        const {value, done} = await reader.read(); if(done) break;
+        buf += dec.decode(value, {stream:true});
+        const parts = buf.split("\n\n"); buf = parts.pop();
+        for(const part of parts){
+          const line = part.split("\n").find(l => l.startsWith("data:"));
+          if(!line) continue;
+          const data = line.slice(5).trim();
+          if(data === "[DONE]") continue;
+          try{
+            const j = JSON.parse(data);
+            const delta = j.choices?.[0]?.delta?.content || "";
+            if(delta){
+              if(!bubble){ typing.remove(); bubble = addBubble("bot",""); }
+              acc += delta; bubble.textContent = acc.replace(/<END>\s*$/,"").trimEnd();
+              msgsEl.scrollTop = msgsEl.scrollHeight;
+            }
+          }catch(_){}
+        }
       }
+      if(typing.parentNode) typing.remove();
+      acc = acc.replace(/<END>\s*$/,"").trim();
+      if(!acc){ if(!bubble) addBubble("bot","Хм, не получилось ответить. Попробуйте ещё раз."); }
+      else { if(!bubble) addBubble("bot",acc); else bubble.textContent = acc; history.push({role:"assistant", content:acc}); saveHistory(); }
     }
-    if(typing.parentNode) typing.remove();
-    acc = acc.replace(/<END>\s*$/,"").trim();
-    if(!acc){ if(!bubble) addBubble("bot","Хм, не получилось ответить. Попробуйте ещё раз."); }
-    else { if(!bubble) addBubble("bot",acc); else bubble.textContent = acc; history.push({role:"assistant", content:acc}); saveHistory(); }
   }catch(e){
     if(typing.parentNode) typing.remove();
     addBubble("bot","Связь прервалась. Проверьте интернет и попробуйте снова.");
@@ -950,10 +995,7 @@ async function vkidOnSuccess(data){
   try{
     const token = data && (data.access_token || data.accessToken || (data.token && data.token.access_token));
     if(!token){ console.warn("VK: нет access_token", data); addBubble("bot","Не удалось получить токен VK."); return; }
-    const r = await fetch(AUTH_ENDPOINT, {
-      method:"POST", headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({ access_token: token, user_id: data.user_id })
-    });
+    const { res:r } = await apiFetch(AUTH_DIRECT, JSON.stringify({ access_token: token, user_id: data.user_id }), 8000);
     const d = await r.json().catch(()=>null);
     if(d && d.session){ session = d.session; localStorage.setItem("ait_session", session); setPlan(d); onLoggedIn(d.name); }
     else { addBubble("bot","Не удалось подтвердить вход через VK. Попробуйте ещё раз."); }
@@ -964,8 +1006,7 @@ function vkidOnError(e){ console.warn("VK error", e); }
 async function startPay(tariff){
   if(!session){ return; }
   try{
-    const r = await fetch(PAY_ENDPOINT, { method:"POST", headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({ session, tariff: tariff || "MONTHLY" }) });
+    const { res:r } = await apiFetch(PAY_DIRECT, JSON.stringify({ session, tariff: tariff || "MONTHLY" }), 8000);
     const d = await r.json().catch(()=>null);
     if(d && d.url){ window.location.href = d.url; }
     else { addBubble("bot","Не удалось создать оплату. Попробуйте позже."); }
