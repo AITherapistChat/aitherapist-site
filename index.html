@@ -643,7 +643,7 @@ const YANDEX_PROXY = "https://functions.yandexcloud.net/d4enpb1jd6ok1i1p6ffd";
 let preferProxy = false; // станет true, если прямой доступ к Supabase не прошёл (на сессию)
 const FORCE_PROXY = new URLSearchParams(location.search).get("proxy") === "1"; // ?proxy=1 — тест прокси
 if(FORCE_PROXY) preferProxy = true;
-const DEMO_LIMIT = 5;
+const DEMO_LIMIT = 3;
 /* VK ID */
 const VK_APP_ID = 54652586;
 const VK_REDIRECT = "https://aitherapist.ru/";
