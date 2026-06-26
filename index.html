@@ -1017,7 +1017,13 @@ function applyRemaining(res){
   if(xr == null) return;
   if(xr === "premium"){ planFlag = "premium"; if(until){ setPlan({premium_until: until}); return; } }
   else if(xr === "trial"){ planFlag = "trial"; if(until){ setPlan({trial_until: until}); return; } }
-  else { planFlag = null; planRemaining = xr; localStorage.setItem("ait_remaining", xr); }
+  else {
+    // сервер вернул число → юзер free (НЕ триал/премиум). Чистим устаревшие даты,
+    // иначе старый trial_until из localStorage держал бы чип/разблокировку персон.
+    planFlag = null; planRemaining = xr; localStorage.setItem("ait_remaining", xr);
+    planPremiumUntil = 0; planTrialUntil = 0;
+    localStorage.setItem("ait_premium_until","0"); localStorage.setItem("ait_trial_until","0");
+  }
   renderPlan();
 }
 function updateAuthUI(){
