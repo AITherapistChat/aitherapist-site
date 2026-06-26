@@ -913,7 +913,9 @@ function mountVk(container){
   }
   try{
     const oneTap = new VKID.OneTap();
-    oneTap.render({ container, scheme:"dark", lang:0, styles:{ borderRadius:12 } })
+    /* доп. провайдер VK ID: Mail.ru — токен единый, бэкенд тот же */
+    const oauthList = (VKID.OAuthName && VKID.OAuthName.MAIL ? [VKID.OAuthName.MAIL] : undefined);
+    oneTap.render({ container, scheme:"dark", lang:0, oauthList, styles:{ borderRadius:12 } })
       .on(VKID.WidgetEvents.ERROR, vkidOnError)
       .on(VKID.OneTapInternalEvents.LOGIN_SUCCESS, function(payload){
         VKID.Auth.exchangeCode(payload.code, payload.device_id).then(vkidOnSuccess).catch(vkidOnError);
