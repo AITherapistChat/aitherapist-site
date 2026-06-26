@@ -1086,6 +1086,7 @@ function showPremiumOffer(){
   const q = new URLSearchParams(location.search);
   // Возврат с оплаты: Robokassa добавляет InvId к SuccessURL/FailURL (legacy: ?paid=success)
   if(q.get("InvId") || q.get("paid") === "success"){
+    try{ history.replaceState({}, "", location.pathname); }catch(_){} // убираем параметры Robokassa из адресной строки
     inputEl.disabled=false; $("c-send").disabled=false;
     addBubble("bot","Спасибо за оплату! Проверяю активацию премиума…");
     let tries = 0;
