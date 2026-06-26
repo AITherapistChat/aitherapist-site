@@ -179,6 +179,33 @@
   .limit-note{align-self:center; text-align:center; background:var(--bg2); border:1px solid var(--line-strong); border-radius:16px; padding:18px; max-width:92%}
   .limit-note p{color:var(--muted); font-size:14px; margin-bottom:13px}
 
+  /* ===== экран Премиума ===== */
+  .pm-overlay{position:fixed; inset:0; z-index:200; background:rgba(44,51,46,.55); backdrop-filter:blur(5px);
+    display:flex; align-items:center; justify-content:center; padding:16px; animation:rise .2s ease}
+  .pm-overlay[hidden]{display:none}
+  .pm-card{position:relative; width:100%; max-width:430px; max-height:92vh; overflow-y:auto;
+    background:var(--surface); border:1px solid var(--line-strong); border-radius:var(--r-lg); box-shadow:var(--sh); padding:26px 24px 22px}
+  .pm-close{position:absolute; top:13px; right:13px; width:34px; height:34px; border:none; border-radius:10px;
+    background:transparent; color:var(--muted); font-size:17px; cursor:pointer; transition:.15s}
+  .pm-close:hover{background:rgba(120,150,180,.12); color:var(--text)}
+  .pm-card h3{font-size:22px; letter-spacing:-.4px}
+  .pm-lead{color:var(--muted); font-size:14px; margin-top:3px}
+  .pm-benefits{list-style:none; margin:18px 0 4px; display:flex; flex-direction:column; gap:11px}
+  .pm-benefits li{display:flex; gap:10px; align-items:flex-start; font-size:14.5px; line-height:1.45}
+  .pm-tariffs{display:flex; flex-direction:column; gap:10px; margin:18px 0 16px}
+  .pm-tariff{display:flex; align-items:center; justify-content:space-between; gap:10px; width:100%;
+    border:1.6px solid var(--line-strong); border-radius:14px; padding:12px 15px; cursor:pointer; background:var(--surface);
+    font:inherit; color:var(--text); text-align:left; transition:border-color .15s, background .15s}
+  .pm-tariff:hover{border-color:var(--teal)}
+  .pm-tariff.on{border-color:var(--teal); background:rgba(94,126,90,.08)}
+  .pm-tariff .pm-t-l b{display:block; font-size:15px; font-weight:700}
+  .pm-tariff .pm-t-l small, .pm-tariff .pm-t-r small{font-size:11.5px; color:var(--muted)}
+  .pm-tariff .pm-t-r{display:flex; align-items:center; gap:9px}
+  .pm-tariff .pm-t-r b{font-size:16px; font-weight:800}
+  .pm-save{background:var(--teal); color:#fff; font-weight:700; padding:2px 7px; border-radius:7px; font-size:11px!important}
+  .pm-legal{font-size:11px; color:var(--faint); text-align:center; margin-top:11px; line-height:1.5}
+  .pm-legal a{color:var(--teal-deep)}
+
   .composer{display:flex; gap:10px; padding:13px 15px; border-top:1px solid var(--line)}
   .composer textarea{flex:1; resize:none; background:var(--bg); border:1px solid var(--line-strong); color:var(--text);
     border-radius:13px; padding:12px 14px; font:inherit; font-size:15px; max-height:100px; line-height:1.4}
@@ -753,7 +780,7 @@ function showPersonaLock(i){
   n.innerHTML = `<p>🔒 <b>${p.key}</b> доступен в Премиуме. Оформите подписку — и откроются все психологи.</p>
     <button class="btn" id="lock-pay">Оформить Премиум</button>`;
   msgsEl.appendChild(n); msgsEl.scrollTop = msgsEl.scrollHeight;
-  const b = document.getElementById("lock-pay"); if(b) b.onclick = () => startPay("MONTHLY");
+  const b = document.getElementById("lock-pay"); if(b) b.onclick = showPremiumModal;
 }
 function openPicker(){ renderPicker(); $("c-picker").hidden = false; }
 function closePicker(){ $("c-picker").hidden = true; }
@@ -1061,6 +1088,59 @@ async function vkidOnSuccess(data){
 }
 function vkidOnError(e){ console.warn("VK error", e); }
 /* ====================== ОПЛАТА (Robokassa, для вошедших) ====================== */
+/* ----- экран Премиума: преимущества + выбор тарифа ----- */
+let PLANS = null;
+async function loadPlans(){
+  if(PLANS) return PLANS;
+  try{
+    const { res } = await apiFetch(CHAT_DIRECT, JSON.stringify({ plans:true }), 5000);
+    const d = await res.json().catch(()=>null);
+    if(d && Array.isArray(d.plans) && d.plans.length) PLANS = d.plans;
+  }catch(_){}
+  if(!PLANS) PLANS = [{code:"MONTHLY",days:30,price:249},{code:"QUARTERLY",days:90,price:599},{code:"YEARLY",days:365,price:1999}];
+  return PLANS;
+}
+function planLabel(d){ return d>=365 ? "1 год" : d>=90 ? "3 месяца" : "1 месяц"; }
+async function showPremiumModal(){
+  const plans = await loadPlans();
+  const monthly = (plans.find(p=>p.days===30)||{}).price || plans[0].price;
+  let chosen = plans[0].code;
+  let ov = document.getElementById("pm-overlay");
+  if(!ov){ ov = document.createElement("div"); ov.id="pm-overlay"; ov.className="pm-overlay"; document.body.appendChild(ov); }
+  const priceOf = c => (plans.find(p=>p.code===c)||plans[0]).price;
+  const tariffs = plans.map(p=>{
+    const perMonth = Math.round(p.price/(p.days/30));
+    const save = p.days>30 ? Math.round((1 - p.price/(monthly*(p.days/30)))*100) : 0;
+    return `<button class="pm-tariff${p.code===chosen?' on':''}" data-code="${p.code}">
+      <span class="pm-t-l"><b>${planLabel(p.days)}</b><small>${perMonth} ₽/мес</small></span>
+      <span class="pm-t-r">${save>0?`<small class="pm-save">−${save}%</small>`:''}<b>${p.price} ₽</b></span>
+    </button>`;
+  }).join("");
+  ov.innerHTML = `<div class="pm-card">
+    <button class="pm-close" id="pm-close" aria-label="Закрыть">✕</button>
+    <h3>Премиум</h3>
+    <p class="pm-lead">Полный доступ к AI Therapist</p>
+    <ul class="pm-benefits">
+      <li>♾️<span><b>Безлимитные сообщения</b> — без суточного лимита</span></li>
+      <li>🧑‍⚕️<span><b>Все 8 психологов</b> на выбор, а не только один</span></li>
+      <li>🧠<span><b>Глубже память диалога</b> — помнит больше предыдущих сообщений</span></li>
+      <li>💛<span>Поддержка проекта и доступ к новым возможностям</span></li>
+    </ul>
+    <div class="pm-tariffs">${tariffs}</div>
+    <button class="btn" id="pm-pay">Оформить за <span id="pm-price">${priceOf(chosen)}</span> ₽</button>
+    <p class="pm-legal">Разовая оплата, без автопродления. Оформляя, вы принимаете
+      <a href="oferta.html" target="_blank" rel="noopener">оферту</a> и
+      <a href="privacy.html" target="_blank" rel="noopener">политику конфиденциальности</a>.</p>
+  </div>`;
+  ov.hidden = false;
+  const close = ()=>{ ov.hidden = true; };
+  ov.onclick = e => { if(e.target===ov) close(); };
+  document.getElementById("pm-close").onclick = close;
+  ov.querySelectorAll(".pm-tariff").forEach(b=>{
+    b.onclick = ()=>{ chosen=b.dataset.code; ov.querySelectorAll(".pm-tariff").forEach(x=>x.classList.toggle("on",x===b)); document.getElementById("pm-price").textContent = priceOf(chosen); };
+  });
+  document.getElementById("pm-pay").onclick = ()=>{ close(); addBubble("bot","Открываю оплату…"); startPay(chosen); };
+}
 async function startPay(tariff){
   if(!session){ return; }
   try{
@@ -1075,11 +1155,10 @@ function showPremiumOffer(){
   const n = document.createElement("div");
   n.className = "limit-note";
   n.innerHTML = `<p>На сегодня бесплатный лимит исчерпан. Оформите Премиум — и общайтесь без ограничений.</p>
-    <button class="btn" id="pay-btn">Оформить Премиум</button>
-    <p style="font-size:11.5px;margin-top:10px;margin-bottom:0">Оформляя оплату, вы принимаете <a href="oferta.html" target="_blank" rel="noopener" style="color:var(--teal-deep)">оферту</a> и <a href="privacy.html" target="_blank" rel="noopener" style="color:var(--teal-deep)">политику конфиденциальности</a>.</p>`;
+    <button class="btn" id="pay-btn">Оформить Премиум</button>`;
   msgsEl.appendChild(n); msgsEl.scrollTop = msgsEl.scrollHeight;
   inputEl.disabled = true; $("c-send").disabled = true;
-  const pb = document.getElementById("pay-btn"); if(pb) pb.onclick = () => startPay("MONTHLY");
+  const pb = document.getElementById("pay-btn"); if(pb) pb.onclick = showPremiumModal;
 }
 /* возврат с оплаты Robokassa */
 (function(){
