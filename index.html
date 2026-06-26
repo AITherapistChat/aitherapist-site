@@ -1126,9 +1126,10 @@ if (!reduceMotion){
 }
 </script>
 
-<!-- Yandex.Metrika — вставьте номер счётчика вместо {{METRIKA_ID}} -->
+<!-- Yandex.Metrika ОТКЛЮЧЕНА: нет номера счётчика. Чтобы включить —
+     замени NNNNNNNN на реальный ID и раскомментируй блок ниже.
 <script type="text/javascript">
-   window.__metrikaId = {{METRIKA_ID}};
+   window.__metrikaId = NNNNNNNN;
    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
    m[i].l=1*new Date();
    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
@@ -1136,7 +1137,8 @@ if (!reduceMotion){
    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
    ym(window.__metrikaId, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true });
 </script>
-<noscript><div><img src="https://mc.yandex.ru/watch/{{METRIKA_ID}}" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<noscript><div><img src="https://mc.yandex.ru/watch/NNNNNNNN" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+-->
 
 </body>
 </html>
