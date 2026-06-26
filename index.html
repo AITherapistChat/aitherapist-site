@@ -641,6 +641,8 @@ const AUTH_DIRECT = SUPA_BASE + "/vk-auth";
 const PAY_DIRECT  = SUPA_BASE + "/pay-web";
 const YANDEX_PROXY = "https://functions.yandexcloud.net/d4enpb1jd6ok1i1p6ffd";
 let preferProxy = false; // станет true, если прямой доступ к Supabase не прошёл (на сессию)
+const FORCE_PROXY = new URLSearchParams(location.search).get("proxy") === "1"; // ?proxy=1 — тест прокси
+if(FORCE_PROXY) preferProxy = true;
 const DEMO_LIMIT = 5;
 /* VK ID */
 const VK_APP_ID = 54652586;
@@ -822,12 +824,13 @@ async function apiFetch(directUrl, bodyStr, timeoutMs){
     try{
       const res = await fetch(directUrl, { method:"POST", headers:{ "Content-Type":"application/json" }, body: bodyStr, signal: ac.signal });
       clearTimeout(t);
+      console.log("%c[net] прямой Supabase ✓","color:#557A51", directUrl);
       return { res, viaProxy:false };
-    }catch(_){ clearTimeout(t); preferProxy = true; } // сеть/таймаут/блокировка → прокси
+    }catch(_){ clearTimeout(t); preferProxy = true; console.warn("[net] прямой не прошёл → переключаюсь на Яндекс-прокси"); }
   }
-  const res = await fetch(YANDEX_PROXY + "?t=" + encodeURIComponent(directUrl), {
-    method:"POST", headers:{ "Content-Type":"application/json" }, body: bodyStr
-  });
+  const purl = YANDEX_PROXY + "?t=" + encodeURIComponent(directUrl);
+  const res = await fetch(purl, { method:"POST", headers:{ "Content-Type":"application/json" }, body: bodyStr });
+  console.log("%c[net] через Яндекс-прокси ✓","color:#c2902f", purl);
   return { res, viaProxy:true };
 }
 /* Печать ответа по символам — когда ответ пришёл целиком (через прокси, без SSE) */
@@ -1059,6 +1062,7 @@ function mountVk(container){
 
 wireShowcase();
 selectPersona(0);
+if(FORCE_PROXY){ addBubble("bot","🔧 Тестовый режим: все запросы идут через резервный Яндекс-прокси (открой консоль F12 — увидишь «[net] через Яндекс-прокси»)."); }
 
 /* scroll-reveal — прогрессивно и с уважением к reduced-motion */
 (function(){
