@@ -633,6 +633,8 @@ const DEMO_LIMIT = 5;
 /* VK ID */
 const VK_APP_ID = 54652586;
 const VK_REDIRECT = "https://aitherapist.ru/";
+/* VK ID SDK экспортирует глобал window.VKIDSDK — пробрасываем как VKID */
+if(window.VKIDSDK && !window.VKID){ window.VKID = window.VKIDSDK; }
 let session = localStorage.getItem("ait_session") || null;
 let userName = localStorage.getItem("ait_name") || null;
 let demoCount = parseInt(localStorage.getItem("ait_demo") || "0", 10) || 0; // глобальный счётчик демо (на все персоны)
@@ -895,6 +897,7 @@ function showPremiumOffer(){
 })();
 let vkInited = false;
 function vkInit(){
+  if(!window.VKID && window.VKIDSDK){ window.VKID = window.VKIDSDK; }
   if(vkInited || !window.VKID) return;
   try{
     VKID.Config.init({ app: VK_APP_ID, redirectUrl: VK_REDIRECT, responseMode: VKID.ConfigResponseMode.Callback });
