@@ -129,17 +129,24 @@
     flex:0 0 auto; color:#fff; background:var(--teal); box-shadow:0 7px 16px -7px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.32)}
   .ava svg, .pa svg{width:54%; height:54%}
   .chat-id{flex:1; min-width:0}
-  .chat-id .nm{font-weight:700; font-size:15.5px; letter-spacing:-.2px}
-  .chat-id .role{font-size:12.5px; color:var(--muted); display:flex; align-items:center; gap:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .chat-id .nm{font-weight:700; font-size:15.5px; letter-spacing:-.2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .chat-id .role{font-size:12.5px; color:var(--muted); display:flex; align-items:center; gap:6px; min-width:0}
   .chat-id .role .on{width:6px;height:6px;border-radius:50%; background:var(--teal); flex:0 0 auto}
+  .chat-id .role #c-role{white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0}
   .planbar{display:flex; align-items:center; justify-content:center; gap:7px; padding:8px 14px;
     font-size:12.5px; font-weight:600; color:var(--muted); background:var(--bg2); border-bottom:1px solid var(--line)}
   .planbar.trial{color:var(--teal-deep); background:rgba(85,122,81,.10)}
   .planbar.premium{color:#9a6a1f; background:rgba(201,154,110,.18)}
   .planbar b{font-weight:700; font-variant-numeric:tabular-nums}
-  .switch{font-size:13px; color:var(--muted); background:transparent; border:1px solid var(--line-strong); padding:8px 13px;
+  .switch{flex:0 0 auto; font-size:13px; color:var(--muted); background:transparent; border:1px solid var(--line-strong); padding:8px 13px;
     border-radius:11px; cursor:pointer; white-space:nowrap; transition:.16s; display:flex; align-items:center; gap:6px}
   .switch:hover{border-color:var(--teal); color:var(--text)}
+  @media (max-width:430px){
+    .chat-top{gap:10px; padding:13px 14px}
+    .switch{padding:7px 10px; gap:4px}
+    .switch .swl{display:none}
+    .switch svg{width:18px; height:18px}
+  }
 
   /* persona picker — overlay panel, no horizontal scroll */
   .chat-body{position:relative; flex:1; min-height:0; display:flex}
@@ -502,7 +509,7 @@
           <div class="nm" id="c-name">Андрей Петрович</div>
           <div class="role"><span class="on"></span><span id="c-role">классический психолог · онлайн</span></div>
         </div>
-        <button class="switch" id="c-switch">Сменить
+        <button class="switch" id="c-switch" aria-label="Сменить психолога"><span class="swl">Сменить</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
       </div>
