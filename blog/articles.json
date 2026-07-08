@@ -1,0 +1,68 @@
+{
+ "articles": [
+  {
+   "title": "Как повысить самооценку: 8 шагов, которые реально работают",
+   "description": "Как повысить самооценку: что это, почему она занижается, признаки низкой самооценки, быстрый тест и 8 рабочих шагов, чтобы поднять уверенность в себе. По делу, с примерами.",
+   "image": "https://aitherapist.ru/assets/blog/samoocenka-cover.webp",
+   "url": "https://aitherapist.ru/blog/kak-povysit-samootsenku.html",
+   "date": "2026-07-04",
+   "minutes": 14
+  },
+  {
+   "title": "Синдром самозванца: 7 способов перестать чувствовать себя обманщиком",
+   "description": "Синдром самозванца: что это, почему возникает, как проявляется, 5 типов самозванца и 7 способов перестать обесценивать свои успехи. Понятно, по делу, с примерами.",
+   "image": "https://aitherapist.ru/assets/blog/impostor-cover.webp",
+   "url": "https://aitherapist.ru/blog/sindrom-samozvantsa.html",
+   "date": "2026-07-03",
+   "minutes": 12
+  },
+  {
+   "title": "Стресс на работе: 8 способов справиться и не выгореть",
+   "description": "Стресс на работе: почему он возникает, как понять, что он перешёл черту, 8 способов справиться в моменте, что делать в долгую и когда нужен специалист. Просто и по делу.",
+   "image": "https://aitherapist.ru/assets/blog/stress-cover.webp",
+   "url": "https://aitherapist.ru/blog/stress-na-rabote.html",
+   "date": "2026-07-02",
+   "minutes": 8
+  },
+  {
+   "title": "Навязчивые мысли: как избавиться, почему появляются и что делать",
+   "description": "Навязчивые мысли: что это, какие бывают, почему появляются, чем отличаются от ОКР и как от них избавиться — 7 рабочих техник. Как остановить мысли в голове и когда нужен специалист.",
+   "image": "https://aitherapist.ru/assets/blog/navyazchivye-mysli-cover.webp",
+   "url": "https://aitherapist.ru/blog/navyazchivye-mysli.html",
+   "date": "2026-07-01",
+   "minutes": 10
+  },
+  {
+   "title": "Эмоциональное выгорание: 5 стадий, признаки и как восстановиться",
+   "description": "Эмоциональное выгорание: признаки и 5 стадий, чем отличается от усталости и депрессии и 7 шагов к восстановлению сил. Как выйти из выгорания и когда нужен специалист.",
+   "image": "https://aitherapist.ru/assets/blog/burnout-cover.webp",
+   "url": "https://aitherapist.ru/blog/emotsionalnoe-vygoranie.html",
+   "date": "2026-06-28",
+   "minutes": 7
+  },
+  {
+   "title": "Бессонница при тревоге: почему не спится и что делать",
+   "description": "Не можете уснуть из-за тревоги? Почему тревога мешает спать, что сделать прямо сейчас, 8 правил гигиены сна, метод КПТ-бессонницы и когда обращаться к врачу.",
+   "image": "https://aitherapist.ru/assets/blog/sleep-cover.webp",
+   "url": "https://aitherapist.ru/blog/bessonnitsa-pri-trevoge.html",
+   "date": "2026-06-27",
+   "minutes": 9
+  },
+  {
+   "title": "Как справиться с тревогой: 8 техник, которые реально помогают",
+   "description": "Как справиться с тревогой: что это такое, 8 техник самопомощи (дыхание, заземление 5-4-3-2-1, КПТ), типичные ошибки и когда обратиться к специалисту. Понятно и по делу.",
+   "image": "https://aitherapist.ru/assets/blog/anxiety-cover.webp",
+   "url": "https://aitherapist.ru/blog/kak-spravitsya-s-trevogoy.html",
+   "date": "2026-06-26",
+   "minutes": 5
+  },
+  {
+   "title": "Паническая атака: что делать в момент приступа — пошаговый алгоритм",
+   "description": "Что делать при панической атаке: пошаговый алгоритм, симптомы, как отличить от инфаркта, что НЕ стоит делать и когда обратиться к специалисту. Паника не опасна и проходит.",
+   "image": "https://aitherapist.ru/assets/blog/panic-cover.webp",
+   "url": "https://aitherapist.ru/blog/panicheskaya-ataka-chto-delat.html",
+   "date": "2026-06-26",
+   "minutes": 4
+  }
+ ]
+}
