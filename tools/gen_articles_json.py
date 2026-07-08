@@ -14,9 +14,24 @@ import re
 import sys
 from pathlib import Path
 
+from PIL import Image
+
 ROOT = Path(__file__).resolve().parent.parent
 BLOG = ROOT / "blog"
 OUT = BLOG / "articles.json"
+SITE_PREFIX = "https://aitherapist.ru/"
+
+
+def image_size(url: str) -> tuple[int, int] | None:
+    """Размеры обложки из локального файла (приложение сохраняет пропорции)."""
+    if not url.startswith(SITE_PREFIX):
+        return None
+    path = ROOT / url[len(SITE_PREFIX):]
+    try:
+        with Image.open(path) as im:
+            return im.size
+    except Exception:
+        return None
 
 
 def extract(html: str) -> dict | None:
@@ -34,7 +49,7 @@ def extract(html: str) -> dict | None:
     # Оценка времени чтения: слова видимого текста / 180 слов-в-минуту
     text = re.sub(r"<script.*?</script>|<style.*?</style>", " ", html, flags=re.S)
     words = len(re.findall(r"[А-Яа-яЁёA-Za-z]{3,}", re.sub(r"<[^>]+>", " ", text)))
-    return {
+    item = {
         "title": title,
         "description": desc or "",
         "image": image or "",
@@ -42,6 +57,11 @@ def extract(html: str) -> dict | None:
         "date": date or "",
         "minutes": max(2, round(words / 180)),
     }
+    if image:
+        size = image_size(image)
+        if size:
+            item["w"], item["h"] = size
+    return item
 
 
 def main() -> int:

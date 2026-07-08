@@ -6,7 +6,9 @@
    "image": "https://aitherapist.ru/assets/blog/samoocenka-cover.webp",
    "url": "https://aitherapist.ru/blog/kak-povysit-samootsenku.html",
    "date": "2026-07-04",
-   "minutes": 14
+   "minutes": 14,
+   "w": 860,
+   "h": 518
   },
   {
    "title": "Синдром самозванца: 7 способов перестать чувствовать себя обманщиком",
@@ -14,7 +16,9 @@
    "image": "https://aitherapist.ru/assets/blog/impostor-cover.webp",
    "url": "https://aitherapist.ru/blog/sindrom-samozvantsa.html",
    "date": "2026-07-03",
-   "minutes": 12
+   "minutes": 12,
+   "w": 799,
+   "h": 451
   },
   {
    "title": "Стресс на работе: 8 способов справиться и не выгореть",
@@ -22,7 +26,9 @@
    "image": "https://aitherapist.ru/assets/blog/stress-cover.webp",
    "url": "https://aitherapist.ru/blog/stress-na-rabote.html",
    "date": "2026-07-02",
-   "minutes": 8
+   "minutes": 8,
+   "w": 960,
+   "h": 640
   },
   {
    "title": "Навязчивые мысли: как избавиться, почему появляются и что делать",
@@ -30,7 +36,9 @@
    "image": "https://aitherapist.ru/assets/blog/navyazchivye-mysli-cover.webp",
    "url": "https://aitherapist.ru/blog/navyazchivye-mysli.html",
    "date": "2026-07-01",
-   "minutes": 10
+   "minutes": 10,
+   "w": 900,
+   "h": 600
   },
   {
    "title": "Эмоциональное выгорание: 5 стадий, признаки и как восстановиться",
@@ -38,7 +46,9 @@
    "image": "https://aitherapist.ru/assets/blog/burnout-cover.webp",
    "url": "https://aitherapist.ru/blog/emotsionalnoe-vygoranie.html",
    "date": "2026-06-28",
-   "minutes": 7
+   "minutes": 7,
+   "w": 645,
+   "h": 366
   },
   {
    "title": "Бессонница при тревоге: почему не спится и что делать",
@@ -46,7 +56,9 @@
    "image": "https://aitherapist.ru/assets/blog/sleep-cover.webp",
    "url": "https://aitherapist.ru/blog/bessonnitsa-pri-trevoge.html",
    "date": "2026-06-27",
-   "minutes": 9
+   "minutes": 9,
+   "w": 820,
+   "h": 406
   },
   {
    "title": "Как справиться с тревогой: 8 техник, которые реально помогают",
@@ -54,7 +66,9 @@
    "image": "https://aitherapist.ru/assets/blog/anxiety-cover.webp",
    "url": "https://aitherapist.ru/blog/kak-spravitsya-s-trevogoy.html",
    "date": "2026-06-26",
-   "minutes": 5
+   "minutes": 5,
+   "w": 820,
+   "h": 399
   },
   {
    "title": "Паническая атака: что делать в момент приступа — пошаговый алгоритм",
@@ -62,7 +76,9 @@
    "image": "https://aitherapist.ru/assets/blog/panic-cover.webp",
    "url": "https://aitherapist.ru/blog/panicheskaya-ataka-chto-delat.html",
    "date": "2026-06-26",
-   "minutes": 4
+   "minutes": 4,
+   "w": 820,
+   "h": 348
   }
  ]
 }
