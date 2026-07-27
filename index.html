@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Therapist — ИИ-психолог, чат с поддержкой 24/7</title>
-<meta name="description" content="AI Therapist — ваш личный ИИ-психолог. Анонимный чат с психологом онлайн 24/7: понимает, поддерживает, помогает при тревоге и стрессе. 8 психологов на выбор, доказательные методы (КПТ, ACT, Mindfulness). Попробуйте бесплатно прямо на сайте.">
+<meta name="description" content="ИИ-психолог онлайн: анонимный чат 24/7 при тревоге, стрессе и выгорании. 8 психологов на выбор, методы КПТ и ACT. Попробуйте бесплатно на сайте.">
 <meta name="keywords" content="ИИ психолог, чат с психологом, психолог онлайн, анонимный психолог, поддержка при тревоге, AI Therapist, ии психотерапевт, психологическая помощь онлайн, чат бот психолог">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <meta name="yandex-verification" content="ee90862e38075369" />
@@ -370,6 +370,19 @@
   .faq details[open] summary::after{content:"\2212"}
   .faq details p{margin:0; padding:0 0 18px; color:var(--muted); font-size:15px; line-height:1.65}
 
+  /* Отзывы */
+  .revs{display:flex; flex-wrap:wrap; gap:18px; justify-content:center; align-items:stretch}
+  .rev{flex:1 1 300px; max-width:362px; display:flex; flex-direction:column; text-align:left;
+    background:var(--surface); border:1px solid var(--line-strong); border-radius:20px; padding:22px 24px}
+  .rev .rhead{display:flex; align-items:baseline; gap:8px; margin-bottom:10px}
+  .rev .rname{font-weight:800; font-size:15px; color:var(--text)}
+  .rev .rstars{color:var(--lav); font-size:14px; letter-spacing:1px}
+  .rev .rdate{margin-left:auto; font-size:12.5px; color:var(--faint)}
+  .rev p{color:var(--muted); font-size:14px; line-height:1.62; margin:0}
+  .rev .rrole{display:inline-block; margin-top:12px; font-size:11px; font-weight:700; letter-spacing:.7px;
+    text-transform:uppercase; color:var(--teal-deep); background:rgba(201,154,110,.18); padding:4px 10px; border-radius:8px}
+  .revs-note{margin-top:18px; font-size:13px; color:var(--faint)}
+  .revs-note a{color:var(--teal-deep); font-weight:700}
   /* Блог / статьи */
   .blog-grid{display:flex; flex-wrap:wrap; gap:18px; justify-content:center}
   .bcard{flex:1 1 300px; max-width:362px; display:flex; flex-direction:column; text-align:left;
@@ -442,8 +455,13 @@
       "description":"Анонимный ИИ-психолог: чат с поддержкой 24/7, 8 психологов на выбор, доказательные методы (КПТ, ACT, Mindfulness, CFT).",
       "offers":{"@type":"Offer","price":"0","priceCurrency":"RUB"},
       "aggregateRating":{"@type":"AggregateRating","ratingValue":"4.7","ratingCount":"90"},
+      "review":[
+        {"@type":"Review","author":{"@type":"Person","name":"Николай"},"datePublished":"2026-07-14","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"reviewBody":"Долго не мог справиться с тревогой, постоянно себя накручивал. Решил попробовать ИИ психолога. Неожиданно стало легче выговорился, получил нормальные советы и постепенно научился спокойнее реагировать на ситуации. Сейчас чувствую себя намного лучше. Не думал что приложение реально сможет помочь."},
+        {"@type":"Review","author":{"@type":"Person","name":"Егор"},"datePublished":"2026-07-13","reviewRating":{"@type":"Rating","ratingValue":"4","bestRating":"5"},"reviewBody":"Я сам работаю психологом и ради интереса протестировал уже немало моделей психологов. Честно говоря, ожидал очередной набор шаблонных ответов, но здесь уровень действительно приятно удивил. Ниже 4 звёзд рука просто не поднялась поставить."},
+        {"@type":"Review","author":{"@type":"Person","name":"Ilya"},"datePublished":"2026-07-13","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"reviewBody":"Обновление супер. Пользуюсь приложением уже давно и сразу заметил разницу. Раньше, если переписка длинная, психолог забывал имена путал и факты. Сейчас помнит прошлые разговоры, учитывает их в ответах и общение стало намного живее"}
+      ],
       "downloadUrl":"https://www.rustore.ru/catalog/app/com.example.aitherapist",
-      "author":{"@type":"Organization","name":"AI Therapist"}
+      "author":{"@type":"Organization","name":"AI Therapist","url":"https://aitherapist.ru/about.html"}
     },
     {"@type":"WebSite","name":"AI Therapist","url":"https://aitherapist.ru/","inLanguage":"ru-RU"},
     {
@@ -611,6 +629,31 @@
   </div>
 </section>
 
+<!-- ОТЗЫВЫ -->
+<section id="reviews">
+  <div class="wrap">
+    <div class="seclabel">Отзывы</div>
+    <h2>Что пишут пользователи</h2>
+    <p class="sub">Рейтинг 4.7 и 90 оценок в RuStore. Ниже — несколько отзывов дословно, как они опубликованы в магазине.</p>
+    <div class="revs">
+      <div class="rev">
+        <div class="rhead"><span class="rname">Николай</span><span class="rstars">★★★★★</span><span class="rdate">14.07.2026</span></div>
+        <p>«Долго не мог справиться с тревогой, постоянно себя накручивал. Решил попробовать ИИ психолога. Неожиданно стало легче выговорился, получил нормальные советы и постепенно научился спокойнее реагировать на ситуации. Сейчас чувствую себя намного лучше. Не думал что приложение реально сможет помочь.»</p>
+      </div>
+      <div class="rev">
+        <div class="rhead"><span class="rname">Егор</span><span class="rstars">★★★★</span><span class="rdate">13.07.2026</span></div>
+        <p>«Я сам работаю психологом и ради интереса протестировал уже немало моделей психологов. Честно говоря, ожидал очередной набор шаблонных ответов, но здесь уровень действительно приятно удивил. Если так пойдёт дальше, скоро начну переживать за свою профессию 😄 Ниже 4 звёзд рука просто не поднялась поставить.»</p>
+        <span class="rrole">Практикующий психолог</span>
+      </div>
+      <div class="rev">
+        <div class="rhead"><span class="rname">Ilya</span><span class="rstars">★★★★★</span><span class="rdate">13.07.2026</span></div>
+        <p>«Обновление супер. Пользуюсь приложением уже давно и сразу заметил разницу. Раньше, если переписка длинная, психолог забывал имена путал и факты. Сейчас помнит прошлые разговоры, учитывает их в ответах и общение стало намного живее»</p>
+      </div>
+    </div>
+    <p class="revs-note" style="text-align:center">Отзывы отражают личный опыт пользователей и не являются обещанием результата. <a href="https://www.rustore.ru/catalog/app/com.example.aitherapist" target="_blank" rel="noopener">Все отзывы в RuStore →</a></p>
+  </div>
+</section>
+
 <!-- ДРУГИЕ ПРИЛОЖЕНИЯ -->
 <section id="apps" style="background:var(--bg2)">
   <div class="wrap">
@@ -674,7 +717,8 @@
         <span class="more">Читать →</span>
       </a>
     </div>
-    <div style="text-align:center"><a class="blog-all" href="blog/">Все статьи →</a></div>
+    <p class="sub" style="margin:22px 0 0">Тревожитесь и не знаете, с чего начать? Загляните в <a href="blog/trevoga-polnyy-gid.html" style="color:var(--teal-deep); font-weight:700">полный гид по тревоге</a> — там карта всех состояний и материалов.</p>
+    <div style="text-align:center; margin-top:18px"><a class="blog-all" href="blog/">Все статьи →</a></div>
   </div>
 </section>
 
@@ -719,7 +763,9 @@
       <a href="privacy.html">Конфиденциальность</a>
       <a href="terms.html">Соглашение</a>
       <a href="oferta.html">Оферта</a>
-      <a href="https://t.me/AI_Therapist_APP" target="_blank" rel="noopener">Поддержка</a>
+      <a href="about.html">О проекте</a>
+      <a href="https://t.me/AI_Therapist_APP" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://max.ru/u/f9LHodD0cOLipAu8wObtKCFFNq0tcwTb1FXJH4-p1ZsA73YJgBBY1-SNVxM" target="_blank" rel="noopener">MAX</a>
     </div>
   </div>
 </footer>
