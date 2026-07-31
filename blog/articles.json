@@ -1,6 +1,16 @@
 {
  "articles": [
   {
+   "title": "Токсичные отношения: 12 признаков и как из них выйти",
+   "description": "Что такое токсичные отношения и чем они отличаются от трудных и абьюзивных, 12 признаков, красные флаги, газлайтинг и цикл качелей, почему трудно уйти, 8 шагов, что делать, и как выйти безопасно.",
+   "image": "https://aitherapist.ru/assets/blog/toksichnye-cover.webp",
+   "url": "https://aitherapist.ru/blog/toksichnye-otnosheniya.html",
+   "date": "2026-07-31",
+   "minutes": 22,
+   "w": 960,
+   "h": 640
+  },
+  {
    "title": "Депрессия: 10 признаков, что делать и когда идти к врачу",
    "description": "Что такое депрессия и чем она отличается от плохого настроения, выгорания и апатии, 10 признаков, экспресс-проверка, 8 шагов, что делать при депрессии, как помочь близкому и когда срочно обратиться к врачу.",
    "image": "https://aitherapist.ru/assets/blog/depressiya-cover.webp",
@@ -46,7 +56,7 @@
    "image": "https://aitherapist.ru/assets/blog/rasstavanie-cover.webp",
    "url": "https://aitherapist.ru/blog/kak-perezhit-rasstavanie.html",
    "date": "2026-07-13",
-   "minutes": 15,
+   "minutes": 16,
    "w": 755,
    "h": 423
   },
@@ -86,7 +96,7 @@
    "image": "https://aitherapist.ru/assets/blog/stress-cover.webp",
    "url": "https://aitherapist.ru/blog/stress-na-rabote.html",
    "date": "2026-07-02",
-   "minutes": 8,
+   "minutes": 9,
    "w": 960,
    "h": 640
   },
