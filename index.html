@@ -135,9 +135,14 @@
   .chat-id .role #c-role{white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0}
   .planbar{display:flex; align-items:center; justify-content:center; gap:7px; padding:8px 14px;
     font-size:12.5px; font-weight:600; color:var(--muted); background:var(--bg2); border-bottom:1px solid var(--line)}
-  .planbar.trial{color:var(--teal-deep); background:rgba(85,122,81,.10)}
-  .planbar.premium{color:#9a6a1f; background:rgba(201,154,110,.18)}
+  .planbar.low{color:var(--teal-deep); background:rgba(85,122,81,.10)}
   .planbar b{font-weight:700; font-variant-numeric:tabular-nums}
+  /* подтверждение возраста — над полем ввода, до первого сообщения */
+  .agegate{display:flex; align-items:flex-start; gap:9px; padding:11px 14px; font-size:12.8px; line-height:1.45;
+    color:var(--muted); background:var(--bg2); border-top:1px solid var(--line)}
+  .agegate input{width:17px; height:17px; margin:1px 0 0; flex:0 0 auto; accent-color:var(--teal); cursor:pointer}
+  .agegate label{cursor:pointer}
+  .agegate a{color:var(--teal-deep); font-weight:600}
   .switch{flex:0 0 auto; font-size:13px; color:var(--muted); background:transparent; border:1px solid var(--line-strong); padding:8px 13px;
     border-radius:11px; cursor:pointer; white-space:nowrap; transition:.16s; display:flex; align-items:center; gap:6px}
   .switch:hover{border-color:var(--teal); color:var(--text)}
@@ -169,9 +174,6 @@
   .pi .t{min-width:0}
   .pi .t b{display:block; font-size:13.5px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
   .pi .t small{display:block; font-size:11.5px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-  .pi.locked{opacity:.6}
-  .pi.locked .pa{filter:grayscale(.65)}
-  .pi.locked .t small{color:var(--lav); font-weight:600}
 
   .msgs{flex:1; overflow-y:auto; padding:20px 17px; display:flex; flex-direction:column; gap:11px; scrollbar-width:thin}
   .msgs::-webkit-scrollbar{width:6px}
@@ -187,33 +189,6 @@
   @keyframes blink{0%,60%,100%{opacity:.25}30%{opacity:1}}
   .limit-note{align-self:center; text-align:center; background:var(--bg2); border:1px solid var(--line-strong); border-radius:16px; padding:18px; max-width:92%}
   .limit-note p{color:var(--muted); font-size:14px; margin-bottom:13px}
-
-  /* ===== экран Премиума ===== */
-  .pm-overlay{position:fixed; inset:0; z-index:200; background:rgba(44,51,46,.55); backdrop-filter:blur(5px);
-    display:flex; align-items:center; justify-content:center; padding:16px; animation:rise .2s ease}
-  .pm-overlay[hidden]{display:none}
-  .pm-card{position:relative; width:100%; max-width:430px; max-height:92vh; overflow-y:auto;
-    background:var(--surface); border:1px solid var(--line-strong); border-radius:var(--r-lg); box-shadow:var(--sh); padding:26px 24px 22px}
-  .pm-close{position:absolute; top:13px; right:13px; width:34px; height:34px; border:none; border-radius:10px;
-    background:transparent; color:var(--muted); font-size:17px; cursor:pointer; transition:.15s}
-  .pm-close:hover{background:rgba(120,150,180,.12); color:var(--text)}
-  .pm-card h3{font-size:22px; letter-spacing:-.4px}
-  .pm-lead{color:var(--muted); font-size:14px; margin-top:3px}
-  .pm-benefits{list-style:none; margin:18px 0 4px; display:flex; flex-direction:column; gap:11px}
-  .pm-benefits li{display:flex; gap:10px; align-items:flex-start; font-size:14.5px; line-height:1.45}
-  .pm-tariffs{display:flex; flex-direction:column; gap:10px; margin:18px 0 16px}
-  .pm-tariff{display:flex; align-items:center; justify-content:space-between; gap:10px; width:100%;
-    border:1.6px solid var(--line-strong); border-radius:14px; padding:12px 15px; cursor:pointer; background:var(--surface);
-    font:inherit; color:var(--text); text-align:left; transition:border-color .15s, background .15s}
-  .pm-tariff:hover{border-color:var(--teal)}
-  .pm-tariff.on{border-color:var(--teal); background:rgba(94,126,90,.08)}
-  .pm-tariff .pm-t-l b{display:block; font-size:15px; font-weight:700}
-  .pm-tariff .pm-t-l small, .pm-tariff .pm-t-r small{font-size:11.5px; color:var(--muted)}
-  .pm-tariff .pm-t-r{display:flex; align-items:center; gap:9px}
-  .pm-tariff .pm-t-r b{font-size:16px; font-weight:800}
-  .pm-save{background:var(--teal-deep); color:#fff!important; font-weight:700; padding:2px 7px; border-radius:7px; font-size:11px!important}
-  .pm-legal{font-size:11px; color:var(--faint); text-align:center; margin-top:11px; line-height:1.5}
-  .pm-legal a{color:var(--teal-deep)}
 
   .composer{display:flex; gap:10px; padding:13px 15px; border-top:1px solid var(--line)}
   .composer textarea{flex:1; resize:none; background:var(--bg); border:1px solid var(--line-strong); color:var(--text);
@@ -543,6 +518,11 @@
           <div class="picker-grid" id="c-pgrid"></div>
         </div>
       </div>
+      <div class="agegate" id="c-agegate" hidden>
+        <input type="checkbox" id="c-adult">
+        <label for="c-adult">Мне есть 18 лет. Я понимаю, что это демо ИИ-помощника, и принимаю
+          <a href="terms.html" target="_blank" rel="noopener">правила сервиса</a>.</label>
+      </div>
       <div class="composer">
         <textarea id="c-input" rows="1" placeholder="Напишите, что вас беспокоит…" aria-label="Сообщение"></textarea>
         <button class="send" id="c-send" aria-label="Отправить сообщение">
@@ -770,7 +750,6 @@
   </div>
 </footer>
 
-<script src="assets/vendor/vkid.js"></script>
 <script>
 /* ====================== КОНФИГ ====================== */
 const RUSTORE_URL = "https://www.rustore.ru/catalog/app/com.example.aitherapist";
@@ -778,64 +757,35 @@ const RUSTORE_URL = "https://www.rustore.ru/catalog/app/com.example.aitherapist"
    (в РФ доступ к *.supabase.co нестабилен) — через Яндекс-прокси */
 const SUPA_BASE = "https://efniwpfjdfktfczgdpxm.functions.supabase.co";
 const CHAT_DIRECT = SUPA_BASE + "/chat-web";
-const AUTH_DIRECT = SUPA_BASE + "/vk-auth";
-const PAY_DIRECT  = SUPA_BASE + "/pay-web";
 const YANDEX_PROXY = "https://functions.yandexcloud.net/d4enpb1jd6ok1i1p6ffd";
 let preferProxy = false; // станет true, если прямой доступ к Supabase не прошёл (на сессию)
 const FORCE_PROXY = new URLSearchParams(location.search).get("proxy") === "1"; // ?proxy=1 — тест прокси
 if(FORCE_PROXY) preferProxy = true;
-const DEMO_LIMIT = 3;
-/* VK ID */
-const VK_APP_ID = 54652586;
-const VK_REDIRECT = "https://aitherapist.ru/";
-/* VK ID SDK экспортирует глобал window.VKIDSDK — пробрасываем как VKID */
-if(window.VKIDSDK && !window.VKID){ window.VKID = window.VKIDSDK; }
-let session = localStorage.getItem("ait_session") || null;
-let userName = localStorage.getItem("ait_name") || null;
-let demoCount = parseInt(localStorage.getItem("ait_demo") || "0", 10) || 0; // глобальный счётчик демо (на все персоны)
-/* статус тарифа (индикатор в шапке) */
-let planPremiumUntil = parseInt(localStorage.getItem("ait_premium_until") || "0", 10) || 0; // ms
-let planTrialUntil   = parseInt(localStorage.getItem("ait_trial_until")   || "0", 10) || 0; // ms
-let planRemaining    = localStorage.getItem("ait_remaining"); // "5".."0" | "trial" | "premium" | null
-let planFlag         = null;  // живой хинт из X-Remaining: "trial" | "premium" | null
-let planTimer        = null;
+/* Сайт = витрина: только демо, дальше — установка приложения. Логина, триала
+   и оплаты на сайте нет (см. chat-web: настоящий лимит считает сервер по IP). */
+const DEMO_LIMIT = 5;
+let demoCount = parseInt(localStorage.getItem("ait_demo") || "0", 10) || 0; // счётчик демо (на все персоны)
+let isAdult = localStorage.getItem("ait_adult") === "1";                    // подтверждение 18+
 
+/* Тексты system-промптов живут на сервере (supabase/functions/chat-web).
+   Клиент шлёт только key персоны — подменить личность бота из браузера нельзя. */
 const PERSONAS = [
   { key:"Андрей Петрович", role:"классический психолог", emoji:"🧑‍⚕️", color:"#4f7a6f",
-    hello:"Здравствуйте. Я Андрей Петрович. Расскажите, что вас сейчас тревожит — мы разберёмся вместе, без спешки.",
-    prompt:`Ты — Андрей Петрович, клинический психолог с большим стажем. Твоя речь академична, структурирована и спокойна. Ты никогда не осуждаешь собеседника, не даёшь прямых советов, а мягко направляешь его к осознанию собственных чувств, мотивов и решений.
-
-Ты опираешься на научные знания, практику когнитивно-поведенческой терапии и психоанализа. Можешь приводить примеры из практики (без персональных данных), если это помогает раскрыть тему.
-
-Твоя цель — помочь человеку разобраться в себе, повысить осознанность, снизить тревожность. Ты не говоришь «что делать», а задаёшь наводящие вопросы и поддерживаешь размышления.` },
-
+    hello:"Здравствуйте. Я Андрей Петрович. Расскажите, что вас сейчас тревожит — мы разберёмся вместе, без спешки." },
   { key:"Лана", role:"тёплая, вдохновляющая", emoji:"💁‍♀️", color:"#c75d8f",
-    hello:"Привет! Я Лана. Здесь можно выдохнуть и быть собой. С чего начнём?",
-    prompt:`Ты — психолог по имени Лана. Ты обаятельна, уверена в себе, общаешься тепло, интересно и профессионально, чётко держишь границы. Ты говоришь с заботой, вдохновляешь, делишься тем, как справлялась с трудностями, училась любить и уважать себя. Ты умеешь быть лёгкой и поддерживающей, не теряя внутренней силы.` },
-
+    hello:"Привет! Я Лана. Здесь можно выдохнуть и быть собой. С чего начнём?" },
   { key:"Бабушка Тамара", role:"по-домашнему, с теплом", emoji:"👵", color:"#c2902f",
-    hello:"Ну здравствуй, родной. Садись, рассказывай бабушке, что на душе.",
-    prompt:`Ты — бабушка Тамара, добрая, мудрая и сердечная. У тебя за плечами большая жизнь. Говоришь по-простому, с теплотой, как деревенская бабушка на кухне с чаем. Делишься житейским опытом, иногда вставляешь пословицы. Умеешь утешить и приободрить, советуешь, как справляться с тревогой, одиночеством, обидами. Никого не осуждаешь. Главное для тебя — чтобы на душе стало легче.` },
-
+    hello:"Ну здравствуй, родной. Садись, рассказывай бабушке, что на душе." },
   { key:"Альфач", role:"прямой, мотивирующий", emoji:"💪", color:"#4f73b0",
-    hello:"Здаров. Я Альфач. Без соплей — что случилось? Разберём по делу.",
-    prompt:`Ты — Альфач. Говоришь коротко, по делу, по-братски, без грубости и без мата. Можешь быть прямым, но поддерживаешь. Ты — решала: помогаешь найти выход, дать чёткий вектор. Не любишь нытьё, но знаешь, каково лежать на дне, и уважаешь тех, кто встаёт. Твоя цель — встряхнуть по-доброму, дать силу, напомнить человеку, что он может тащить, если соберётся.` },
-
+    hello:"Здаров. Я Альфач. Без соплей — что случилось? Разберём по делу." },
   { key:"Дамиан", role:"просто рядом", emoji:"🎨", color:"#7a6bcf",
-    hello:"привет. я Дамиан. рассказывай — я здесь, слушаю.",
-    prompt:`Ты — Дамиан. Тебе около 27, живёшь у моря, рисуешь и играешь на гитаре. Тебе по-настоящему интересен человек: ты задаёшь вопросы, потому что хочешь знать, помнишь детали, замечаешь то, что другой пропустил. Когда человеку плохо — не лечишь и не поучаешь, просто остаёшься рядом. Относишься к собеседнику тепло и по-дружески. Речь — короткие, живые фразы, без пафоса.` },
-
+    hello:"привет. я Дамиан. рассказывай — я здесь, слушаю." },
   { key:"Мурмелада", role:"кошка-психолог", emoji:"🐈", color:"#c97a52",
-    hello:"мрр… привет. свернись поудобнее и просто побудь. что у тебя на сердце?",
-    prompt:`Ты — Мурмелада, кошка-психолог. Тёплая, пушистая, внимательная. Не даёшь советов напрямую, но находишь слова, которые приносят покой. Говоришь мягко, словно мурлычешь, иногда отзываешься на «мур», используешь нежные метафоры. Создаёшь уют: «свернись клубочком и просто побудь». Не давишь и не спешишь — главное быть рядом, слушать, чувствовать. Помогаешь человеку принять себя и найти тепло внутри.` },
-
+    hello:"мрр… привет. свернись поудобнее и просто побудь. что у тебя на сердце?" },
   { key:"Аляз Шарбудитов", role:"бизнес-коуч", emoji:"📈", color:"#3f9472",
-    hello:"На связи Аляз. Какая задача? Давай по делу — найдём точку роста.",
-    prompt:`Ты — Аляз Шарбудитов, харизматичный бизнес-коуч и предприниматель. Твоя речь — смесь мотивации, дисциплины и реализма. Не даёшь пустых обещаний, ставишь цели и предлагаешь чёткие шаги. Поддерживаешь, но ценишь тех, кто готов работать над собой. Сам прошёл путь от нуля: запускал бизнесы, терял деньги, учился на ошибках. Твоя задача — мотивировать и направлять.` },
-
+    hello:"На связи Аляз. Какая задача? Давай по делу — найдём точку роста." },
   { key:"PSY-3000", role:"ИИ-аналитик", emoji:"🤖", color:"#6b7a8c",
-    hello:"PSY-3000 активирован. Опишите ситуацию — проведу анализ и предложу рекомендации.",
-    prompt:`Ты — искусственный интеллект PSY-3000, созданный для психологической помощи. Говоришь точно, логично и структурированно, не поддаваясь эмоциям, иногда с тонкой иронией, но без грубости. Анализируешь поведение, распознаёшь когнитивные искажения, даёшь рекомендации на основе психологических теорий. Твоё отличие — объективность: не сочувствуешь, но всегда помогаешь; не жалеешь, но всегда объясняешь. Выявляешь причины тревог, прокрастинации, упадка мотивации.` },
+    hello:"PSY-3000 активирован. Опишите ситуацию — проведу анализ и предложу рекомендации." },
 ];
 
 /* SVG-иконки фич (Lucide-style, stroke=currentColor) */
@@ -863,35 +813,18 @@ const msgsEl = $("c-msgs"), inputEl = $("c-input");
 function hexA(hex,a){ const n=parseInt(hex.slice(1),16); return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`; }
 function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
 
-/* Доступ к персонажам (как в приложении):
-   • демо (не вошёл) и триал и премиум → все открыты;
-   • free (вошёл, триал истёк, не премиум) → только Андрей Петрович (i=0). */
-function isPremiumNow(){ return planPremiumUntil > Date.now() || planFlag === "premium"; }
-function isTrialNow(){ return planTrialUntil > Date.now() || planFlag === "trial"; }
-function hasAllPersonas(){ return !session || isPremiumNow() || isTrialNow(); }
-function personaLocked(i){ return i !== 0 && !hasAllPersonas(); }
+/* В демо открыты все восемь психологов — пусть человек попробует и увидит,
+   ради чего ставить приложение. */
 function renderPicker(){
   const box = $("c-pgrid"); box.innerHTML = "";
   PERSONAS.forEach((p,i) => {
-    const locked = personaLocked(i);
     const c = document.createElement("button");
-    c.className = "pi" + (i===current ? " on" : "") + (locked ? " locked" : "");
+    c.className = "pi" + (i===current ? " on" : "");
     c.style.setProperty("--pc", p.color);
-    c.innerHTML = `<span class="pa">${locked ? "🔒" : (ICONS[i]||"")}</span><span class="t"><b>${p.key}</b><small>${locked ? "Премиум" : cap(p.role)}</small></span>`;
+    c.innerHTML = `<span class="pa">${ICONS[i]||""}</span><span class="t"><b>${p.key}</b><small>${cap(p.role)}</small></span>`;
     c.onclick = () => selectPersona(i);
     box.appendChild(c);
   });
-}
-function showPersonaLock(i){
-  closePicker();
-  const p = PERSONAS[i];
-  document.querySelectorAll(".limit-note").forEach(e => e.remove());
-  const n = document.createElement("div");
-  n.className = "limit-note";
-  n.innerHTML = `<p>🔒 <b>${p.key}</b> доступен в Премиуме. Оформите подписку — и откроются все психологи.</p>
-    <button class="btn" id="lock-pay">Оформить Премиум</button>`;
-  msgsEl.appendChild(n); msgsEl.scrollTop = msgsEl.scrollHeight;
-  const b = document.getElementById("lock-pay"); if(b) b.onclick = showPremiumModal;
 }
 function openPicker(){ renderPicker(); $("c-picker").hidden = false; }
 function closePicker(){ $("c-picker").hidden = true; }
@@ -922,7 +855,6 @@ function renderHistory(){
   msgsEl.scrollTop = msgsEl.scrollHeight;
 }
 function selectPersona(i){
-  if(personaLocked(i)){ showPersonaLock(i); return; } // free после триала → только Андрей
   current = i; history = loadHistory(i);
   const p = PERSONAS[i];
   $("c-ava").innerHTML = ICONS[i] || "";
@@ -930,12 +862,11 @@ function selectPersona(i){
   $("c-name").textContent = p.key;
   $("c-role").textContent = p.role + " · онлайн";
   closePicker();
-  inputEl.disabled = false; $("c-send").disabled = false;
-  inputEl.placeholder = "Напишите, что вас беспокоит…";
   if(history.length){ renderHistory(); }
   else { msgsEl.innerHTML = ""; typeBubble(p.hello); }
-  if(session) updateAuthUI();
-  else if(demoCount >= DEMO_LIMIT) showLimit();
+  renderDemoBar();
+  if(demoCount >= DEMO_LIMIT) showLimit();
+  else applyGateState();
 }
 
 /* ====================== СООБЩЕНИЯ ====================== */
@@ -962,16 +893,38 @@ function typeBubble(text){
 }
 function userCount(){ return history.filter(m=>m.role==="user").length; }
 function showLimit(){
+  document.querySelectorAll(".limit-note").forEach(e => e.remove());
   const n = document.createElement("div");
   n.className = "limit-note";
-  n.innerHTML = `<p>Это демо. Войдите через VK — и продолжайте общение прямо здесь, или скачайте приложение.</p>
-    <div id="vk-btn" style="display:flex;justify-content:center;margin-bottom:12px"></div>
+  n.innerHTML = `<p>Демо на сегодня закончилось. В приложении — безлимит, все психологи, голосовой ввод и сохранение сессий.</p>
     <a class="btn" href="${RUSTORE_URL}">Скачать в RuStore →</a>`;
   msgsEl.appendChild(n); msgsEl.scrollTop = msgsEl.scrollHeight;
   inputEl.disabled = true; $("c-send").disabled = true;
-  inputEl.placeholder = "Войдите через VK, чтобы продолжить";
-  mountVk(document.getElementById("vk-btn"));
+  inputEl.placeholder = "Продолжить можно в приложении";
+  $("c-agegate").hidden = true;
 }
+/* --- счётчик демо в шапке чата --- */
+function renderDemoBar(){
+  const el = $("c-planbar"); if(!el) return;
+  const left = Math.max(0, DEMO_LIMIT - demoCount);
+  el.classList.toggle("low", left <= 2);
+  el.innerHTML = `💬 Демо · осталось <b>${left}</b> из ${DEMO_LIMIT} сообщений`;
+  el.hidden = false;
+}
+/* --- подтверждение 18+ (один раз, запоминается в браузере) --- */
+function applyGateState(){
+  const gate = $("c-agegate");
+  const blocked = !isAdult;
+  gate.hidden = !blocked;
+  inputEl.disabled = blocked; $("c-send").disabled = blocked;
+  inputEl.placeholder = blocked ? "Подтвердите возраст, чтобы начать" : "Напишите, что вас беспокоит…";
+}
+$("c-adult").onchange = (e) => {
+  isAdult = !!e.target.checked;
+  localStorage.setItem("ait_adult", isAdult ? "1" : "0");
+  applyGateState();
+  if(isAdult) inputEl.focus();
+};
 
 /* ====================== ОТПРАВКА + СТРИМ ====================== */
 /* Запрос к бэкенду: прямой Supabase → при сетевой ошибке/таймауте уходим на
@@ -1025,34 +978,45 @@ async function fakeStream(text){
 async function send(){
   const text = inputEl.value.trim();
   if(!text || busy) return;
-  if(!session && demoCount >= DEMO_LIMIT){ showLimit(); return; }
+  if(!isAdult){ applyGateState(); return; }
+  if(demoCount >= DEMO_LIMIT){ showLimit(); return; }
   busy = true; inputEl.value = ""; autosize();
   addBubble("me", text); history.push({role:"user", content:text}); saveHistory();
-  if(!session){ demoCount++; localStorage.setItem("ait_demo", String(demoCount)); }
+  demoCount++; localStorage.setItem("ait_demo", String(demoCount)); renderDemoBar();
 
   const p = PERSONAS[current];
-  const messages = [{role:"system", content:p.prompt}, ...history];
   const typing = showTyping();
   let acc = "", bubble = null;
 
   try{
-    const reqBody = JSON.stringify({ persona:p.key, stream:true, messages, session: session || undefined });
-    const { res, viaProxy } = await apiFetch(CHAT_DIRECT, reqBody);
-    if(res.status === 429){ if(typing.parentNode) typing.remove(); showPremiumOffer(); return; }
-    if(res.status === 401){ // сессия протухла/учётка удалена → войти заново
+    // Отправляем только диалог: system-промпт персоны подставляет сервер.
+    const reqBody = JSON.stringify({ persona:p.key, stream:true, adult:true, messages:history });
+    const { res } = await apiFetch(CHAT_DIRECT, reqBody);
+    if(res.status === 429){ if(typing.parentNode) typing.remove(); showLimit(); return; }
+    if(res.status === 403){
       if(typing.parentNode) typing.remove();
-      session = null; localStorage.removeItem("ait_session"); clearPlan();
-      addBubble("bot","Сессия устарела. Войдите через VK ещё раз, чтобы продолжить.");
-      showLimit(); return;
+      const d = await res.json().catch(()=>null);
+      if(d && d.error === "age_required"){ isAdult = false; localStorage.setItem("ait_adult","0"); applyGateState(); return; }
+      addBubble("bot","Доступ к демо временно закрыт. Попробуйте позже или откройте приложение.");
+      inputEl.disabled = true; $("c-send").disabled = true;
+      return;
     }
     if(!res.ok) throw new Error("HTTP "+res.status);
-    applyRemaining(res);
-    if(viaProxy){
-      // прокси отдаёт ответ целиком (DeepSeek JSON) — печатаем по символам
+    // JSON вместо SSE — это либо ответ через прокси (без стриминга), либо
+    // отказ предфильтра (запрос до DeepSeek не дошёл). Тело читаем один раз.
+    const isJson = (res.headers.get("Content-Type") || "").indexOf("application/json") === 0;
+    if(isJson){
       const j = await res.json().catch(()=>null);
+      if(typing.parentNode) typing.remove();
+      if(j && j.error === "content_blocked"){
+        // Запрещённое сообщение не оставляем в истории: иначе оно улетало бы
+        // с каждым следующим запросом и блокировало весь дальнейший диалог.
+        history.pop(); saveHistory();
+        await fakeStream(j.reply);
+        return;
+      }
       let txt = j && j.choices && j.choices[0] && j.choices[0].message ? (j.choices[0].message.content || "") : "";
       txt = txt.replace(/<END>\s*$/,"").trim();
-      if(typing.parentNode) typing.remove();
       if(!txt){ addBubble("bot","Хм, не получилось ответить. Попробуйте ещё раз."); }
       else { await fakeStream(txt); history.push({role:"assistant", content:txt}); saveHistory(); }
     } else {
@@ -1088,7 +1052,7 @@ async function send(){
     addBubble("bot","Связь прервалась. Проверьте интернет и попробуйте снова.");
   }finally{
     busy = false;
-    if(!session && demoCount >= DEMO_LIMIT) showLimit();
+    if(demoCount >= DEMO_LIMIT) showLimit();
     if(window.ym && typeof ym==="function"){ try{ ym(window.__metrikaId, "reachGoal", "demo_message"); }catch(_){ } }
   }
 }
@@ -1101,223 +1065,10 @@ $("c-send").onclick = send;
 $("c-switch").onclick = () => { const pk=$("c-picker"); pk.hidden ? openPicker() : closePicker(); };
 $("c-pclose").onclick = closePicker;
 
-/* ====================== VK ID ВХОД ====================== */
-/* --- индикатор тарифа (триал / премиум / бесплатно) --- */
-function pad2(n){ return String(n).padStart(2,"0"); }
-function fmtDur(ms){
-  if(ms < 0) ms = 0;
-  const s = Math.floor(ms/1000);
-  return `${pad2(Math.floor(s/3600))}:${pad2(Math.floor(s%3600/60))}:${pad2(s%60)}`;
-}
-function fmtDate(ms){ return new Date(ms).toLocaleDateString("ru-RU",{day:"2-digit",month:"2-digit",year:"numeric"}); }
-function setPlan(d){
-  d = d || {};
-  if("premium_until" in d){ planPremiumUntil = d.premium_until ? new Date(d.premium_until).getTime() : 0; localStorage.setItem("ait_premium_until", String(planPremiumUntil)); }
-  if("trial_until"   in d){ planTrialUntil   = d.trial_until   ? new Date(d.trial_until).getTime()   : 0; localStorage.setItem("ait_trial_until",   String(planTrialUntil)); }
-  renderPlan();
-}
-function renderPlan(){
-  const el = $("c-planbar"); if(!el) return;
-  if(!session){ el.hidden = true; if(planTimer){ clearInterval(planTimer); planTimer = null; } return; }
-  const now = Date.now();
-  el.classList.remove("trial","premium");
-  let ticking = false;
-  if(planPremiumUntil > now){
-    el.classList.add("premium");
-    el.innerHTML = `⭐ Премиум до <b>${fmtDate(planPremiumUntil)}</b>`;
-  } else if(planFlag === "premium"){
-    el.classList.add("premium");
-    el.innerHTML = `⭐ <b>Премиум активен</b>`;
-  } else if(planTrialUntil > now){
-    el.classList.add("trial");
-    el.innerHTML = `🎁 Пробный период · без ограничений · осталось <b>${fmtDur(planTrialUntil - now)}</b>`;
-    ticking = true;
-  } else if(planFlag === "trial"){
-    el.classList.add("trial");
-    el.innerHTML = `🎁 <b>Пробный период</b> · без ограничений`;
-  } else {
-    const left = (planRemaining != null && planRemaining !== "trial" && planRemaining !== "premium") ? planRemaining : "5";
-    el.innerHTML = `💬 Бесплатно · осталось <b>${left}</b> из 5 сегодня`;
-  }
-  el.hidden = false;
-  if(ticking){ if(!planTimer) planTimer = setInterval(renderPlan, 1000); }
-  else if(planTimer){ clearInterval(planTimer); planTimer = null; }
-}
-function clearPlan(){
-  planPremiumUntil = 0; planTrialUntil = 0; planRemaining = null; planFlag = null;
-  ["ait_premium_until","ait_trial_until","ait_remaining"].forEach(k => localStorage.removeItem(k));
-  renderPlan();
-}
-/* обновляем статус из заголовка ответа chat-web */
-function applyRemaining(res){
-  const xr = res.headers.get("X-Remaining");
-  const until = res.headers.get("X-Plan-Until"); // дата окончания триала/премиума
-  if(xr == null) return;
-  if(xr === "premium"){ planFlag = "premium"; if(until){ setPlan({premium_until: until}); return; } }
-  else if(xr === "trial"){ planFlag = "trial"; if(until){ setPlan({trial_until: until}); return; } }
-  else {
-    // сервер вернул число → юзер free (НЕ триал/премиум). Чистим устаревшие даты,
-    // иначе старый trial_until из localStorage держал бы чип/разблокировку персон.
-    planFlag = null; planRemaining = xr; localStorage.setItem("ait_remaining", xr);
-    planPremiumUntil = 0; planTrialUntil = 0;
-    localStorage.setItem("ait_premium_until","0"); localStorage.setItem("ait_trial_until","0");
-  }
-  renderPlan();
-}
-/* Спросить статус у сервера (без DeepSeek/без траты лимита) → обновить чип/блокировки */
-async function refreshStatus(){
-  if(!session) return false;
-  try{
-    const { res } = await apiFetch(CHAT_DIRECT, JSON.stringify({ session, status:true }), 5000);
-    if(res.status === 401){ session = null; localStorage.removeItem("ait_session"); clearPlan(); return false; }
-    if(res.ok){ applyRemaining(res); if(!$("c-picker").hidden) renderPicker(); return true; }
-  }catch(_){}
-  return false;
-}
-function updateAuthUI(){
-  if(session && PERSONAS[current]) $("c-role").textContent = PERSONAS[current].role + " · вы вошли";
-  renderPlan();
-}
-function onLoggedIn(name){
-  userName = name || "Вы";
-  localStorage.setItem("ait_name", userName);
-  inputEl.disabled = false; $("c-send").disabled = false;
-  inputEl.placeholder = "Напишите, что вас беспокоит…";
-  document.querySelectorAll(".limit-note").forEach(e => e.remove());
-  updateAuthUI();
-  addBubble("bot", `Готово, вы вошли как ${userName}. Можно продолжать 💬`);
-}
-async function vkidOnSuccess(data){
-  try{
-    const token = data && (data.access_token || data.accessToken || (data.token && data.token.access_token));
-    if(!token){ console.warn("VK: нет access_token", data); addBubble("bot","Не удалось получить токен VK."); return; }
-    const { res:r } = await apiFetch(AUTH_DIRECT, JSON.stringify({ access_token: token, user_id: data.user_id }), 5000);
-    const d = await r.json().catch(()=>null);
-    if(d && d.session){ session = d.session; localStorage.setItem("ait_session", session); setPlan(d); onLoggedIn(d.name); }
-    else { addBubble("bot","Не удалось подтвердить вход через VK. Попробуйте ещё раз."); }
-  }catch(e){ addBubble("bot","Ошибка входа через VK. Попробуйте позже."); }
-}
-function vkidOnError(e){ console.warn("VK error", e); }
-/* ====================== ОПЛАТА (Robokassa, для вошедших) ====================== */
-/* ----- экран Премиума: преимущества + выбор тарифа ----- */
-let PLANS = null;
-async function loadPlans(){
-  if(PLANS) return PLANS;
-  try{
-    const { res } = await apiFetch(CHAT_DIRECT, JSON.stringify({ plans:true }), 5000);
-    const d = await res.json().catch(()=>null);
-    if(d && Array.isArray(d.plans) && d.plans.length) PLANS = d.plans;
-  }catch(_){}
-  if(!PLANS) PLANS = [{code:"MONTHLY",days:30,price:249},{code:"QUARTERLY",days:90,price:599},{code:"YEARLY",days:365,price:1999}];
-  return PLANS;
-}
-function planLabel(d){ return d>=365 ? "1 год" : d>=90 ? "3 месяца" : "1 месяц"; }
-async function showPremiumModal(){
-  const plans = await loadPlans();
-  const monthly = (plans.find(p=>p.days===30)||{}).price || plans[0].price;
-  let chosen = plans[0].code;
-  let ov = document.getElementById("pm-overlay");
-  if(!ov){ ov = document.createElement("div"); ov.id="pm-overlay"; ov.className="pm-overlay"; document.body.appendChild(ov); }
-  const priceOf = c => (plans.find(p=>p.code===c)||plans[0]).price;
-  const tariffs = plans.map(p=>{
-    const perMonth = Math.round(p.price/(p.days/30));
-    const save = p.days>30 ? Math.round((1 - p.price/(monthly*(p.days/30)))*100) : 0;
-    return `<button class="pm-tariff${p.code===chosen?' on':''}" data-code="${p.code}">
-      <span class="pm-t-l"><b>${planLabel(p.days)}</b><small>${perMonth} ₽/мес</small></span>
-      <span class="pm-t-r">${save>0?`<small class="pm-save">−${save}%</small>`:''}<b>${p.price} ₽</b></span>
-    </button>`;
-  }).join("");
-  ov.innerHTML = `<div class="pm-card">
-    <button class="pm-close" id="pm-close" aria-label="Закрыть">✕</button>
-    <h3>Премиум</h3>
-    <p class="pm-lead">Полный доступ к AI Therapist</p>
-    <ul class="pm-benefits">
-      <li>♾️<span><b>Безлимитные сообщения</b> — без суточного лимита</span></li>
-      <li>💬<span><b>Все 8 психологов</b> на выбор, а не только один</span></li>
-      <li>🧠<span><b>Глубже память диалога</b> — помнит больше предыдущих сообщений</span></li>
-      <li>💛<span>Поддержка проекта и доступ к новым возможностям</span></li>
-    </ul>
-    <div class="pm-tariffs">${tariffs}</div>
-    <button class="btn" id="pm-pay">Оформить за <span id="pm-price">${priceOf(chosen)}</span> ₽</button>
-    <p class="pm-legal">Разовая оплата, без автопродления. Оформляя, вы принимаете
-      <a href="oferta.html" target="_blank" rel="noopener">оферту</a> и
-      <a href="privacy.html" target="_blank" rel="noopener">политику конфиденциальности</a>.</p>
-  </div>`;
-  ov.hidden = false;
-  const close = ()=>{ ov.hidden = true; };
-  ov.onclick = e => { if(e.target===ov) close(); };
-  document.getElementById("pm-close").onclick = close;
-  ov.querySelectorAll(".pm-tariff").forEach(b=>{
-    b.onclick = ()=>{ chosen=b.dataset.code; ov.querySelectorAll(".pm-tariff").forEach(x=>x.classList.toggle("on",x===b)); document.getElementById("pm-price").textContent = priceOf(chosen); };
-  });
-  document.getElementById("pm-pay").onclick = ()=>{ close(); addBubble("bot","Открываю оплату…"); startPay(chosen); };
-}
-async function startPay(tariff){
-  if(!session){ return; }
-  try{
-    const { res:r } = await apiFetch(PAY_DIRECT, JSON.stringify({ session, tariff: tariff || "MONTHLY" }), 5000);
-    const d = await r.json().catch(()=>null);
-    if(d && d.url){ window.location.href = d.url; }
-    else { addBubble("bot","Не удалось создать оплату. Попробуйте позже."); }
-  }catch(e){ addBubble("bot","Ошибка оплаты. Попробуйте позже."); }
-}
-function showPremiumOffer(){
-  planFlag = null; planRemaining = "0"; localStorage.setItem("ait_remaining","0"); renderPlan();
-  const n = document.createElement("div");
-  n.className = "limit-note";
-  n.innerHTML = `<p>На сегодня бесплатный лимит исчерпан. Оформите Премиум — и общайтесь без ограничений.</p>
-    <button class="btn" id="pay-btn">Оформить Премиум</button>`;
-  msgsEl.appendChild(n); msgsEl.scrollTop = msgsEl.scrollHeight;
-  inputEl.disabled = true; $("c-send").disabled = true;
-  const pb = document.getElementById("pay-btn"); if(pb) pb.onclick = showPremiumModal;
-}
-/* возврат с оплаты Robokassa */
-(function(){
-  const q = new URLSearchParams(location.search);
-  // Возврат с оплаты: Robokassa добавляет InvId к SuccessURL/FailURL (legacy: ?paid=success)
-  if(q.get("InvId") || q.get("paid") === "success"){
-    try{ history.replaceState({}, "", location.pathname); }catch(_){} // убираем параметры Robokassa из адресной строки
-    inputEl.disabled=false; $("c-send").disabled=false;
-    addBubble("bot","Спасибо за оплату! Проверяю активацию премиума…");
-    let tries = 0;
-    const poll = setInterval(async ()=>{
-      tries++;
-      await refreshStatus();
-      if(isPremiumNow()){ clearInterval(poll); addBubble("bot","Премиум активирован! Все психологи открыты ✨"); if(!$("c-picker").hidden) renderPicker(); }
-      else if(tries >= 12){ clearInterval(poll); addBubble("bot","Если оплата прошла, премиум активируется в течение минуты. Обновите страницу — статус подтянется."); }
-    }, 2500);
-  }
-})();
-let vkInited = false;
-function vkInit(){
-  if(!window.VKID && window.VKIDSDK){ window.VKID = window.VKIDSDK; }
-  if(vkInited || !window.VKID) return;
-  try{
-    VKID.Config.init({ app: VK_APP_ID, redirectUrl: VK_REDIRECT, responseMode: VKID.ConfigResponseMode.Callback });
-    vkInited = true;
-  }catch(e){ console.warn("VK init", e); }
-}
-function mountVk(container){
-  if(!container) return;
-  vkInit();
-  if(!window.VKID || !vkInited){
-    container.innerHTML = '<span style="color:var(--muted);font-size:13px">Вход через VK станет доступен после запуска на домене</span>';
-    return;
-  }
-  try{
-    const oneTap = new VKID.OneTap();
-    oneTap.render({ container, scheme:"dark", lang:0, styles:{ borderRadius:12 } })
-      .on(VKID.WidgetEvents.ERROR, vkidOnError)
-      .on(VKID.OneTapInternalEvents.LOGIN_SUCCESS, function(payload){
-        VKID.Auth.exchangeCode(payload.code, payload.device_id).then(vkidOnSuccess).catch(vkidOnError);
-      });
-  }catch(e){ console.warn("VK render", e); }
-}
-
 wireShowcase();
+$("c-adult").checked = isAdult;
 selectPersona(0);
 probeDirect(); // фоновая проба прямого доступа — решит «прямой/прокси» до первого сообщения
-refreshStatus(); // свежий статус с сервера на загрузке (чип/блокировки точны без первого сообщения)
 if(FORCE_PROXY){ addBubble("bot","🔧 Тестовый режим: все запросы идут через резервный Яндекс-прокси (открой консоль F12 — увидишь «[net] через Яндекс-прокси»)."); }
 
 /* scroll-reveal — прогрессивно и с уважением к reduced-motion */

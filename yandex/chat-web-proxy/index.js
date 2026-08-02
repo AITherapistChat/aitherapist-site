@@ -21,7 +21,8 @@ var https = require('https');
 
 var ALLOW_ORIGIN   = 'https://aitherapist.ru';
 var ALLOWED_HOST   = 'efniwpfjdfktfczgdpxm.functions.supabase.co';
-var ALLOWED_PATHS  = ['/chat-web', '/vk-auth', '/pay-web'];
+// vk-auth / pay-web убраны 02.08.2026 вместе с веб-логином и оплатой на сайте.
+var ALLOWED_PATHS  = ['/chat-web'];
 
 function corsHeaders() {
   return {
@@ -102,6 +103,7 @@ module.exports.handler = function (event) {
   var inHeaders = event.headers || {};
   var origin = inHeaders['origin'] || inHeaders['Origin'];
   if (origin) headers['Origin'] = origin;
+  // IP клиента апстриму НЕ пробрасываем: он там не нужен и не хранится.
 
   return proxyRequest(parsed.hostname, parsed.pathname + parsed.search, method, headers, body);
 };
