@@ -1,6 +1,16 @@
 {
  "articles": [
   {
+   "title": "Как пережить смерть близкого человека: 9 шагов, которые помогают",
+   "description": "Сколько длится горе, почему этапы горевания не идут по порядку, что делать в первые дни, как справиться с чувством вины, что говорить горюющему и когда горе становится осложнённым и нужна помощь специалиста.",
+   "image": "https://aitherapist.ru/assets/blog/gore-cover.webp",
+   "url": "https://aitherapist.ru/blog/kak-perezhit-smert-blizkogo.html",
+   "date": "2026-08-02",
+   "minutes": 21,
+   "w": 960,
+   "h": 640
+  },
+  {
    "title": "Токсичные отношения: 12 признаков и как из них выйти",
    "description": "Что такое токсичные отношения и чем они отличаются от трудных и абьюзивных, 12 признаков, красные флаги, газлайтинг и цикл качелей, почему трудно уйти, 8 шагов, что делать, и как выйти безопасно.",
    "image": "https://aitherapist.ru/assets/blog/toksichnye-cover.webp",
@@ -36,7 +46,7 @@
    "image": "https://aitherapist.ru/assets/blog/odinochestvo-cover.webp",
    "url": "https://aitherapist.ru/blog/kak-spravitsya-s-odinochestvom.html",
    "date": "2026-07-27",
-   "minutes": 16,
+   "minutes": 17,
    "w": 960,
    "h": 640
   },
