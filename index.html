@@ -38,6 +38,10 @@
     --sh-sm:0 2px 8px rgba(60,70,55,.08);
     --sh:0 16px 44px rgba(60,70,55,.13);
     --sh-glow:0 0 0 1px rgba(94,126,90,.16), 0 16px 44px rgba(94,126,90,.14);
+    /* v2: тени с цветом среды (тёплый шалфей), а не нейтрально-серые —
+       это главное, что отличает «дорогую» карточку от шаблонной */
+    --sh-card:0 1px 2px rgba(60,80,55,.05), 0 12px 28px -18px rgba(60,80,55,.30);
+    --sh-card-h:0 2px 4px rgba(60,80,55,.06), 0 26px 50px -24px rgba(70,100,62,.42);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth; overflow-x:hidden; max-width:100%}
@@ -110,8 +114,8 @@
     background:rgba(94,126,90,.08); border:1px solid rgba(94,126,90,.20); padding:7px 15px; border-radius:999px; margin-bottom:24px}
   .pulse{width:7px;height:7px;border-radius:50%; background:var(--teal); box-shadow:0 0 0 0 rgba(94,126,90,.6); animation:pulse 2.4s infinite}
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(94,126,90,.5)} 70%{box-shadow:0 0 0 7px rgba(94,126,90,0)} 100%{box-shadow:0 0 0 0 rgba(94,126,90,0)}}
-  .hero h1{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:clamp(33px,4.6vw,55px);
-    line-height:1.08; letter-spacing:-.6px; margin-bottom:20px}
+  .hero h1{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:clamp(34px,4.8vw,58px);
+    line-height:1.06; letter-spacing:-.9px; margin-bottom:22px}
   .hero h1 em{font-style:italic; font-weight:500; color:var(--teal)}
   .hero p.lead{font-size:clamp(16px,1.7vw,19px); color:var(--muted); max-width:500px; margin-bottom:30px}
   .cta-row{display:flex; gap:13px; flex-wrap:wrap; align-items:center}
@@ -209,9 +213,9 @@
   .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px}
   .feat{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:28px; transition:transform .2s ease, border-color .2s ease}
   .feat:hover{transform:translateY(-4px); border-color:rgba(94,126,90,.3)}
-  .feat .ic{width:48px;height:48px;border-radius:14px; background:rgba(94,126,90,.10); border:1px solid rgba(94,126,90,.16);
+  .feat .ic{width:62px;height:62px;border-radius:18px; background:rgba(94,126,90,.10); border:1px solid rgba(94,126,90,.16);
     display:flex; align-items:center; justify-content:center; color:var(--teal); margin-bottom:17px}
-  .feat .ic svg{width:23px;height:23px}
+  .feat .ic svg{width:33px;height:33px}
   .feat h3{font-size:18px; margin-bottom:8px; font-weight:700; letter-spacing:-.2px}
   .feat p{color:var(--muted); font-size:14.5px}
 
@@ -266,14 +270,18 @@
 
   /* stats band */
   .stats-wrap{padding:6px 0 44px}
-  .stats-band{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;
+  .stats-band{display:grid; grid-template-columns:repeat(5,1fr); gap:16px;
     background:linear-gradient(180deg,var(--surface),var(--bg2)); border:1px solid var(--line);
     border-radius:var(--r-lg); padding:30px 24px; box-shadow:var(--sh)}
   .stat{text-align:center; position:relative}
   .stat + .stat::before{content:""; position:absolute; left:-8px; top:50%; transform:translateY(-50%); width:1px; height:42px; background:var(--line)}
   .stat b{font-family:"Spectral",serif; font-weight:600; font-size:clamp(25px,3vw,33px); color:var(--text); display:block; line-height:1.05; letter-spacing:-.5px}
   .stat b .u{color:var(--teal)}
-  .stat span{color:var(--muted); font-size:13.5px}
+  /* ВАЖНО: было «.stat span» — правило подписи задевало и <span class="num"> внутри <b>,
+     из-за чего все числа рендерились 13.5px вместо 33px (крупным оставался только «24/7»,
+     у которого нет span). Ограничиваем прямым потомком. */
+  .stat > span{color:var(--muted); font-size:13.5px}
+  .stat b .u{font-size:.62em; vertical-align:baseline}
 
   /* ecosystem app cards */
   .apps{display:grid; grid-template-columns:1fr 1fr; gap:20px}
@@ -321,6 +329,93 @@
   @keyframes auroraSpin{to{--ang:360deg}}
   @keyframes spin{to{transform:rotate(360deg)}}
 
+  /* ===================== v2: свет, глубина, первый экран ===================== */
+  /* 1. Карточки получают цветную тень и «подъём» — раньше они лежали плоско */
+  .feat, .pcard, .rev, .bcard, .step{box-shadow:var(--sh-card); transition:transform .24s cubic-bezier(.2,.7,.2,1), border-color .24s ease, box-shadow .24s ease}
+  .feat:hover, .pcard:hover, .rev:hover, .bcard:hover{box-shadow:var(--sh-card-h)}
+  .rev:hover{transform:translateY(-3px)}
+  .faq details{box-shadow:var(--sh-card)}
+
+  /* 2. Шапка: при прокрутке становится плотнее и обретает тень — даёт ощущение слоя */
+  header{transition:background .3s ease, box-shadow .3s ease, border-color .3s ease}
+  header.scrolled{background:rgba(255,255,255,.92); box-shadow:0 10px 30px -22px rgba(60,80,55,.5); border-bottom-color:transparent}
+
+  /* 3. Живое превью диалога в героe: реплики-примера визуально мягче настоящих,
+        чтобы никто не принял их за свой разговор */
+  @media(min-width:881px){ .hero h1 em{white-space:nowrap} }
+  .bubble.preview{opacity:.97}
+  .bubble.preview.bot{background:linear-gradient(180deg,#ffffff,var(--surface2))}
+  .preview-tag{align-self:center; margin-top:2px; font-size:11.5px; font-weight:600; letter-spacing:.3px;
+    color:var(--faint); background:rgba(94,126,90,.07); border:1px solid rgba(94,126,90,.14);
+    padding:5px 12px; border-radius:999px; animation:tagIn .5s ease both}
+  @keyframes tagIn{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+  .msgs.is-preview{-webkit-mask-image:none}
+
+  /* 7. Карточки «Что внутри»: сгенерированные иллюстрации вместо векторных иконок */
+  .feat .ic{width:106px; height:106px; border-radius:20px; background:none; border:0;
+    box-shadow:none; padding:0; overflow:hidden; margin-bottom:15px}
+  .feat:hover .ic{box-shadow:none}
+  .feat .ic img{width:100%; height:100%; display:block; object-fit:cover}
+
+  /* 6. Темы обращений — плитки-ссылки на разборы в блоге */
+  .topics{display:grid; grid-template-columns:repeat(auto-fill,minmax(212px,1fr)); gap:12px}
+  .topic{display:flex; flex-direction:column; gap:3px; padding:15px 17px; border-radius:14px;
+    background:var(--surface); border:1px solid var(--line); box-shadow:var(--sh-card);
+    transition:transform .2s cubic-bezier(.2,.7,.2,1), border-color .2s ease, box-shadow .2s ease}
+  .topic b{font-size:15.5px; font-weight:700; letter-spacing:-.2px}
+  .topic span{font-size:13px; color:var(--muted); line-height:1.45}
+  .topic:hover{transform:translateY(-3px); border-color:rgba(94,126,90,.34); box-shadow:var(--sh-card-h)}
+  @media(max-width:560px){ .topics{grid-template-columns:1fr 1fr; gap:9px} .topic{padding:12px 13px} .topic b{font-size:14.5px} .topic span{font-size:12px} }
+
+  /* 5. Тёмный акцентный блок с телефонами.
+        Скриншоты приложения тёмные — на кремовом фоне они смотрелись чужеродно.
+        Тёмная секция превращает этот конфликт в приём: продукт становится акцентом. */
+  .showcase{position:relative; overflow:hidden; isolation:isolate;
+    background:radial-gradient(120% 90% at 50% -10%, #2f4a3b 0%, #24382d 45%, #1c2c24 100%); color:#EFEFE8}
+  .showcase .seclabel{color:#A9C7A2}
+  .showcase .seclabel::before{background:linear-gradient(90deg,transparent,#A9C7A2,transparent)}
+  .showcase h2{color:#F4F2EA}
+  .showcase .sub{color:rgba(239,239,232,.72)}
+  .sc-glow{position:absolute; inset:0; pointer-events:none; z-index:-1}
+  .sc-glow::before{content:""; position:absolute; width:760px; height:520px; left:50%; top:26%;
+    transform:translateX(-50%); border-radius:50%; filter:blur(90px); opacity:.5;
+    background:radial-gradient(circle, rgba(140,190,140,.42), transparent 68%)}
+  /* Без 3D-поворота: rotateY заставляет браузер растрировать слой и пересэмплировать
+     текст — на боковых экранах он становился мылом (замер: 579 против 12681 у прямого).
+     Глубину даём размером, вертикальной ступенькой и тенью. */
+  .phones{display:flex; align-items:flex-end; justify-content:center; gap:30px; margin-top:6px}
+  .ph{position:relative; margin:0; flex:0 0 auto}
+  .ph img{display:block; width:100%; height:auto; border-radius:20px;
+    box-shadow:0 40px 70px -30px rgba(0,0,0,.75), 0 0 0 1px rgba(255,255,255,.20), 0 0 34px -12px rgba(150,200,150,.28)}
+  .ph figcaption{margin-top:16px; text-align:center; font-size:13px; color:rgba(239,239,232,.62)}
+  .ph-main{width:258px; z-index:2}
+  .ph-side{width:206px; margin-bottom:38px;   /* ступенька вместо наклона */
+    transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+  .ph-side img{box-shadow:0 30px 56px -28px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.16)}
+  .ph:hover{transform:translateY(-6px)}   /* трансформация только на hover — в покое картинка резкая */
+  .sc-cta{text-align:center; margin-top:38px}
+  .showcase .btn{background:#EFEFE8; color:#22352A}
+  .showcase .btn:hover{background:#ffffff}
+  @media(max-width:880px){
+    .phones{gap:14px}
+    .ph-main{width:200px} .ph-side{width:164px; margin-bottom:26px}
+  }
+  @media(max-width:560px){
+    /* на узких экранах не прячем два экрана из трёх (мобильных большинство),
+       а даём пролистать их вбок; скроллится контейнер, страница не едет */
+    .phones{gap:14px; justify-content:flex-start; overflow-x:auto; scroll-snap-type:x mandatory;
+      padding:0 16px 10px; margin:0 -16px;   /* совпадает с .wrap{padding:0 16px} на этой ширине */
+      -webkit-overflow-scrolling:touch; scrollbar-width:none}
+    .phones::-webkit-scrollbar{display:none}
+    .ph{scroll-snap-align:center}
+    .ph-main{width:min(62vw,240px)}
+    .ph-side{width:min(52vw,200px); margin-bottom:0}
+  }
+
+  /* 4. Мягкий блик по верхней кромке ключевых блоков — «стекло», а не «бумага» */
+  .chat::after{content:""; position:absolute; left:0; right:0; top:0; height:1px; pointer-events:none;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.9),transparent)}
+
   /* 3D tilt for app cards */
   .apps{perspective:1100px}
   .appcard{transform-style:preserve-3d; will-change:transform}
@@ -330,6 +425,9 @@
     border:1px solid var(--line-strong); border-radius:var(--r-lg); padding:56px 32px; box-shadow:var(--sh-glow)}
   .finalcta .glow{position:absolute; inset:0; pointer-events:none;
     background:radial-gradient(440px 220px at 50% -15%, rgba(94,126,90,.20), transparent 70%)}
+  .cta-band{position:relative; display:block; width:calc(100% + 64px); max-width:none; margin:-56px -32px 30px;
+    height:clamp(180px,26vw,300px); object-fit:cover; object-position:center 42%;
+    border-radius:var(--r-lg) var(--r-lg) 0 0}
   .finalcta h2{margin-bottom:12px; position:relative}
   .finalcta p{color:var(--muted); max-width:560px; margin:0 auto 26px; position:relative; font-size:16.5px}
   .finalcta .btn{position:relative}
@@ -407,6 +505,7 @@
     .shot{width:48%; min-width:150px}
     .fcols{flex-direction:column; gap:18px}
     .stats-band{grid-template-columns:1fr 1fr; gap:26px 12px; padding:26px 16px}
+    .stat:nth-child(5){grid-column:1 / -1}
     .stat + .stat::before{display:none}
     .apps{grid-template-columns:1fr}
     .appcard{padding:24px}
@@ -538,6 +637,7 @@
 <section class="stats-wrap">
   <div class="wrap">
     <div class="stats-band">
+      <div class="stat"><b><span class="num" data-count="7000">7 000</span><span class="u">+</span></b><span>установок приложения</span></div>
       <div class="stat"><b><span class="num" data-count="4.7" data-dec="1">4.7</span><span class="u">★</span></b><span>рейтинг в RuStore</span></div>
       <div class="stat"><b><span class="num" data-count="8">8</span></b><span>психологов на выбор</span></div>
       <div class="stat"><b>24/7</b><span>всегда рядом</span></div>
@@ -553,12 +653,12 @@
     <h2>Поддержка, в которой чувствуешь человека</h2>
     <p class="sub">Не сухой бот, а собеседник, который помнит контекст и подбирает слова под вас.</p>
     <div class="grid">
-      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div><h3>Разговор с ИИ-психологом</h3><p>Понимает контекст беседы, поддерживает и помогает разобраться — спокойно и бережно.</p></div>
-      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3>Разные психологи на выбор</h3><p>Каждый со своим характером и подходом — от академичного до тёплого «по-домашнему».</p></div>
-      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.142 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.142 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/></svg></div><h3>Доказательные методы</h3><p>Опора на КПТ, ACT, схематерапию, Mindfulness и CFT. Без эзотерики и обещаний «вылечить».</p></div>
-      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg></div><h3>Голосовой ввод</h3><p>Говорите, а не печатайте — удобно, когда хочется просто выговориться.</p></div>
-      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg></div><h3>Сохранение сессий</h3><p>Сохраняйте беседы и перечитывайте офлайн. Экспорт и импорт в текстовом формате.</p></div>
-      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h3>Полная анонимность</h3><p>Без регистрации и сбора данных. Профиль — только по желанию. Разговоры остаются с вами.</p></div>
+      <div class="feat"><div class="ic"><img src="assets/feat-razgovor.webp" alt="Два речевых облачка — разговор с ИИ-психологом" width="240" height="240" loading="lazy"></div><h3>Разговор с ИИ-психологом</h3><p>Понимает контекст беседы, поддерживает и помогает разобраться — спокойно и бережно.</p></div>
+      <div class="feat"><div class="ic"><img src="assets/feat-personas.webp" alt="Силуэты разных собеседников — восемь психологов на выбор" width="240" height="240" loading="lazy"></div><h3>Разные психологи на выбор</h3><p>Каждый со своим характером и подходом — от академичного до тёплого «по-домашнему».</p></div>
+      <div class="feat"><div class="ic"><img src="assets/feat-metody.webp" alt="Раскрытая книга и схема — опора на доказательные методы" width="240" height="240" loading="lazy"></div><h3>Доказательные методы</h3><p>Опора на КПТ, ACT, схематерапию, Mindfulness и CFT. Без эзотерики и обещаний «вылечить».</p></div>
+      <div class="feat"><div class="ic"><img src="assets/feat-golos.webp" alt="Микрофон со звуковыми волнами — голосовой ввод" width="240" height="240" loading="lazy"></div><h3>Голосовой ввод</h3><p>Говорите, а не печатайте — удобно, когда хочется просто выговориться.</p></div>
+      <div class="feat"><div class="ic"><img src="assets/feat-sessii.webp" alt="Папка с закладкой и облако — сохранение сессий" width="240" height="240" loading="lazy"></div><h3>Сохранение сессий</h3><p>Сохраняйте беседы и перечитывайте офлайн. Экспорт и импорт в текстовом формате.</p></div>
+      <div class="feat"><div class="ic"><img src="assets/feat-anonimnost.webp" alt="Щит с замком — полная анонимность" width="240" height="240" loading="lazy"></div><h3>Полная анонимность</h3><p>Без регистрации и сбора данных. Профиль — только по желанию. Разговоры остаются с вами.</p></div>
     </div>
   </div>
 </section>
@@ -595,17 +695,47 @@
   </div>
 </section>
 
-<!-- СКРИНШОТЫ -->
-<section style="background:var(--bg2)">
+<!-- С ЧЕМ ПРИХОДЯТ — показывает применимость и раздаёт вес на статьи блога -->
+<section id="topics">
+  <div class="wrap">
+    <div class="seclabel">С чем приходят</div>
+    <h2>О чём с ним чаще всего говорят</h2>
+    <p class="sub">Здесь можно начать с любой из этих тем — а можно просто рассказать, как есть, своими словами.</p>
+    <div class="topics">
+      <a class="topic" href="blog/kak-spravitsya-s-trevogoy.html"><b>Тревога</b><span>не отпускает напряжение</span></a>
+      <a class="topic" href="blog/panicheskaya-ataka-chto-delat.html"><b>Паническая атака</b><span>накрывает внезапно</span></a>
+      <a class="topic" href="blog/bessonnitsa-pri-trevoge.html"><b>Бессонница</b><span>мысли не дают уснуть</span></a>
+      <a class="topic" href="blog/emotsionalnoe-vygoranie.html"><b>Выгорание</b><span>ничего не радует в работе</span></a>
+      <a class="topic" href="blog/depressiya-priznaki-chto-delat.html"><b>Депрессия</b><span>тяжесть не проходит неделями</span></a>
+      <a class="topic" href="blog/osennyaya-depressiya.html"><b>Осенняя хандра</b><span>с темнотой пропали силы</span></a>
+      <a class="topic" href="blog/apatiya.html"><b>Апатия</b><span>нет сил и ничего не хочется</span></a>
+      <a class="topic" href="blog/kak-spravitsya-s-odinochestvom.html"><b>Одиночество</b><span>не с кем поговорить</span></a>
+      <a class="topic" href="blog/kak-perezhit-rasstavanie.html"><b>Расставание</b><span>не получается отпустить</span></a>
+      <a class="topic" href="blog/toksichnye-otnosheniya.html"><b>Токсичные отношения</b><span>рядом становится хуже</span></a>
+      <a class="topic" href="blog/kak-perezhit-smert-blizkogo.html"><b>Утрата</b><span>ушёл близкий человек</span></a>
+      <a class="topic" href="blog/kak-povysit-samootsenku.html"><b>Самооценка</b><span>вечно себя ругаю</span></a>
+      <a class="topic" href="blog/navyazchivye-mysli.html"><b>Навязчивые мысли</b><span>крутится одно и то же</span></a>
+      <a class="topic" href="blog/prokrastinatsiya.html"><b>Прокрастинация</b><span>всё откладываю на потом</span></a>
+      <a class="topic" href="blog/stress-na-rabote.html"><b>Стресс на работе</b><span>напряжение не отпускает</span></a>
+      <a class="topic" href="blog/sindrom-samozvantsa.html"><b>Синдром самозванца</b><span>кажется, что я обманщик</span></a>
+    </div>
+    <p class="sub" style="margin:26px auto 0">У каждой темы есть подробный разбор — в <a href="blog/" style="color:var(--teal-deep); font-weight:700">блоге</a>.</p>
+  </div>
+</section>
+
+<!-- СКРИНШОТЫ — тёмный акцентный блок -->
+<section class="showcase">
+  <div class="sc-glow" aria-hidden="true"></div>
   <div class="wrap">
     <div class="seclabel">Приложение</div>
     <h2>Полная версия — в RuStore</h2>
     <p class="sub">Голос, сохранение сессий, тонкая настройка психологов и безлимит в Премиуме.</p>
-    <div class="shots">
-      <div class="shot"><img src="assets/screenshots/screen1.webp" alt="Экран чата с ИИ-психологом" loading="lazy"></div>
-      <div class="shot"><img src="assets/screenshots/screen2.webp" alt="Экран выбора психолога" loading="lazy"></div>
-      <div class="shot"><img src="assets/screenshots/screen3.webp" alt="Экран с доказательными методами" loading="lazy"></div>
+    <div class="phones">
+      <figure class="ph ph-side"><img src="assets/screenshots/phone-dnevnik.webp" alt="Дневник настроения в приложении AI Therapist: оценка дня и график динамики за месяц" width="760" height="1484" loading="lazy"><figcaption>Дневник настроения и динамика</figcaption></figure>
+      <figure class="ph ph-main"><img src="assets/screenshots/phone-razgovor.webp" alt="Разговор с ИИ-психологом в приложении AI Therapist: разбор ссоры по шагам" width="760" height="1539" loading="lazy"><figcaption>Разговор, который помнит контекст</figcaption></figure>
+      <figure class="ph ph-side"><img src="assets/screenshots/phone-nastroyki.webp" alt="Настройка характера ответов: длина, подача, подход КПТ или психоанализ, обращение на вы или на ты" width="760" height="1579" loading="lazy"><figcaption>Тонкая настройка под себя</figcaption></figure>
     </div>
+    <div class="sc-cta"><a class="btn" id="dl-shots" href="#">Скачать в RuStore</a></div>
   </div>
 </section>
 
@@ -641,7 +771,7 @@
     <h2>Другие наши приложения</h2>
     <p class="sub">Сделаны той же командой — с тем же вниманием к человеку и приватности.</p>
     <div class="apps">
-      <article class="appcard" style="--ac:#7a6bcf;--ac-glow:rgba(201,154,110,.24);--ac-soft:rgba(201,154,110,.10);--ac-line:rgba(201,154,110,.26)">
+      <article class="appcard" style="--ac:#b8811f;--ac-glow:rgba(184,129,31,.34);--ac-soft:rgba(184,129,31,.11);--ac-line:rgba(184,129,31,.30)">
         <div class="appcard-top">
           <div class="appicon"><img src="assets/apps/metacards.webp" alt="Иконка приложения Метакарты" loading="lazy"></div>
           <div>
@@ -654,7 +784,7 @@
         <a class="abtn" href="https://www.rustore.ru/catalog/app/com.metacards.app" target="_blank" rel="noopener">Скачать в RuStore →</a>
       </article>
 
-      <article class="appcard" style="--ac:#c2902f;--ac-glow:rgba(231,184,115,.24);--ac-soft:rgba(231,184,115,.10);--ac-line:rgba(231,184,115,.26)">
+      <article class="appcard" style="--ac:#7a6bcf;--ac-glow:rgba(122,107,207,.34);--ac-soft:rgba(122,107,207,.11);--ac-line:rgba(122,107,207,.30)">
         <div class="appcard-top">
           <div class="appicon"><img src="assets/apps/fateai.webp" alt="Иконка приложения Fate AI" loading="lazy"></div>
           <div>
@@ -697,7 +827,7 @@
         <span class="more">Читать →</span>
       </a>
     </div>
-    <p class="sub" style="margin:22px 0 0">Тревожитесь и не знаете, с чего начать? Загляните в <a href="blog/trevoga-polnyy-gid.html" style="color:var(--teal-deep); font-weight:700">полный гид по тревоге</a> — там карта всех состояний и материалов.</p>
+    <p class="sub" style="margin:22px auto 0">Тревожитесь и не знаете, с чего начать? Загляните в <a href="blog/trevoga-polnyy-gid.html" style="color:var(--teal-deep); font-weight:700">полный гид по тревоге</a> — там карта всех состояний и материалов.</p>
     <div style="text-align:center; margin-top:18px"><a class="blog-all" href="blog/">Все статьи →</a></div>
   </div>
 </section>
@@ -724,6 +854,7 @@
   <div class="wrap">
     <div class="finalcta">
       <div class="glow" aria-hidden="true"></div>
+      <img class="cta-band" src="assets/cta-band.webp" alt="Вечер, тёплая комната: человек с телефоном под пледом у окна" width="1400" height="547" loading="lazy">
       <h2>Начните бесплатно прямо сейчас</h2>
       <p>Без регистрации. Выберите психолога, поговорите — а полная версия с безлимитом, голосовым вводом и сохранением сессий ждёт в RuStore.</p>
       <a class="btn" id="dl-final" href="#">Скачать в RuStore</a>
@@ -807,7 +938,7 @@ const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-mo
 const $ = (id) => document.getElementById(id);
 const msgsEl = $("c-msgs"), inputEl = $("c-input");
 
-["dl-top","dl-hero","dl-final"].forEach(id => { const e=$(id); if(e) e.href = RUSTORE_URL; });
+["dl-top","dl-hero","dl-final","dl-shots"].forEach(id => { const e=$(id); if(e) e.href = RUSTORE_URL; });
 
 /* ====================== ПЕРСОНЫ ====================== */
 function hexA(hex,a){ const n=parseInt(hex.slice(1),16); return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`; }
@@ -862,8 +993,14 @@ function selectPersona(i){
   $("c-name").textContent = p.key;
   $("c-role").textContent = p.role + " · онлайн";
   closePicker();
+  clearPreview();
   if(history.length){ renderHistory(); }
-  else { msgsEl.innerHTML = ""; typeBubble(p.hello); }
+  else {
+    msgsEl.innerHTML = "";
+    typeBubble(p.hello);
+    /* превью стартует после того, как приветствие допечаталось */
+    runPreview(reduceMotion ? 0 : p.hello.length * 28 + 900);
+  }
   renderDemoBar();
   if(demoCount >= DEMO_LIMIT) showLimit();
   else applyGateState();
@@ -891,6 +1028,70 @@ function typeBubble(text){
     if (i < text.length) setTimeout(tick, 16 + Math.random()*24);
   })();
 }
+/* ============ v2: живое превью диалога на первом экране ============
+   Раньше в чате висело одно приветствие и 400px пустоты — продукт был не виден.
+   Теперь чат сам проигрывает короткий пример разговора.
+   ВАЖНО: реплики примера НЕ попадают в history (её мы шлём на бэкенд),
+   помечены классом .preview и стираются при первом же действии пользователя. */
+const PREVIEW_DIALOG = {
+  me:  "Тревожно уже которую неделю, ночью не могу уснуть.",
+  bot: "Это выматывает: тело устало, а голова не выключается. Какая мысль возвращается чаще всего?"
+};
+let previewOn = false;
+const previewTimers = [];
+function clearPreview(){
+  if(!previewOn) return;
+  previewOn = false;
+  while(previewTimers.length) clearTimeout(previewTimers.pop());
+  msgsEl.querySelectorAll(".preview, .preview-tag").forEach(el => el.remove());
+}
+function previewSleep(ms){ return new Promise(r => previewTimers.push(setTimeout(r, ms))); }
+async function runPreview(startDelay){
+  if(history.length || demoCount >= DEMO_LIMIT) return;   // не мешаем реальному разговору
+  previewOn = true;
+  await previewSleep(reduceMotion ? 0 : (startDelay || 1500));
+  if(!previewOn) return;
+
+  const me = addBubble("me", "");
+  me.classList.add("preview");
+  if(reduceMotion){ me.textContent = PREVIEW_DIALOG.me; }
+  else {
+    for(let i = 1; i <= PREVIEW_DIALOG.me.length; i++){
+      if(!previewOn) return;
+      me.textContent = PREVIEW_DIALOG.me.slice(0, i);
+      msgsEl.scrollTop = msgsEl.scrollHeight;
+      await previewSleep(18);
+    }
+  }
+  await previewSleep(reduceMotion ? 0 : 500);
+  if(!previewOn) return;
+
+  const dots = showTyping(); dots.classList.add("preview");
+  await previewSleep(reduceMotion ? 0 : 1100);
+  if(!previewOn){ return; }
+  dots.remove();
+
+  const bot = addBubble("bot", "");
+  bot.classList.add("preview");
+  if(reduceMotion){ bot.textContent = PREVIEW_DIALOG.bot; }
+  else {
+    for(let i = 1; i <= PREVIEW_DIALOG.bot.length; i++){
+      if(!previewOn) return;
+      bot.textContent = PREVIEW_DIALOG.bot.slice(0, i);
+      msgsEl.scrollTop = msgsEl.scrollHeight;
+      await previewSleep(17);
+    }
+  }
+  await previewSleep(reduceMotion ? 0 : 400);
+  if(!previewOn) return;
+
+  const tag = document.createElement("div");
+  tag.className = "preview-tag";
+  tag.textContent = "Это пример разговора — напишите своё, ответит по-настоящему";
+  msgsEl.appendChild(tag);
+  msgsEl.scrollTop = msgsEl.scrollHeight;
+}
+
 function userCount(){ return history.filter(m=>m.role==="user").length; }
 function showLimit(){
   document.querySelectorAll(".limit-note").forEach(e => e.remove());
@@ -1060,6 +1261,9 @@ async function send(){
 /* ====================== UI ====================== */
 function autosize(){ inputEl.style.height="auto"; inputEl.style.height=Math.min(inputEl.scrollHeight,100)+"px"; }
 inputEl.addEventListener("input", autosize);
+inputEl.addEventListener("focus", clearPreview);   // v2: пример уходит, как только человек начал сам
+inputEl.addEventListener("input", clearPreview);
+$("c-send").addEventListener("click", clearPreview);
 inputEl.addEventListener("keydown", e => { if(e.key==="Enter" && !e.shiftKey){ e.preventDefault(); send(); } });
 $("c-send").onclick = send;
 $("c-switch").onclick = () => { const pk=$("c-picker"); pk.hidden ? openPicker() : closePicker(); };
@@ -1071,11 +1275,18 @@ selectPersona(0);
 probeDirect(); // фоновая проба прямого доступа — решит «прямой/прокси» до первого сообщения
 if(FORCE_PROXY){ addBubble("bot","🔧 Тестовый режим: все запросы идут через резервный Яндекс-прокси (открой консоль F12 — увидишь «[net] через Яндекс-прокси»)."); }
 
+/* v2: уплотнение шапки при прокрутке */
+(function(){
+  const h = document.querySelector('header'); if(!h) return;
+  const onScroll = () => h.classList.toggle('scrolled', window.scrollY > 12);
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+})();
+
 /* scroll-reveal — прогрессивно и с уважением к reduced-motion */
 (function(){
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (!('IntersectionObserver' in window)) return;
-  const els = document.querySelectorAll('.feat, .pcard, .step, .appcard, .stat, .shot, .price');
+  const els = document.querySelectorAll('.feat, .pcard, .step, .appcard, .stat, .shot, .price, .rev, .bcard, .faq details, section > .wrap > .seclabel, section > .wrap > h2, section > .wrap > .sub');
   els.forEach(el => {
     el.classList.add('rv');
     const sibs = [...el.parentElement.children].filter(c => c.classList.contains('rv'));
@@ -1094,8 +1305,9 @@ if(FORCE_PROXY){ addBubble("bot","🔧 Тестовый режим: все за�
   if(reduceMotion) return;
   const animate = (el) => {
     const target = parseFloat(el.dataset.count), dec = +(el.dataset.dec||0), dur = 1100, t0 = performance.now();
+    const fmt = (v) => { const t = v.toFixed(dec); return dec ? t : t.replace(/\B(?=(\d{3})+(?!\d))/g, ' '); };
     const tick = (t) => { let p = Math.min((t-t0)/dur,1); p = 1-Math.pow(1-p,3);
-      el.textContent = (target*p).toFixed(dec); if(p<1) requestAnimationFrame(tick); else el.textContent = target.toFixed(dec); };
+      el.textContent = fmt(target*p); if(p<1) requestAnimationFrame(tick); else el.textContent = fmt(target); };
     requestAnimationFrame(tick);
   };
   const io = new IntersectionObserver((ents,o)=>{ ents.forEach(e=>{ if(e.isIntersecting){ animate(e.target); o.unobserve(e.target);} }); },{threshold:.6});
