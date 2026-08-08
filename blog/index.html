@@ -5,16 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Блог о ментальном здоровье — AI Therapist</title>
 <meta name="description" content="Статьи о тревоге, стрессе, выгорании, самооценке и самопомощи. Понятные техники и доказательные подходы (КПТ, осознанность) от команды AI Therapist.">
-<meta name="robots" content="index,follow">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <link rel="canonical" href="https://aitherapist.ru/blog/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Блог о ментальном здоровье — AI Therapist">
 <meta property="og:description" content="Статьи о тревоге, стрессе, выгорании, самооценке и самопомощи: понятные техники и доказательные подходы.">
 <meta property="og:url" content="https://aitherapist.ru/blog/">
 <meta property="og:image" content="https://aitherapist.ru/assets/og.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Spectral:wght@500;600&display=swap" rel="stylesheet">
+<meta property="og:site_name" content="AI Therapist">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Блог о ментальном здоровье — AI Therapist">
+<meta name="twitter:description" content="Статьи о тревоге, стрессе, выгорании, самооценке и самопомощи: понятные техники и доказательные подходы.">
+<meta name="twitter:image" content="https://aitherapist.ru/assets/og.png">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../assets/fonts/manrope-400-800-cyrillic.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../assets/fonts/spectral-600-cyrillic.woff2">
 <link rel="icon" type="image/webp" href="../assets/apps/aitherapist.webp">
 <link rel="stylesheet" href="../assets/legal.css">
 <script type="application/ld+json">
@@ -28,7 +33,7 @@
       "description":"Статьи о тревоге, стрессе, выгорании, самооценке и самопомощи: понятные техники и доказательные подходы (КПТ, осознанность).",
       "url":"https://aitherapist.ru/blog/",
       "inLanguage":"ru-RU",
-      "publisher":{"@type":"Organization","name":"AI Therapist","logo":{"@type":"ImageObject","url":"https://aitherapist.ru/assets/apps/aitherapist.webp"}},
+      "publisher":{"@type":"Organization","@id":"https://aitherapist.ru/#organization","name":"AI Therapist","logo":{"@type":"ImageObject","url":"https://aitherapist.ru/assets/apps/aitherapist.webp"}},
       "blogPost":[
         {"@type":"BlogPosting","headline":"Осенняя депрессия: почему накрывает осенью и 8 способов справиться","url":"https://aitherapist.ru/blog/osennyaya-depressiya.html","datePublished":"2026-08-07"},
         {"@type":"BlogPosting","headline":"Как пережить смерть близкого человека: 9 шагов, которые помогают","url":"https://aitherapist.ru/blog/kak-perezhit-smert-blizkogo.html","datePublished":"2026-08-02"},
@@ -77,7 +82,7 @@
   .post-card:hover{border-color:var(--teal,#557A51); transform:translateY(-4px); box-shadow:0 16px 44px rgba(94,126,90,.14)}
   .post-card .tag{align-self:flex-start; font-size:11px; font-weight:700; letter-spacing:.7px; text-transform:uppercase;
     color:var(--teal-deep,#41633E); background:rgba(201,154,110,.18); padding:4px 10px; border-radius:8px; margin-bottom:14px}
-  .post-card h2{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:20.5px; line-height:1.25; letter-spacing:-.2px; margin:0 0 9px}
+  .post-card h3{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:20.5px; line-height:1.25; letter-spacing:-.2px; margin:0 0 9px}
   .post-card p{margin:0 0 16px; color:var(--muted,#56625A); font-size:14px; line-height:1.6; flex:1}
   .post-card .more{font-weight:700; font-size:14px; color:var(--teal-deep,#41633E); display:inline-flex; align-items:center; gap:6px; transition:gap .18s ease}
   .post-card:hover .more{gap:10px}
@@ -96,6 +101,9 @@
   <h1>Блог о ментальном здоровье</h1>
   <p class="date">Понятные техники самопомощи и доказательные подходы — простым языком.</p>
 
+  <p class="intro">Здесь мы разбираем состояния, с которыми люди чаще всего остаются один на один: тревогу и панические атаки, бессонницу, депрессию и апатию, выгорание, одиночество, расставания и утрату. Каждая статья устроена одинаково: что это такое, почему возникает, как проявляется, что можно сделать прямо сейчас, что работает вдолгую и в какой момент нужен специалист.</p>
+  <p>Материалы готовит команда AI Therapist на основе публикаций ВОЗ, NHS, NIH и Американской психологической ассоциации — со ссылками на первоисточники в конце каждого текста. Мы не ставим диагнозы и не выдумываем экспертов: как именно устроена работа над статьями, написано на странице <a href="../about.html">о проекте</a>. Тексты носят просветительский характер и не заменяют консультацию врача или психотерапевта.</p>
+
   <nav class="clusternav" aria-label="Разделы блога">
     <a href="#trevoga">🧠 Тревога и спокойствие</a>
     <a href="#nastroenie">🌧 Настроение и депрессия</a>
@@ -112,25 +120,25 @@
     <div class="posts">
       <a class="post-card" href="kak-spravitsya-s-trevogoy.html">
         <span class="tag">Тревога</span>
-        <h2>Как справиться с тревогой: 8 техник, которые реально помогают</h2>
+        <h3>Как справиться с тревогой: 8 техник, которые реально помогают</h3>
         <p>Дыхание, заземление, работа с тревожными мыслями по КПТ и другие приёмы, которые можно применить прямо сейчас — и когда стоит обратиться к специалисту.</p>
         <span class="more">Читать →</span>
       </a>
       <a class="post-card" href="panicheskaya-ataka-chto-delat.html">
         <span class="tag">Паника</span>
-        <h2>Паническая атака: что делать в момент приступа</h2>
+        <h3>Паническая атака: что делать в момент приступа</h3>
         <p>Почему паника не опасна, как отличить её от инфаркта и пошаговый алгоритм, что делать прямо сейчас.</p>
         <span class="more">Читать →</span>
       </a>
       <a class="post-card" href="navyazchivye-mysli.html">
         <span class="tag">Навязчивые мысли</span>
-        <h2>Навязчивые мысли: почему появляются и 7 способов их остановить</h2>
+        <h3>Навязчивые мысли: почему появляются и 7 способов их остановить</h3>
         <p>Что такое навязчивые мысли и руминация, чем они отличаются от ОКР, 7 техник, как ослабить их власть, и когда нужен специалист.</p>
         <span class="more">Читать →</span>
       </a>
       <a class="post-card" href="bessonnitsa-pri-trevoge.html">
         <span class="tag">Сон</span>
-        <h2>Бессонница при тревоге: почему не спится и что делать</h2>
+        <h3>Бессонница при тревоге: почему не спится и что делать</h3>
         <p>Почему тревога ворует сон, что сделать прямо сейчас, чтобы уснуть, гигиена сна и метод КПТ-бессонницы.</p>
         <span class="more">Читать →</span>
       </a>
@@ -143,19 +151,19 @@
     <div class="posts">
       <a class="post-card" href="osennyaya-depressiya.html">
         <span class="tag">Осенняя депрессия</span>
-        <h2>Осенняя депрессия: почему накрывает осенью и 8 способов справиться</h2>
+        <h3>Осенняя депрессия: почему накрывает осенью и 8 способов справиться</h3>
         <p>Чем сезонная депрессия отличается от осенней хандры, почему на коротком дне нет сил и хочется спать, как работает светотерапия, нужен ли витамин D и 8 шагов на тёмные месяцы.</p>
         <span class="more">Читать →</span>
       </a>
       <a class="post-card" href="depressiya-priznaki-chto-delat.html">
         <span class="tag">Депрессия</span>
-        <h2>Депрессия: 10 признаков, что делать и когда идти к врачу</h2>
+        <h3>Депрессия: 10 признаков, что делать и когда идти к врачу</h3>
         <p>Чем депрессия отличается от плохого настроения, выгорания и апатии, 10 симптомов, экспресс-проверка, 8 шагов, как помочь близкому и когда нужна помощь врача.</p>
         <span class="more">Читать →</span>
       </a>
       <a class="post-card" href="apatiya.html">
         <span class="tag">Апатия</span>
-        <h2>Апатия: почему нет сил и ничего не хочется — и что делать</h2>
+        <h3>Апатия: почему нет сил и ничего не хочется — и что делать</h3>
         <p>Чем апатия отличается от лени и депрессии, почему пропадают силы и желания, 7 шагов вернуть энергию, частые ошибки и когда пора к специалисту.</p>
         <span class="more">Читать →</span>
       </a>
@@ -168,7 +176,7 @@
     <div class="posts">
       <a class="post-card" href="kak-perezhit-smert-blizkogo.html">
         <span class="tag">Утрата</span>
-        <h2>Как пережить смерть близкого человека: 9 шагов, которые помогают</h2>
+        <h3>Как пережить смерть близкого человека: 9 шагов, которые помогают</h3>
         <p>Сколько длится горе, почему этапы не идут по порядку, что делать в первые дни, как справиться с чувством вины, что говорить горюющему и когда горе становится осложнённым.</p>
         <span class="more">Читать →</span>
       </a>
@@ -181,19 +189,19 @@
     <div class="posts">
       <a class="post-card" href="prokrastinatsiya.html">
         <span class="tag">Прокрастинация</span>
-        <h2>Прокрастинация: почему вы откладываете дела и 7 способов перестать</h2>
+        <h3>Прокрастинация: почему вы откладываете дела и 7 способов перестать</h3>
         <p>Почему мы откладываем важные дела, чем прокрастинация отличается от лени, цикл откладывания, мифы и 7 рабочих способов из него выйти.</p>
         <span class="more">Читать →</span>
       </a>
       <a class="post-card" href="stress-na-rabote.html">
         <span class="tag">Стресс</span>
-        <h2>Стресс на работе: 8 способов справиться и не выгореть</h2>
+        <h3>Стресс на работе: 8 способов справиться и не выгореть</h3>
         <p>Почему накрывает рабочий стресс, как понять, что он перешёл черту, 8 способов справиться в моменте и что делать в долгую, чтобы не выгореть.</p>
         <span class="more">Читать →</span>
       </a>
       <a class="post-card" href="emotsionalnoe-vygoranie.html">
         <span class="tag">Выгорание</span>
-        <h2>Эмоциональное выгорание: 5 стадий, признаки и как восстановиться</h2>
+        <h3>Эмоциональное выгорание: 5 стадий, признаки и как восстановиться</h3>
         <p>Признаки и стадии выгорания, чем оно отличается от усталости и депрессии, и пошаговый план восстановления.</p>
         <span class="more">Читать →</span>
       </a>
@@ -206,13 +214,13 @@
     <div class="posts">
       <a class="post-card" href="kak-povysit-samootsenku.html">
         <span class="tag">Самооценка</span>
-        <h2>Как повысить самооценку: 8 шагов, которые реально работают</h2>
+        <h3>Как повысить самооценку: 8 шагов, которые реально работают</h3>
         <p>Что такое самооценка, почему она занижается, признаки низкой самооценки, быстрый тест и 8 рабочих шагов, чтобы поднять уверенность в себе.</p>
         <span class="more">Читать →</span>
       </a>
       <a class="post-card" href="sindrom-samozvantsa.html">
         <span class="tag">Синдром самозванца</span>
-        <h2>Синдром самозванца: 7 способов перестать чувствовать себя обманщиком</h2>
+        <h3>Синдром самозванца: 7 способов перестать чувствовать себя обманщиком</h3>
         <p>Почему возникает синдром самозванца, как он проявляется, 5 типов самозванца и 7 способов перестать обесценивать свои успехи — и когда нужен специалист.</p>
         <span class="more">Читать →</span>
       </a>
@@ -225,19 +233,19 @@
     <div class="posts">
       <a class="post-card" href="toksichnye-otnosheniya.html">
         <span class="tag">Токсичные отношения</span>
-        <h2>Токсичные отношения: 12 признаков и как из них выйти</h2>
+        <h3>Токсичные отношения: 12 признаков и как из них выйти</h3>
         <p>Чем токсичные отношения отличаются от трудных и абьюзивных, 12 признаков, газлайтинг и цикл качелей, почему так трудно уйти, 8 шагов и как выйти безопасно.</p>
         <span class="more">Читать →</span>
       </a>
       <a class="post-card" href="kak-spravitsya-s-odinochestvom.html">
         <span class="tag">Одиночество</span>
-        <h2>Как справиться с одиночеством: 8 шагов, когда рядом никого нет</h2>
+        <h3>Как справиться с одиночеством: 8 шагов, когда рядом никого нет</h3>
         <p>Почему становится одиноко даже среди людей, чем одиночество отличается от уединения, чем опасно хроническое одиночество и 8 шагов, чтобы вернуться в контакт с людьми.</p>
         <span class="more">Читать →</span>
       </a>
       <a class="post-card" href="kak-perezhit-rasstavanie.html">
         <span class="tag">Расставание</span>
-        <h2>Как пережить расставание и отпустить человека: 8 шагов</h2>
+        <h3>Как пережить расставание и отпустить человека: 8 шагов</h3>
         <p>Почему после разрыва так больно, сколько длится боль, что делать в первые дни, 8 шагов, чтобы отпустить человека, и ошибки, которые растягивают страдание на годы.</p>
         <span class="more">Читать →</span>
       </a>

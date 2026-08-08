@@ -23,10 +23,16 @@
 <meta name="theme-color" content="#F7F4EE">
 <link rel="icon" type="image/webp" href="assets/apps/aitherapist.webp">
 <link rel="apple-touch-icon" href="assets/apps/aitherapist.webp">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Spectral:ital,wght@0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/manrope-400-800-cyrillic.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/spectral-600-cyrillic.woff2">
 <style>
+/* Локальные шрифты — без обращения к fonts.googleapis.com (см. assets/fonts/) */
+@font-face{font-family:'Manrope';font-style:normal;font-weight:400 800;font-display:swap;src:url(assets/fonts/manrope-400-800-cyrillic.woff2) format('woff2');unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116}
+@font-face{font-family:'Manrope';font-style:normal;font-weight:400 800;font-display:swap;src:url(assets/fonts/manrope-400-800-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Spectral';font-style:italic;font-weight:500;font-display:swap;src:url(assets/fonts/spectral-500-italic-cyrillic.woff2) format('woff2');unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116}
+@font-face{font-family:'Spectral';font-style:italic;font-weight:500;font-display:swap;src:url(assets/fonts/spectral-500-italic-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Spectral';font-style:normal;font-weight:600;font-display:swap;src:url(assets/fonts/spectral-600-cyrillic.woff2) format('woff2');unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116}
+@font-face{font-family:'Spectral';font-style:normal;font-weight:600;font-display:swap;src:url(assets/fonts/spectral-600-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
   :root{
     /* светлая тёплая палитра: шалфей + песок (успокаивающая, приветливая) */
     --bg:#F7F4EE; --bg2:#EFEBE1; --surface:#FFFFFF; --surface2:#F7F5F0;
@@ -535,11 +541,11 @@
         {"@type":"Review","author":{"@type":"Person","name":"Ilya"},"datePublished":"2026-07-13","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"reviewBody":"Обновление супер. Пользуюсь приложением уже давно и сразу заметил разницу. Раньше, если переписка длинная, психолог забывал имена путал и факты. Сейчас помнит прошлые разговоры, учитывает их в ответах и общение стало намного живее"}
       ],
       "downloadUrl":"https://www.rustore.ru/catalog/app/com.example.aitherapist",
-      "author":{"@type":"Organization","name":"AI Therapist","url":"https://aitherapist.ru/about.html"}
+      "author":{"@id":"https://aitherapist.ru/#organization"}
     },
-    {"@type":"WebSite","name":"AI Therapist","url":"https://aitherapist.ru/","inLanguage":"ru-RU"},
+    {"@type":"WebSite","@id":"https://aitherapist.ru/#website","name":"AI Therapist","url":"https://aitherapist.ru/","inLanguage":"ru-RU","publisher":{"@id":"https://aitherapist.ru/#organization"}},
     {
-      "@type":"Organization","name":"AI Therapist","url":"https://aitherapist.ru/",
+      "@type":"Organization","@id":"https://aitherapist.ru/#organization","name":"AI Therapist","url":"https://aitherapist.ru/",
       "logo":"https://aitherapist.ru/assets/apps/aitherapist.webp",
       "sameAs":["https://t.me/AI_Therapist_APP","https://www.rustore.ru/catalog/app/com.example.aitherapist"]
     },
@@ -548,7 +554,7 @@
       "mainEntity":[
         {"@type":"Question","name":"Что такое AI Therapist?","acceptedAnswer":{"@type":"Answer","text":"AI Therapist — это приложение-чат с ИИ-психологом для анонимной эмоциональной поддержки 24/7. Можно выбрать одного из восьми психологов с разными характерами и подходами и просто поговорить о том, что беспокоит."}},
         {"@type":"Question","name":"Это бесплатно?","acceptedAnswer":{"@type":"Answer","text":"Да, начать можно бесплатно. Есть платный премиум с безлимитными сообщениями и расширенными возможностями — он оформляется в приложении."}},
-        {"@type":"Question","name":"Это анонимно?","acceptedAnswer":{"@type":"Answer","text":"Да. Регистрация не нужна, персональные данные не собираются, а история переписки хранится только на вашем устройстве."}},
+        {"@type":"Question","name":"Это анонимно?","acceptedAnswer":{"@type":"Answer","text":"Да. Регистрация не нужна: имя, телефон и email мы не спрашиваем, а история переписки хранится только на вашем устройстве и не сохраняется на наших серверах. Сайт использует обезличенную веб-аналитику для подсчёта посещаемости — содержимое переписки в неё не попадает. Подробнее — в политике конфиденциальности."}},
         {"@type":"Question","name":"ИИ-психолог заменяет настоящего специалиста?","acceptedAnswer":{"@type":"Answer","text":"Нет. Это инструмент самопомощи и эмоциональной поддержки — он не заменяет профессиональную медицинскую или психотерапевтическую помощь. В кризисной ситуации обратитесь к специалисту или на линию экстренной психологической помощи."}},
         {"@type":"Question","name":"На каких методах основаны ответы?","acceptedAnswer":{"@type":"Answer","text":"Ответы опираются на доказательные подходы: когнитивно-поведенческую терапию (КПТ), ACT, схематерапию, практики осознанности (Mindfulness) и CFT."}},
         {"@type":"Question","name":"Можно попробовать без установки?","acceptedAnswer":{"@type":"Answer","text":"Да, прямо на сайте работает демо-чат: выберите психолога и напишите сообщение. Полная версия с безлимитом, голосовым вводом и сохранением сессий — в RuStore."}}
@@ -607,7 +613,8 @@
       </div>
       <div class="planbar" id="c-planbar" hidden></div>
       <div class="chat-body">
-        <div class="msgs" id="c-msgs"></div>
+        <!-- ym-hide-content: переписка демо-чата не попадает в записи Вебвизора -->
+        <div class="msgs ym-hide-content" id="c-msgs"></div>
         <div class="picker" id="c-picker" hidden>
           <div class="picker-h"><span>Выберите психолога</span>
             <button class="picker-close" id="c-pclose" aria-label="Закрыть">
@@ -623,7 +630,8 @@
           <a href="oferta.html" target="_blank" rel="noopener">условия использования сайта</a>.</label>
       </div>
       <div class="composer">
-        <textarea id="c-input" rows="1" placeholder="Напишите, что вас беспокоит…" aria-label="Сообщение"></textarea>
+        <!-- ym-disable-keys: набор текста в поле не пишется Вебвизором -->
+        <textarea id="c-input" class="ym-disable-keys" rows="1" placeholder="Напишите, что вас беспокоит…" aria-label="Сообщение"></textarea>
         <button class="send" id="c-send" aria-label="Отправить сообщение">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         </button>
@@ -658,7 +666,7 @@
       <div class="feat"><div class="ic"><img src="assets/feat-metody.webp" alt="Раскрытая книга и схема — опора на доказательные методы" width="240" height="240" loading="lazy"></div><h3>Доказательные методы</h3><p>Опора на КПТ, ACT, схематерапию, Mindfulness и CFT. Без эзотерики и обещаний «вылечить».</p></div>
       <div class="feat"><div class="ic"><img src="assets/feat-golos.webp" alt="Микрофон со звуковыми волнами — голосовой ввод" width="240" height="240" loading="lazy"></div><h3>Голосовой ввод</h3><p>Говорите, а не печатайте — удобно, когда хочется просто выговориться.</p></div>
       <div class="feat"><div class="ic"><img src="assets/feat-sessii.webp" alt="Папка с закладкой и облако — сохранение сессий" width="240" height="240" loading="lazy"></div><h3>Сохранение сессий</h3><p>Сохраняйте беседы и перечитывайте офлайн. Экспорт и импорт в текстовом формате.</p></div>
-      <div class="feat"><div class="ic"><img src="assets/feat-anonimnost.webp" alt="Щит с замком — полная анонимность" width="240" height="240" loading="lazy"></div><h3>Полная анонимность</h3><p>Без регистрации и сбора данных. Профиль — только по желанию. Разговоры остаются с вами.</p></div>
+      <div class="feat"><div class="ic"><img src="assets/feat-anonimnost.webp" alt="Щит с замком — полная анонимность" width="240" height="240" loading="lazy"></div><h3>Полная анонимность</h3><p>Без регистрации: мы не спрашиваем имя, телефон и email. Переписка не сохраняется на наших серверах и остаётся с вами.</p></div>
     </div>
   </div>
 </section>
@@ -841,7 +849,7 @@
     <div class="faq">
       <details open><summary>Что такое AI Therapist?</summary><p>AI Therapist — это приложение-чат с ИИ-психологом для анонимной эмоциональной поддержки 24/7. Можно выбрать одного из восьми психологов с разными характерами и подходами и просто поговорить о том, что беспокоит.</p></details>
       <details><summary>Это бесплатно?</summary><p>Да, начать можно бесплатно. Есть платный премиум с безлимитными сообщениями и расширенными возможностями — он оформляется в приложении.</p></details>
-      <details><summary>Это анонимно?</summary><p>Да. Регистрация не нужна, персональные данные не собираются, а история переписки хранится только на вашем устройстве.</p></details>
+      <details><summary>Это анонимно?</summary><p>Да. Регистрация не нужна: имя, телефон и email мы не спрашиваем, а история переписки хранится только на вашем устройстве и не сохраняется на наших серверах. Сайт использует обезличенную веб-аналитику для подсчёта посещаемости — содержимое переписки в неё не попадает. Подробнее — в <a href="privacy.html">политике конфиденциальности</a>.</p></details>
       <details><summary>ИИ-психолог заменяет настоящего специалиста?</summary><p>Нет. Это инструмент самопомощи и эмоциональной поддержки — он не заменяет профессиональную медицинскую или психотерапевтическую помощь. В кризисной ситуации обратитесь к специалисту или на линию экстренной психологической помощи.</p></details>
       <details><summary>На каких методах основаны ответы?</summary><p>Ответы опираются на доказательные подходы: когнитивно-поведенческую терапию (КПТ), ACT, схематерапию, практики осознанности (Mindfulness) и CFT.</p></details>
       <details><summary>Можно попробовать без установки?</summary><p>Да, прямо на сайте работает демо-чат: выберите психолога и напишите сообщение. Полная версия с безлимитом, голосовым вводом и сохранением сессий — в RuStore.</p></details>
