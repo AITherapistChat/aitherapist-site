@@ -231,6 +231,76 @@ blockquote.q cite, blockquote.q footer{display:block; margin-top:10px; font-fami
 .eeat p{margin-bottom:8px}
 .eeat a{color:var(--green)}
 
+/* ---------------- тесты-опросники (GAD-7 и далее) ----------------
+   Инструмент, а не статья: отделён от прозы двумя чернильными линейками.
+   Варианты ответа — прямоугольники на волосяной рамке; выбранный берётся
+   в чернильную рамку и подложку, а не заливается цветом. */
+.quiz{background:none; border:0; border-top:2px solid var(--ink); border-bottom:2px solid var(--ink);
+  border-radius:0; padding:var(--s3) 0 var(--s4); margin:var(--s5) 0}
+.quiz .lead{font-size:var(--fs-micro); font-weight:800; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--ink-faint); margin:0 0 var(--s1)}
+.quiz .stem{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:23px; color:var(--ink);
+  margin:0 0 var(--s3); line-height:1.25; letter-spacing:-.3px; max-width:34ch}
+.quiz fieldset{border:0; margin:0; padding:0; min-width:0}
+.q{border-top:1px solid var(--rule-soft); padding:var(--s3) 0 var(--s2); margin:0}
+.q legend{font-size:17px; font-weight:600; color:var(--ink); padding:0 0 var(--s2);
+  display:block; width:100%; position:relative; padding-left:40px; line-height:1.4}
+.q legend i{position:absolute; left:0; top:0; font-family:"Spectral",Georgia,serif; font-style:normal;
+  font-weight:600; font-size:16px; color:var(--sand); margin:0}
+.opts{display:grid; grid-template-columns:repeat(auto-fit,minmax(158px,1fr)); gap:8px; padding-left:40px}
+.opts label{display:flex; align-items:center; gap:10px; border:1px solid var(--rule); border-radius:2px;
+  padding:11px 14px; font-size:14.5px; color:var(--ink-soft); cursor:pointer; background:none;
+  transition:border-color .18s ease, background .18s ease, color .18s ease}
+.opts label:hover{border-color:var(--ink); color:var(--ink)}
+.opts label:has(input:checked){border-color:var(--ink); background:var(--paper2); color:var(--ink)}
+.opts input{accent-color:var(--green); width:16px; height:16px; flex:none; margin:0}
+.opts input:checked + span{color:var(--ink); font-weight:700}
+/* панель отправки прилипает к низу экрана, пока идёт заполнение */
+.qbar{position:sticky; bottom:0; z-index:5; background:var(--paper); padding:var(--s2) 0 var(--s2);
+  margin-top:var(--s3); border-top:1px solid var(--rule);
+  display:flex; align-items:center; gap:18px; flex-wrap:wrap}
+.qbar button{background:var(--green); color:var(--paper); border:1px solid var(--green); border-radius:2px;
+  padding:15px 27px; font:700 15px/1 "Manrope",system-ui,sans-serif; cursor:pointer;
+  transition:background .2s ease, border-color .2s ease}
+.qbar button:hover:not(:disabled){background:var(--ink); border-color:var(--ink)}
+.qbar button:disabled{background:none; color:var(--ink-faint); border-color:var(--rule); cursor:not-allowed}
+.qbar .count{font-size:var(--fs-micro); font-weight:800; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--ink-faint); font-variant-numeric:tabular-nums}
+
+/* результат */
+.res{display:none; margin:var(--s5) 0; padding:var(--s4) 0; border-radius:0;
+  border:0; border-top:2px solid var(--ink); border-bottom:1px solid var(--rule);
+  background:none; scroll-margin-top:84px}
+.res.on{display:block}
+.res .score{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:64px; line-height:1;
+  color:var(--ink); letter-spacing:-2px; font-variant-numeric:tabular-nums lining-nums}
+.res .score small{font-size:var(--fs-micro); font-weight:800; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--ink-faint); font-family:"Manrope",system-ui,sans-serif; letter-spacing:.16em; margin-left:8px}
+.res .scale{display:flex; height:8px; border-radius:0; overflow:hidden; margin:var(--s3) 0 8px}
+.res .scale i{display:block; height:100%; opacity:.3; transition:opacity .2s ease}
+.res .scale i.on{opacity:1}
+.res .ticks{display:flex; font-size:var(--fs-micro); font-weight:800; letter-spacing:.1em;
+  color:var(--ink-faint); justify-content:space-between; margin-bottom:var(--s3);
+  font-variant-numeric:tabular-nums}
+.res .lvl{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:27px; letter-spacing:-.5px;
+  margin:0 0 var(--s2); color:var(--ink); line-height:1.15}
+.res p{font-size:16px; color:var(--ink-soft); margin:0 0 var(--s2); max-width:70ch}
+.res .again{background:none; border:0; padding:0 0 3px; cursor:pointer; color:var(--green);
+  font:800 var(--fs-micro)/1 "Manrope",system-ui,sans-serif; letter-spacing:.14em; text-transform:uppercase;
+  text-decoration:none; border-bottom:1px solid var(--rule); transition:border-color .18s ease}
+.res .again:hover{border-color:var(--green)}
+
+/* указатель тестов */
+.tests{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:0 var(--s4); margin:var(--s4) 0}
+.tests a{display:flex; flex-direction:column; border-top:1px solid var(--rule-soft);
+  padding:var(--s3) 0; color:var(--ink); border-bottom:0; transition:background .18s ease}
+.tests a:hover{background:var(--paper2)}
+.tests b{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:19px; line-height:1.22;
+  letter-spacing:-.2px; margin-bottom:6px}
+.tests span{font-size:14.5px; color:var(--ink-faint); line-height:1.55; flex:1}
+.tests em{display:block; margin-top:var(--s2); font-style:normal; font-size:var(--fs-micro);
+  font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--green)}
+
 /* ---------------- хаб блога ---------------- */
 .clusternav{display:flex; flex-wrap:wrap; gap:10px 26px; max-width:var(--measure);
   margin:var(--s3) auto var(--s1); justify-content:flex-start; padding:0 26px}
@@ -300,6 +370,12 @@ footer a:hover{color:var(--green); border:0}
   .facts{grid-template-columns:1fr 1fr}
   .facts div{padding:18px 16px 14px}
   .facts div:nth-child(odd){border-left:0; padding-left:0}
+  .quiz .stem{font-size:20px}
+  .q legend, .opts{padding-left:0}
+  .q legend{padding-left:32px}
+  .opts{grid-template-columns:1fr}
+  .res .score{font-size:52px}
+  .res .lvl{font-size:23px}
   /* таблицы на телефоне листаются вбок, страница не едет */
   .cmp{display:block; overflow-x:auto; white-space:nowrap; font-size:14.5px}
   .cmp td, .cmp th{white-space:normal; min-width:150px}
