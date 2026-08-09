@@ -20,7 +20,7 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#F7F4EE">
+<meta name="theme-color" content="#F6F2EA">
 <link rel="icon" type="image/webp" href="assets/apps/aitherapist.webp">
 <link rel="apple-touch-icon" href="assets/apps/aitherapist.webp">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/manrope-400-800-cyrillic.woff2">
@@ -33,492 +33,475 @@
 @font-face{font-family:'Spectral';font-style:italic;font-weight:500;font-display:swap;src:url(assets/fonts/spectral-500-italic-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
 @font-face{font-family:'Spectral';font-style:normal;font-weight:600;font-display:swap;src:url(assets/fonts/spectral-600-cyrillic.woff2) format('woff2');unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116}
 @font-face{font-family:'Spectral';font-style:normal;font-weight:600;font-display:swap;src:url(assets/fonts/spectral-600-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+  /* ================================================================
+     ТИПОГРАФИЧЕСКАЯ СИСТЕМА «РАЗВОРОТ»
+     Страница построена как печатный разворот, а не как лендинг:
+     колонка полей с номером раздела и маргиналиями слева, текстовая
+     колонка справа, разделители — линейки, а не карточки с тенями.
+     Иерархия держится на кегле и воздухе, а не на плашках.
+
+     Сознательно НЕ используется (шаблонный словарь SaaS-лендингов):
+     пилюли-бейджи, blur-стекло, градиентные заливки блоков,
+     подъём карточек на hover, блики по кнопкам, цветные свечения,
+     появление блоков по скроллу, скруглённые плитки под иконки.
+     ================================================================ */
   :root{
-    /* светлая тёплая палитра: шалфей + песок (успокаивающая, приветливая) */
-    --bg:#F7F4EE; --bg2:#EFEBE1; --surface:#FFFFFF; --surface2:#F7F5F0;
-    --text:#2C332E; --muted:#56625A; --faint:#838d83;
-    --teal:#557A51; --teal-deep:#41633E; --lav:#C99A6E; --on-accent:#ffffff;
-    --line:rgba(44,51,46,.10); --line-strong:rgba(44,51,46,.17);
-    --warn:#bd7d1f;
-    --r:18px; --r-lg:24px;
-    --sh-sm:0 2px 8px rgba(60,70,55,.08);
-    --sh:0 16px 44px rgba(60,70,55,.13);
-    --sh-glow:0 0 0 1px rgba(94,126,90,.16), 0 16px 44px rgba(94,126,90,.14);
-    /* v2: тени с цветом среды (тёплый шалфей), а не нейтрально-серые —
-       это главное, что отличает «дорогую» карточку от шаблонной */
-    --sh-card:0 1px 2px rgba(60,80,55,.05), 0 12px 28px -18px rgba(60,80,55,.30);
-    --sh-card-h:0 2px 4px rgba(60,80,55,.06), 0 26px 50px -24px rgba(70,100,62,.42);
+    /* бумага и типографская краска: тёплый офсет, зелёные чернила, охра */
+    --paper:#F6F2EA; --paper2:#EDE7DA; --paper3:#E3DBC9;
+    --card:#FFFFFF; --dark:#1C2720;
+    --ink:#1B201A; --ink-soft:#525A4E; --ink-faint:#8B9285;
+    --green:#3A5836; --green-br:#557A51; --sand:#A66E38;
+    --rule:rgba(27,32,26,.22); --rule-soft:rgba(27,32,26,.11);
+    --warn:#A9761C;
+    /* алиасы под старые имена (инлайн-стили в разметке, скрипт) */
+    --bg:#F6F2EA; --bg2:#EDE7DA; --surface:#FFFFFF; --surface2:#F1EDE3;
+    --text:#1B201A; --muted:#525A4E; --faint:#8B9285;
+    --teal:#557A51; --teal-deep:#3A5836; --lav:#A66E38; --on-accent:#F6F2EA;
+    --line:rgba(27,32,26,.11); --line-strong:rgba(27,32,26,.22);
+
+    /* модульная шкала */
+    --fs-display:clamp(40px,5.4vw,70px);
+    --fs-h2:clamp(30px,3.9vw,48px);
+    --fs-h3:21px;
+    --fs-stand:21px;
+    --fs-body:17px;
+    --fs-small:14.5px;
+    --fs-micro:11px;
+    /* ритм */
+    --s1:8px; --s2:14px; --s3:22px; --s4:34px; --s5:52px; --s6:78px; --s7:110px;
+    /* сетка разворота */
+    --rail:164px; --colgap:58px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth; overflow-x:hidden; max-width:100%}
   body{
     font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-    background:var(--bg); color:var(--text); line-height:1.65; font-size:16px;
+    background:var(--paper); color:var(--ink); line-height:1.62; font-size:var(--fs-body);
     -webkit-font-smoothing:antialiased; overflow-x:hidden;
+    font-feature-settings:"kern" 1; hanging-punctuation:first last;
   }
-  .wrap{max-width:1120px; margin:0 auto; padding:0 22px}
+  .wrap{max-width:1200px; margin:0 auto; padding:0 36px}
   a{color:inherit; text-decoration:none}
-  ::selection{background:rgba(94,126,90,.26)}
-  :focus-visible{outline:2px solid var(--teal); outline-offset:3px; border-radius:6px}
+  p{text-wrap:pretty}
+  ::selection{background:rgba(58,88,54,.18)}
+  :focus-visible{outline:2px solid var(--green); outline-offset:3px}
   svg{display:block}
+  img{max-width:100%}
+  /* цифры всегда табличные — колонки цифр не «пляшут» */
+  .tnum{font-variant-numeric:tabular-nums lining-nums}
 
-  /* buttons — solid teal primary, no rainbow gradient */
-  .btn{display:inline-flex; align-items:center; gap:9px; padding:13px 24px; border-radius:13px;
-    font-weight:700; font-size:15px; line-height:1; cursor:pointer; border:1px solid transparent;
-    background:var(--teal-deep); color:#ffffff; transition:transform .16s ease, box-shadow .16s ease, background .16s ease}
-  .btn:hover{transform:translateY(-2px); background:var(--teal); box-shadow:0 12px 30px rgba(94,126,90,.28)}
-  .btn.ghost{background:transparent; border-color:var(--line-strong); color:var(--text)}
-  .btn.ghost:hover{background:rgba(120,150,180,.06); border-color:var(--teal); box-shadow:none; color:var(--text)}
-  /* shimmer на главных кнопках */
-  .btn:not(.ghost){position:relative; overflow:hidden}
-  .btn:not(.ghost)::after{content:""; position:absolute; top:0; left:-75%; width:45%; height:100%;
-    background:linear-gradient(120deg, transparent, rgba(255,255,255,.38), transparent); transform:skewX(-20deg); animation:sheen 5.5s ease-in-out infinite}
-  @keyframes sheen{0%,40%{left:-75%} 70%,100%{left:160%}}
-  /* кастомная кнопка-бейдж RuStore */
-  .rustore-btn{display:inline-flex; align-items:center; gap:11px; padding:10px 22px 10px 13px; border-radius:14px;
-    background:#21342c; color:#fff; cursor:pointer; transition:transform .16s ease, box-shadow .16s ease; position:relative; overflow:hidden;
-    box-shadow:0 12px 26px -12px rgba(33,52,44,.55)}
-  .rustore-btn:hover{transform:translateY(-2px); box-shadow:0 18px 34px -14px rgba(33,52,44,.6)}
-  .rustore-btn::after{content:""; position:absolute; top:0; left:-75%; width:40%; height:100%;
-    background:linear-gradient(120deg, transparent, rgba(255,255,255,.18), transparent); transform:skewX(-20deg); animation:sheen 6s ease-in-out infinite}
-  .rustore-btn .rs-ico{width:34px;height:34px;border-radius:10px; flex:0 0 auto; display:flex;align-items:center;justify-content:center;
-    background:linear-gradient(145deg,#6aa08f,#43705f)}
-  .rustore-btn .rs-ico svg{width:19px;height:19px}
-  .rustore-btn .rs-txt{display:flex; flex-direction:column; line-height:1.12; text-align:left}
-  .rustore-btn .rs-txt small{font-size:11px; opacity:.82; font-weight:500}
-  .rustore-btn .rs-txt b{font-size:16.5px; font-weight:700; letter-spacing:.2px}
-  /* официальный бейдж RuStore (картинка) */
-  .rs-link{display:inline-block; line-height:0; border-radius:9px}
-  .rustore-badge{height:50px; width:auto; display:block; border-radius:9px; transition:transform .16s ease, box-shadow .16s ease, filter .16s ease}
-  .rs-link:hover .rustore-badge{transform:translateY(-2px); filter:brightness(1.07); box-shadow:0 12px 26px -12px rgba(0,0,0,.4)}
-  .rs-link.rs-sm .rustore-badge{height:38px}
-  .appcard .rs-link .rustore-badge{height:46px}
+  /* микро-типографика: рубрики, колонцифры, подписи */
+  .micro{font-size:var(--fs-micro); font-weight:800; letter-spacing:.2em; text-transform:uppercase; line-height:1.5}
 
-  /* header */
-  header{position:sticky; top:0; z-index:50; padding:16px 0;
-    background:rgba(255,255,255,.8); backdrop-filter:blur(14px) saturate(1.2); border-bottom:1px solid var(--line)}
-  .nav{display:flex; align-items:center; justify-content:space-between}
-  .logo{display:flex; align-items:center; gap:11px; font-weight:800; font-size:18px; letter-spacing:-.3px}
-  .mark{width:32px;height:32px;border-radius:10px; background:linear-gradient(150deg,var(--teal),var(--teal-deep));
-    display:flex;align-items:center;justify-content:center; color:#ffffff; box-shadow:0 6px 18px rgba(94,126,90,.3)}
-  .header-cta{padding:10px 20px}
+  /* ---------------- сетка разворота: поля + колонка ---------------- */
+  .spread{display:grid; grid-template-columns:var(--rail) minmax(0,1fr); gap:0 var(--colgap); align-items:start}
+  .rail{position:sticky; top:100px}
+  .rail .no{display:block; font-family:"Spectral",Georgia,serif; font-weight:600; font-size:40px;
+    line-height:.88; color:var(--sand); letter-spacing:-1.5px; font-variant-numeric:lining-nums}
+  .rail .rule{display:block; height:1px; background:var(--ink); margin:16px 0 14px}
+  .rail .lb{display:block; font-size:var(--fs-micro); font-weight:800; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--ink-faint); line-height:1.55}
+  /* маргиналия — короткая заметка на полях, как сноска в книге */
+  .rail .marg{display:block; margin-top:var(--s3); padding-top:var(--s2); border-top:1px solid var(--rule-soft);
+    font-family:"Spectral",Georgia,serif; font-style:italic; font-weight:500; font-size:13.5px;
+    line-height:1.5; color:var(--ink-faint)}
 
-  /* hero */
-  .hero{position:relative; padding:78px 0 56px; overflow:hidden}
-  .aura{position:absolute; inset:0; z-index:0; pointer-events:none}
-  .aura::before,.aura::after{content:""; position:absolute; border-radius:50%; filter:blur(70px); opacity:.5}
-  .aura::before{width:520px;height:520px; top:-160px; right:-80px;
-    background:radial-gradient(circle, rgba(94,126,90,.34), transparent 65%); animation:breathe 9s ease-in-out infinite}
-  .aura::after{width:440px;height:440px; bottom:-180px; left:-100px;
-    background:radial-gradient(circle, rgba(201,154,110,.22), transparent 65%); animation:breathe 11s ease-in-out infinite 1s}
-  @keyframes breathe{0%,100%{transform:scale(1); opacity:.45} 50%{transform:scale(1.12); opacity:.62}}
-  .hero-grid{position:relative; z-index:1; display:grid; grid-template-columns:minmax(0,1.04fr) minmax(0,1fr); gap:52px; align-items:center}
-  .hero-grid>*{min-width:0}
-  .chat, .msgs, .composer textarea{min-width:0}
-  .hero h1{overflow-wrap:break-word}
-  .eyebrow{display:inline-flex; align-items:center; gap:9px; font-size:13px; font-weight:600; color:var(--teal);
-    background:rgba(94,126,90,.08); border:1px solid rgba(94,126,90,.20); padding:7px 15px; border-radius:999px; margin-bottom:24px}
-  .pulse{width:7px;height:7px;border-radius:50%; background:var(--teal); box-shadow:0 0 0 0 rgba(94,126,90,.6); animation:pulse 2.4s infinite}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(94,126,90,.5)} 70%{box-shadow:0 0 0 7px rgba(94,126,90,0)} 100%{box-shadow:0 0 0 0 rgba(94,126,90,0)}}
-  .hero h1{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:clamp(34px,4.8vw,58px);
-    line-height:1.06; letter-spacing:-.9px; margin-bottom:22px}
-  .hero h1 em{font-style:italic; font-weight:500; color:var(--teal)}
-  .hero p.lead{font-size:clamp(16px,1.7vw,19px); color:var(--muted); max-width:500px; margin-bottom:30px}
-  .cta-row{display:flex; gap:13px; flex-wrap:wrap; align-items:center}
-  .trust{display:flex; gap:8px 16px; flex-wrap:wrap; margin-top:26px; color:var(--faint); font-size:13.5px; align-items:center}
-  .trust b{color:var(--text)}
-  .stars{color:var(--warn); letter-spacing:1px; font-weight:600}
-  .trust .sep{opacity:.4}
+  /* ---------------- заголовки ---------------- */
+  h2{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:var(--fs-h2);
+    line-height:1.05; letter-spacing:-.9px; text-align:left; max-width:18ch;
+    margin-bottom:var(--s3); text-wrap:balance}
+  h2 em{font-style:italic; font-weight:500}
+  /* врез: курсивный serif — приём журнальной вёрстки, а не подзаголовок лендинга */
+  .standfirst{font-family:"Spectral",Georgia,serif; font-style:italic; font-weight:500;
+    font-size:var(--fs-stand); line-height:1.45; color:var(--ink-soft); max-width:52ch; margin:0 0 var(--s5)}
+  .standfirst a{color:var(--green); border-bottom:1px solid var(--rule); transition:border-color .18s ease}
+  .standfirst a:hover{border-color:var(--green)}
 
-  /* chat (signature) */
-  .chat{position:relative; z-index:1; display:flex; flex-direction:column; height:540px;
-    background:linear-gradient(180deg, #ffffff, var(--surface2)); backdrop-filter:blur(8px);
-    border:1px solid var(--line-strong); border-radius:var(--r-lg); box-shadow:var(--sh); overflow:hidden}
-  .chat-top{display:flex; align-items:center; gap:13px; padding:15px 17px; border-bottom:1px solid var(--line)}
-  .ava{position:relative; width:42px;height:42px;border-radius:13px; display:flex;align-items:center;justify-content:center;
-    flex:0 0 auto; color:#fff; background:var(--teal); box-shadow:0 7px 16px -7px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.32)}
+  /* ---------------- кнопки: печатные прямоугольники ---------------- */
+  .btn{display:inline-flex; align-items:center; gap:10px; padding:16px 28px; border-radius:2px;
+    font-weight:700; font-size:15px; line-height:1; cursor:pointer;
+    border:1px solid var(--green); background:var(--green); color:var(--paper);
+    transition:background .2s ease, border-color .2s ease, color .2s ease}
+  .btn:hover{background:var(--ink); border-color:var(--ink)}
+  .btn.ghost{background:transparent; color:var(--ink); border-color:var(--rule)}
+  .btn.ghost:hover{background:transparent; color:var(--green); border-color:var(--green)}
+  /* текстовая ссылка: линейка прорастает слева направо — единый жест наведения на всём сайте */
+  .tlink{display:inline-block; font-weight:700; font-size:15px; color:var(--green); padding-bottom:4px;
+    background-image:linear-gradient(var(--green),var(--green));
+    background-repeat:no-repeat; background-position:0 100%; background-size:0% 1px;
+    transition:background-size .32s cubic-bezier(.2,.7,.2,1)}
+  .tlink:hover{background-size:100% 1px}
+
+  .rs-link{display:inline-block; line-height:0}
+  .rustore-badge{height:50px; width:auto; display:block; border-radius:3px; transition:opacity .2s ease}
+  .rs-link:hover .rustore-badge{opacity:.8}
+  .rs-link.rs-sm .rustore-badge{height:36px}
+
+  /* ---------------- шапка: плотная бумага, без стекла ---------------- */
+  header{position:sticky; top:0; z-index:50; padding:14px 0; background:var(--paper);
+    border-bottom:1px solid var(--ink)}
+  .nav{display:flex; align-items:center; justify-content:space-between; gap:20px}
+  .nav-left{display:flex; align-items:center; gap:28px}
+  .logo{display:flex; align-items:center; gap:11px; font-family:"Spectral",Georgia,serif;
+    font-weight:600; font-size:21px; letter-spacing:-.3px; white-space:nowrap}
+  .logo .appmark{border-radius:3px; object-fit:cover}
+  .navlink{font-size:var(--fs-micro); font-weight:800; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--ink-soft); white-space:nowrap; transition:color .18s ease}
+  .navlink:hover{color:var(--green)}
+  /* второстепенные пункты уходят, когда шапка перестаёт помещаться в одну строку */
+  @media (max-width:820px){ .navlink.sec{display:none} .nav-left{gap:20px} }
+  @media (max-width:430px){ .logo{font-size:19px} .logo .appmark{width:28px; height:28px} }
+
+  /* ---------------- первый разворот ---------------- */
+  .hero{padding:var(--s5) 0 0}
+  /* колонтитул выпуска вместо пилюли-бейджа */
+  .kicker{display:flex; align-items:center; gap:18px; margin-bottom:var(--s4)}
+  .kicker span{color:var(--sand); white-space:nowrap}
+  .kicker::after{content:""; flex:1; height:1px; background:var(--rule)}
+  .hero h1{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:var(--fs-display);
+    line-height:1; letter-spacing:-1.8px; margin-bottom:var(--s4); max-width:16ch;
+    overflow-wrap:break-word; text-wrap:balance}
+  .hero h1 em{font-style:italic; font-weight:500}
+  .hero-grid{display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr); gap:var(--s5) 64px; align-items:start}
+  /* лид с буквицей — чисто печатный приём, в лендингах не встречается */
+  .hero .lead{font-size:18.5px; line-height:1.6; color:var(--ink-soft); margin-bottom:var(--s4)}
+  .hero .lead::first-letter{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:62px;
+    line-height:.8; float:left; margin:6px 12px 0 0; color:var(--ink)}
+  .cta-row{display:flex; gap:26px; flex-wrap:wrap; align-items:center}
+  /* заметка на полях под кнопками — заполняет воздух рядом с высокой врезкой смыслом */
+  .hero-marg{margin-top:var(--s5); padding-top:var(--s2); border-top:1px solid var(--rule);
+    font-family:"Spectral",Georgia,serif; font-style:italic; font-weight:500; font-size:15px;
+    line-height:1.5; color:var(--ink-faint); max-width:42ch}
+
+  /* выходные данные: цифры строкой на линейке, как в шапке издания */
+  .colophon{margin-top:var(--s6); border-top:1px solid var(--ink); border-bottom:1px solid var(--rule);
+    display:grid; grid-template-columns:repeat(5,1fr)}
+  .stat{padding:var(--s3) var(--s3) 18px; border-left:1px solid var(--rule-soft)}
+  .stat:first-child{border-left:0; padding-left:0}
+  .stat b{display:block; font-family:"Spectral",Georgia,serif; font-weight:600; font-size:32px;
+    line-height:1; letter-spacing:-1px; color:var(--ink); font-variant-numeric:tabular-nums lining-nums}
+  .stat b .u{font-size:.58em; color:var(--sand); letter-spacing:0}
+  .stat > span{display:block; margin-top:9px; font-size:var(--fs-micro); font-weight:800; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--ink-faint); line-height:1.45}
+
+  /* ---------------- врезка с живым демо ---------------- */
+  .insert-h{display:flex; align-items:baseline; gap:14px; margin-bottom:var(--s2); padding-bottom:10px;
+    border-bottom:1px solid var(--ink)}
+  .insert-h b{color:var(--ink)}
+  .insert-h i{font-style:normal; font-size:12.5px; color:var(--ink-faint); margin-left:auto; white-space:nowrap}
+  .chat{position:relative; display:flex; flex-direction:column; height:556px;
+    background:var(--card); border:1px solid var(--ink); border-radius:0; overflow:hidden}
+  .figcap{margin-top:12px; font-size:12.5px; line-height:1.5; color:var(--ink-faint); max-width:46ch}
+  .chat-top{display:flex; align-items:center; gap:13px; padding:14px 16px; border-bottom:1px solid var(--rule)}
+  .ava{width:40px;height:40px;border-radius:2px; display:flex;align-items:center;justify-content:center;
+    flex:0 0 auto; color:#fff; background:var(--green)}
   .ava svg, .pa svg{width:54%; height:54%}
   .chat-id{flex:1; min-width:0}
-  .chat-id .nm{font-weight:700; font-size:15.5px; letter-spacing:-.2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-  .chat-id .role{font-size:12.5px; color:var(--muted); display:flex; align-items:center; gap:6px; min-width:0}
-  .chat-id .role .on{width:6px;height:6px;border-radius:50%; background:var(--teal); flex:0 0 auto}
+  .chat-id .nm{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:17.5px; letter-spacing:-.2px;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .chat-id .role{font-size:12px; color:var(--ink-faint); display:flex; align-items:center; gap:6px; min-width:0}
+  .chat-id .role .on{width:5px;height:5px;border-radius:50%; background:var(--green-br); flex:0 0 auto}
   .chat-id .role #c-role{white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0}
-  .planbar{display:flex; align-items:center; justify-content:center; gap:7px; padding:8px 14px;
-    font-size:12.5px; font-weight:600; color:var(--muted); background:var(--bg2); border-bottom:1px solid var(--line)}
-  .planbar.low{color:var(--teal-deep); background:rgba(85,122,81,.10)}
-  .planbar b{font-weight:700; font-variant-numeric:tabular-nums}
-  /* подтверждение возраста — над полем ввода, до первого сообщения */
-  .agegate{display:flex; align-items:flex-start; gap:9px; padding:11px 14px; font-size:12.8px; line-height:1.45;
-    color:var(--muted); background:var(--bg2); border-top:1px solid var(--line)}
-  .agegate input{width:17px; height:17px; margin:1px 0 0; flex:0 0 auto; accent-color:var(--teal); cursor:pointer}
+  .switch{flex:0 0 auto; font-size:var(--fs-micro); font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--ink-soft); background:transparent; border:1px solid var(--rule); padding:9px 12px;
+    border-radius:2px; cursor:pointer; white-space:nowrap; transition:.18s; display:flex; align-items:center; gap:6px}
+  .switch:hover{border-color:var(--ink); color:var(--ink)}
+  .planbar{display:flex; align-items:center; justify-content:center; gap:7px; padding:9px 14px;
+    font-size:var(--fs-micro); font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--ink-faint); background:var(--paper2); border-bottom:1px solid var(--rule-soft)}
+  .planbar.low{color:var(--sand)}
+  .planbar b{font-weight:800; font-variant-numeric:tabular-nums}
+  .agegate{display:flex; align-items:flex-start; gap:9px; padding:12px 14px; font-size:12.5px; line-height:1.45;
+    color:var(--ink-soft); background:var(--paper2); border-top:1px solid var(--rule-soft)}
+  .agegate input{width:16px; height:16px; margin:2px 0 0; flex:0 0 auto; accent-color:var(--green); cursor:pointer}
   .agegate label{cursor:pointer}
-  .agegate a{color:var(--teal-deep); font-weight:600}
-  .switch{flex:0 0 auto; font-size:13px; color:var(--muted); background:transparent; border:1px solid var(--line-strong); padding:8px 13px;
-    border-radius:11px; cursor:pointer; white-space:nowrap; transition:.16s; display:flex; align-items:center; gap:6px}
-  .switch:hover{border-color:var(--teal); color:var(--text)}
+  .agegate a{color:var(--green); border-bottom:1px solid var(--rule)}
   @media (max-width:430px){
-    .chat-top{gap:10px; padding:13px 14px}
-    .switch{padding:7px 10px; gap:4px}
+    .chat-top{gap:10px; padding:12px 13px}
+    .switch{padding:8px 9px; gap:4px}
     .switch .swl{display:none}
-    .switch svg{width:18px; height:18px}
+    .switch svg{width:16px; height:16px}
   }
 
-  /* persona picker — overlay panel, no horizontal scroll */
   .chat-body{position:relative; flex:1; min-height:0; display:flex}
-  .picker{position:absolute; inset:0; z-index:5; background:rgba(255,255,255,.94); backdrop-filter:blur(12px);
-    display:flex; flex-direction:column; padding:15px; overflow-y:auto; animation:fade .18s ease}
+  .picker{position:absolute; inset:0; z-index:5; background:var(--card);
+    display:flex; flex-direction:column; padding:15px; overflow-y:auto}
   .picker[hidden]{display:none}
-  @keyframes fade{from{opacity:0}to{opacity:1}}
-  .picker-h{display:flex; align-items:center; justify-content:space-between; margin:2px 3px 13px}
-  .picker-h span{font-size:12.5px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted)}
-  .picker-close{background:transparent; border:none; color:var(--muted); cursor:pointer; width:38px; height:38px;
-    display:flex; align-items:center; justify-content:center; border-radius:10px; transition:.15s; flex:0 0 auto}
-  .picker-close:hover{color:var(--text); background:rgba(120,150,180,.1)}
-  .picker-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
-  .pi{display:flex; align-items:center; gap:11px; padding:11px; border-radius:14px; border:1px solid var(--line);
-    background:var(--surface); cursor:pointer; transition:transform .15s ease, border-color .15s ease; text-align:left; font:inherit; color:var(--text)}
-  .pi:hover{border-color:var(--line-strong); transform:translateY(-2px)}
-  .pi.on{border-color:var(--pc,var(--teal)); background:rgba(94,126,90,.07)}
-  .pi .pa{width:38px;height:38px;border-radius:11px; display:flex;align-items:center;justify-content:center;
-    flex:0 0 auto; color:#fff; background:var(--pc,var(--teal)); box-shadow:0 5px 12px -6px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.3)}
+  .picker-h{display:flex; align-items:center; justify-content:space-between; margin:0 2px 10px;
+    padding-bottom:11px; border-bottom:1px solid var(--ink)}
+  .picker-h span{font-size:var(--fs-micro); font-weight:800; letter-spacing:.2em; text-transform:uppercase; color:var(--ink)}
+  .picker-close{background:transparent; border:none; color:var(--ink-faint); cursor:pointer; width:32px; height:32px;
+    display:flex; align-items:center; justify-content:center; transition:.15s; flex:0 0 auto}
+  .picker-close:hover{color:var(--ink)}
+  .picker-grid{display:grid; grid-template-columns:1fr 1fr; gap:0 18px}
+  .pi{display:flex; align-items:center; gap:11px; padding:11px 6px; border:0; border-top:1px solid var(--rule-soft);
+    background:transparent; cursor:pointer; transition:background .18s ease; text-align:left; font:inherit; color:var(--ink)}
+  .pi:hover{background:var(--paper2)}
+  .pi.on{background:var(--paper2); box-shadow:inset 2px 0 0 var(--pc,var(--green))}
+  .pi .pa{width:34px;height:34px;border-radius:2px; display:flex;align-items:center;justify-content:center;
+    flex:0 0 auto; color:#fff; background:var(--pc,var(--green))}
   .pi .t{min-width:0}
-  .pi .t b{display:block; font-size:13.5px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-  .pi .t small{display:block; font-size:11.5px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .pi .t b{display:block; font-family:"Spectral",Georgia,serif; font-weight:600; font-size:14.5px;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .pi .t small{display:block; font-size:11.5px; color:var(--ink-faint); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 
-  .msgs{flex:1; overflow-y:auto; padding:20px 17px; display:flex; flex-direction:column; gap:11px; scrollbar-width:thin}
-  .msgs::-webkit-scrollbar{width:6px}
-  .msgs::-webkit-scrollbar-thumb{background:var(--line-strong); border-radius:6px}
-  .bubble{max-width:84%; padding:12px 16px; border-radius:18px; font-size:14.5px; line-height:1.55;
-    white-space:pre-wrap; word-wrap:break-word; animation:rise .26s ease}
-  @keyframes rise{from{opacity:0; transform:translateY(7px)}to{opacity:1;transform:none}}
-  .bubble.bot{align-self:flex-start; background:var(--surface2); border:1px solid var(--line); border-bottom-left-radius:6px; color:var(--text)}
-  .bubble.me{align-self:flex-end; background:var(--teal-deep); color:#ffffff; border-bottom-right-radius:6px; font-weight:500}
+  .msgs{flex:1; overflow-y:auto; padding:22px 18px; display:flex; flex-direction:column; gap:11px; scrollbar-width:thin}
+  .msgs::-webkit-scrollbar{width:5px}
+  .msgs::-webkit-scrollbar-thumb{background:var(--rule)}
+  /* реплики — единственное место, где скругление уместно: это диалог */
+  .bubble{max-width:84%; padding:11px 15px; border-radius:14px; font-size:14.5px; line-height:1.55;
+    white-space:pre-wrap; word-wrap:break-word}
+  .bubble.bot{align-self:flex-start; background:var(--paper2); border-bottom-left-radius:3px; color:var(--ink)}
+  .bubble.me{align-self:flex-end; background:var(--green); color:var(--paper); border-bottom-right-radius:3px}
+  .bubble.preview{opacity:.55}
+  .preview-tag{align-self:stretch; margin-top:6px; padding-top:10px; border-top:1px solid var(--rule-soft);
+    font-size:11.5px; font-style:italic; font-family:"Spectral",Georgia,serif; text-align:center; color:var(--ink-faint)}
   .typing{display:inline-flex; gap:5px; align-items:center; padding:3px 0}
-  .typing i{width:7px;height:7px;border-radius:50%; background:var(--muted); animation:blink 1.3s infinite}
+  .typing i{width:6px;height:6px;border-radius:50%; background:var(--ink-faint); animation:blink 1.3s infinite}
   .typing i:nth-child(2){animation-delay:.18s}.typing i:nth-child(3){animation-delay:.36s}
   @keyframes blink{0%,60%,100%{opacity:.25}30%{opacity:1}}
-  .limit-note{align-self:center; text-align:center; background:var(--bg2); border:1px solid var(--line-strong); border-radius:16px; padding:18px; max-width:92%}
-  .limit-note p{color:var(--muted); font-size:14px; margin-bottom:13px}
+  .limit-note{align-self:stretch; background:var(--paper2); border-left:2px solid var(--green);
+    padding:18px 19px; margin-top:6px}
+  .limit-note p{color:var(--ink-soft); font-size:14px; margin-bottom:15px}
 
-  .composer{display:flex; gap:10px; padding:13px 15px; border-top:1px solid var(--line)}
-  .composer textarea{flex:1; resize:none; background:var(--bg); border:1px solid var(--line-strong); color:var(--text);
-    border-radius:13px; padding:12px 14px; font:inherit; font-size:15px; max-height:100px; line-height:1.4}
-  .composer textarea::placeholder{color:var(--faint)}
-  .composer textarea:focus{outline:none; border-color:var(--teal)}
-  .send{flex:0 0 auto; width:46px;height:46px;border-radius:13px;border:none; background:var(--teal-deep); color:#ffffff;
-    cursor:pointer; transition:.16s; display:flex;align-items:center;justify-content:center}
-  .send:hover{background:var(--teal); transform:translateY(-1px)}
-  .send:disabled{opacity:.38; cursor:not-allowed; transform:none}
+  .composer{display:flex; gap:10px; padding:12px 14px; border-top:1px solid var(--rule)}
+  .composer textarea{flex:1; resize:none; background:var(--paper); border:1px solid var(--rule); color:var(--ink);
+    border-radius:2px; padding:12px 13px; font:inherit; font-size:15px; max-height:100px; line-height:1.4; min-width:0}
+  .composer textarea::placeholder{color:var(--ink-faint)}
+  .composer textarea:focus{outline:none; border-color:var(--ink)}
+  .send{flex:0 0 auto; width:46px;height:46px;border-radius:2px;border:1px solid var(--green);
+    background:var(--green); color:var(--paper); cursor:pointer; transition:.18s;
+    display:flex;align-items:center;justify-content:center}
+  .send:hover{background:var(--ink); border-color:var(--ink)}
+  .send:disabled{opacity:.32; cursor:not-allowed}
 
-  /* sections */
-  section{padding:84px 0}
-  .seclabel{text-align:center; font-size:12.5px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--teal-deep); margin-bottom:14px}
-  h2{font-family:"Spectral",serif; font-weight:600; font-size:clamp(27px,3.5vw,40px); text-align:center; letter-spacing:-.4px; margin-bottom:14px}
-  .sub{text-align:center; color:var(--muted); max-width:600px; margin:0 auto 52px; font-size:16.5px}
+  /* ---------------- секции: разделяются линейкой, а не фоном ---------------- */
+  section{padding:var(--s6) 0}
+  section.ruled{border-top:1px solid var(--ink)}
 
-  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px}
-  .feat{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:28px; transition:transform .2s ease, border-color .2s ease}
-  .feat:hover{transform:translateY(-4px); border-color:rgba(94,126,90,.3)}
-  .feat .ic{width:62px;height:62px;border-radius:18px; background:rgba(94,126,90,.10); border:1px solid rgba(94,126,90,.16);
-    display:flex; align-items:center; justify-content:center; color:var(--teal); margin-bottom:17px}
-  .feat .ic svg{width:33px;height:33px}
-  .feat h3{font-size:18px; margin-bottom:8px; font-weight:700; letter-spacing:-.2px}
-  .feat p{color:var(--muted); font-size:14.5px}
+  /* ---------------- «что внутри»: рубрицированная сетка ---------------- */
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(256px,1fr)); gap:0 48px}
+  .feat{padding:var(--s3) 0 var(--s4); border-top:1px solid var(--rule-soft)}
+  .feat .ic{width:92px; height:92px; overflow:hidden; margin-bottom:var(--s3); border-radius:2px}
+  .feat .ic img{width:100%; height:100%; display:block; object-fit:cover}
+  .feat h3{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:var(--fs-h3); line-height:1.18;
+    letter-spacing:-.3px; margin-bottom:var(--s1)}
+  .feat p{color:var(--ink-soft); font-size:var(--fs-small); line-height:1.58}
 
-  /* personas showcase */
-  .pgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px}
-  .pcard{position:relative; background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:22px; cursor:pointer; transition:transform .2s ease, border-color .2s ease; overflow:hidden}
-  .pcard::before{content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--pc,var(--teal)); opacity:.85}
-  .pcard:hover{transform:translateY(-4px); border-color:var(--line-strong)}
-  .pcard .pa{width:50px;height:50px;border-radius:15px; display:flex;align-items:center;justify-content:center; margin-bottom:14px; color:#fff; background:var(--pc,var(--teal)); box-shadow:0 9px 20px -9px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.32)}
-  .pcard h4{font-size:16.5px; font-weight:700; margin-bottom:4px; letter-spacing:-.2px}
-  .pcard p{color:var(--muted); font-size:13.5px}
-  .pcard .try{margin-top:12px; font-size:13px; color:var(--teal); font-weight:600; opacity:0; transition:opacity .2s}
+  /* ---------------- психологи: указатель имён ---------------- */
+  .pgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(268px,1fr)); gap:0 48px}
+  .pcard{display:flex; align-items:center; gap:14px; padding:14px 6px 14px 0; border-top:1px solid var(--rule-soft);
+    cursor:pointer; transition:background .18s ease, padding-left .24s cubic-bezier(.2,.7,.2,1)}
+  .pcard:hover{background:var(--paper2); padding-left:10px}
+  .pcard .pa{width:38px;height:38px;border-radius:2px; display:flex;align-items:center;justify-content:center;
+    flex:0 0 auto; color:#fff; background:var(--pc,var(--green))}
+  .pcard .pt{min-width:0; flex:1}
+  .pcard h4{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:18px; letter-spacing:-.2px; line-height:1.25}
+  .pcard p{color:var(--ink-faint); font-size:13px; line-height:1.4}
+  .pcard .try{flex:0 0 auto; font-size:var(--fs-micro); font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--green); opacity:0; transition:opacity .2s ease}
   .pcard:hover .try{opacity:1}
 
-  /* steps */
-  .steps{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:30px 20px; margin-top:40px}
-  .step{position:relative; padding:30px 24px 26px; background:var(--bg2); border-radius:var(--r); border:1px solid var(--line)}
-  .stepn{position:absolute; top:-18px; left:24px; width:38px;height:38px; border-radius:12px; background:var(--surface2);
-    border:1px solid rgba(94,126,90,.4); color:var(--teal); font-weight:800; font-size:16px; display:flex; align-items:center; justify-content:center; box-shadow:var(--sh-sm)}
-  .step h3{margin:8px 0; font-size:17.5px; font-weight:700}
-  .step p{color:var(--muted); font-size:14.5px}
+  /* ---------------- как работает: нумерованные заметки ---------------- */
+  /* вертикальный зазор нужен, когда колонки схлопываются в одну (телефон):
+     у записей есть только верхняя линейка, без него они слипаются */
+  .steps{display:grid; grid-template-columns:repeat(auto-fit,minmax(236px,1fr)); gap:var(--s4) 48px}
+  .step{padding:var(--s3) 0 0; border-top:2px solid var(--ink)}
+  .stepn{display:block; font-family:"Spectral",Georgia,serif; font-weight:600; font-size:15px;
+    letter-spacing:.12em; color:var(--sand); margin-bottom:var(--s2)}
+  .step h3{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:var(--fs-h3); line-height:1.18; margin-bottom:var(--s1)}
+  .step p{color:var(--ink-soft); font-size:var(--fs-small); line-height:1.58}
 
-  /* shots */
-  .shots{display:flex; gap:22px; justify-content:center; flex-wrap:wrap}
-  .shot{width:206px; border-radius:26px; border:1px solid var(--line-strong); overflow:hidden; background:var(--surface); box-shadow:var(--sh)}
-  .shot img{width:100%; display:block}
+  /* ---------------- с чем приходят: предметный указатель ---------------- */
+  .topics{display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:0 44px}
+  /* строки указателя набраны в два яруса: заголовок и пояснение под ним —
+     так правый край не рвётся переносами разной длины */
+  .topic{display:block; padding:13px 0; border-top:1px solid var(--rule-soft)}
+  .topic b{display:inline-block; font-family:"Spectral",Georgia,serif; font-weight:600; font-size:17px;
+    letter-spacing:-.2px; padding-bottom:2px;
+    background-image:linear-gradient(var(--green),var(--green));
+    background-repeat:no-repeat; background-position:0 100%; background-size:0% 1px;
+    transition:color .18s ease, background-size .3s cubic-bezier(.2,.7,.2,1)}
+  .topic span{display:block; margin-top:2px; font-size:12.5px; color:var(--ink-faint); line-height:1.4}
+  .topic:hover b{color:var(--green); background-size:100% 1px}
+  .after-index{margin-top:var(--s4); font-size:var(--fs-small); color:var(--ink-soft)}
+  .after-index a{color:var(--green); border-bottom:1px solid var(--rule); transition:border-color .18s ease}
+  .after-index a:hover{border-color:var(--green)}
 
-  /* pricing */
-  .price{max-width:470px; margin:0 auto; background:linear-gradient(180deg,var(--surface),var(--bg2));
-    border:1px solid var(--line-strong); border-radius:var(--r-lg); padding:40px; text-align:center; box-shadow:var(--sh-glow)}
-  .price .free{font-size:12.5px; color:var(--teal); text-transform:uppercase; letter-spacing:2px; font-weight:700}
-  .price h3{font-family:"Spectral",serif; font-size:32px; margin:12px 0 6px; font-weight:600}
-  .price .pp{color:var(--muted); font-size:15px; margin-bottom:6px}
-  .price ul{list-style:none; text-align:left; margin:24px auto; display:inline-block}
-  .price li{padding:9px 0 9px 32px; position:relative; color:var(--muted)}
-  .price li svg{position:absolute; left:0; top:11px; width:19px;height:19px; color:var(--teal)}
-  .note{max-width:760px; margin:48px auto 0; padding:20px 24px; border:1px solid var(--line); border-radius:14px; background:var(--bg2); color:var(--muted); font-size:13.5px; text-align:center; line-height:1.6}
+  /* ---------------- тёмный разворот: экраны уходят за край полосы ---------------- */
+  .showcase{background:var(--dark); color:#E9E5D9; overflow:hidden}
+  .showcase .rail .no{color:#B58754}
+  .showcase .rail .rule{background:rgba(233,229,217,.34)}
+  .showcase .rail .lb{color:rgba(233,229,217,.5)}
+  .showcase .rail .marg{color:rgba(233,229,217,.45); border-top-color:rgba(233,229,217,.16)}
+  .showcase h2{color:#F2EFE5}
+  .showcase .standfirst{color:rgba(233,229,217,.7)}
+  .showcase .btn{background:#F2EFE5; border-color:#F2EFE5; color:var(--dark)}
+  .showcase .btn:hover{background:#fff; border-color:#fff; color:var(--dark)}
+  /* Вынос за правый край полосы — приём вёрстки «на вылет», страница не едет вбок.
+     Все три экрана одного размера и стоят на одной линии: исходники пересняты
+     в единый формат 760×1543, поэтому верх, низ и подписи выравниваются точно.
+     Разные пропорции исходников как раз и давали рваный верх. */
+  .phones{display:flex; align-items:flex-start; gap:26px; margin:var(--s1) -180px 0 0}
+  .ph{position:relative; margin:0; flex:0 0 auto; width:316px}
+  .ph img{display:block; width:100%; height:auto; border-radius:6px; box-shadow:0 34px 64px -32px rgba(0,0,0,.85)}
+  .ph figcaption{margin-top:var(--s2); font-size:var(--fs-micro); font-weight:800; letter-spacing:.13em;
+    text-transform:uppercase; color:rgba(233,229,217,.46); line-height:1.55; max-width:24ch}
+  .sc-cta{margin-top:var(--s5)}
+  @media(max-width:1000px){ .phones{margin-right:-90px} .ph{width:270px} }
+  @media(max-width:880px){ .phones{gap:16px; margin-right:-40px} .ph{width:196px} }
+  @media(max-width:560px){
+    .phones{gap:14px; margin:var(--s1) -18px 0; padding:0 18px 10px; overflow-x:auto;
+      scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; scrollbar-width:none}
+    .phones::-webkit-scrollbar{display:none}
+    .ph{scroll-snap-align:center; width:min(64vw,250px)}
+  }
 
-  /* footer */
-  footer{border-top:1px solid var(--line); padding:48px 0; color:var(--muted); font-size:14px}
-  .fcols{display:flex; justify-content:space-between; flex-wrap:wrap; gap:26px}
-  footer a:hover{color:var(--text)}
-  .flinks{display:flex; gap:24px; flex-wrap:wrap; align-items:center}
+  /* ---------------- отзывы: выносные цитаты ---------------- */
+  .revs{display:grid; grid-template-columns:repeat(auto-fit,minmax(266px,1fr)); gap:var(--s4) 48px}
+  .rev{padding:var(--s3) 0 0; border-top:2px solid var(--ink); display:flex; flex-direction:column}
+  /* висячая кавычка: открывающая ёлочка выносится в поле, левый край текста остаётся ровным */
+  .rev q{font-family:"Spectral",Georgia,serif; font-size:17.5px; line-height:1.46; color:var(--ink);
+    display:block; margin-bottom:var(--s3); flex:1; text-indent:-.42em; quotes:"«" "»"}
+  .rev .rhead{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+  .rev .rname{font-size:var(--fs-micro); font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--ink)}
+  .rev .rstars{color:var(--sand); font-size:12px; letter-spacing:1px}
+  .rev .rdate{font-size:12px; color:var(--ink-faint); font-variant-numeric:tabular-nums}
+  .rev .rrole{margin-top:7px; font-family:"Spectral",Georgia,serif; font-style:italic; font-size:13.5px; color:var(--ink-faint)}
+  .revs-note{margin-top:var(--s4); font-size:13px; color:var(--ink-faint); line-height:1.6}
+  .revs-note a{color:var(--green); border-bottom:1px solid var(--rule); transition:border-color .18s ease}
+  .revs-note a:hover{border-color:var(--green)}
 
-  /* ===== premium enhancements ===== */
-  .grain{position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.035; mix-blend-mode:multiply;
+  /* ---------------- экосистема ---------------- */
+  .apps{display:grid; grid-template-columns:1fr 1fr; gap:0 52px}
+  .appcard{display:flex; flex-direction:column; padding:var(--s3) 0 0; border-top:2px solid var(--ink)}
+  .appcard-top{display:flex; align-items:center; gap:15px; margin-bottom:var(--s3)}
+  .appicon{width:56px;height:56px;border-radius:5px; overflow:hidden; flex:0 0 auto; background:var(--paper2)}
+  .appicon img{width:100%;height:100%;object-fit:cover; display:block}
+  .appcard h3{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:22px; letter-spacing:-.3px; margin-bottom:3px}
+  .arate{display:inline-flex; align-items:center; gap:7px; font-size:12.5px; color:var(--ink-faint)}
+  .arate b{color:var(--sand); font-weight:700}
+  .appdesc{color:var(--ink-soft); font-size:var(--fs-small); line-height:1.58; margin-bottom:var(--s3); flex:1}
+  .appchips{display:flex; gap:6px 16px; flex-wrap:wrap; margin-bottom:var(--s4)}
+  .appchip{font-size:var(--fs-micro); font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint)}
+  .appchip::before{content:"— "; color:var(--rule)}
+  .appcard .abtn{align-self:flex-start; display:inline-flex; align-items:center; gap:8px;
+    padding:14px 25px; border-radius:2px; font-weight:700; font-size:14.5px; cursor:pointer;
+    border:1px solid var(--rule); color:var(--ink); transition:border-color .2s ease, color .2s ease}
+  .appcard .abtn:hover{border-color:var(--green); color:var(--green)}
+
+  /* ---------------- блог ---------------- */
+  .blog-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:var(--s4) 48px}
+  .bcard{display:flex; flex-direction:column; padding:var(--s3) 0 0; border-top:1px solid var(--rule-soft); color:var(--ink)}
+  .bcard, .bcard:hover, .bcard *{text-decoration:none!important}
+  .bcard .btag{font-size:var(--fs-micro); font-weight:800; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--sand); margin-bottom:var(--s2)}
+  .bcard h3{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:21.5px; line-height:1.2;
+    letter-spacing:-.35px; margin-bottom:10px; transition:color .18s ease}
+  .bcard:hover h3{color:var(--green)}
+  .bcard p{color:var(--ink-soft); font-size:14px; line-height:1.58; margin:0 0 var(--s3); flex:1}
+  .bcard .more{font-size:var(--fs-micro); font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--green)}
+  /* подвал раздела: фраза слева, ссылка на каталог справа — разнесены по краям полосы,
+     иначе на широком экране они читаются как одна слипшаяся строка */
+  .blog-after{margin-top:var(--s4); padding-top:var(--s3); border-top:1px solid var(--rule-soft);
+    display:flex; align-items:baseline; justify-content:space-between; gap:12px 44px; flex-wrap:wrap;
+    font-size:var(--fs-small); color:var(--ink-soft)}
+  .blog-after > span{max-width:56ch; line-height:1.7}
+  .blog-after > span b{color:var(--ink); font-weight:700}
+  .blog-after a{color:var(--green); border-bottom:1px solid var(--rule); transition:border-color .18s ease}
+  .blog-after a:hover{border-color:var(--green)}
+  .blog-after .all{flex:0 0 auto; font-size:var(--fs-micro); font-weight:800; letter-spacing:.14em;
+    text-transform:uppercase; padding-bottom:3px}
+
+  /* ---------------- вопросы ---------------- */
+  .faq{border-top:1px solid var(--ink)}
+  .faq details{border-bottom:1px solid var(--rule-soft)}
+  .faq summary{cursor:pointer; list-style:none; padding:20px 0; font-family:"Spectral",Georgia,serif;
+    font-weight:600; font-size:19px; line-height:1.28; color:var(--ink);
+    display:flex; justify-content:space-between; align-items:baseline; gap:20px; transition:color .18s ease}
+  .faq summary:hover{color:var(--green)}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+"; color:var(--sand); font-family:"Manrope",sans-serif; font-size:20px;
+    font-weight:400; line-height:1; flex:0 0 auto}
+  .faq details[open] summary::after{content:"\2212"}
+  .faq details p{margin:0; padding:0 0 24px; color:var(--ink-soft); font-size:15.5px; line-height:1.65; max-width:68ch}
+  .faq details p a{color:var(--green); border-bottom:1px solid var(--rule)}
+
+  /* ---------------- финальный разворот ---------------- */
+  .cta-band{display:block; width:100%; height:clamp(190px,26vw,320px); object-fit:cover;
+    object-position:center 42%; border-radius:3px; margin-bottom:var(--s5)}
+  .final-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:56px; align-items:start}
+  .finalcta h2{margin-bottom:0; max-width:13ch}
+  .finalcta p{color:var(--ink-soft); font-size:17px; line-height:1.6; margin-bottom:var(--s4); max-width:46ch}
+  /* сноска в конце полосы; телефоны — неразрывными блоками, чтобы номер
+     и его расшифровка никогда не расползались по разным строкам */
+  .note{margin-top:var(--s6); padding-top:var(--s3); border-top:1px solid var(--rule); color:var(--ink-faint);
+    font-size:12.5px; line-height:1.7; max-width:84ch}
+  .note p + p{margin-top:12px}
+  .note .tel{display:inline-block; white-space:nowrap; margin:0 26px 0 0}
+  .note .tel b{color:var(--ink-soft); font-weight:800}
+
+  /* ---------------- колофон ---------------- */
+  footer{border-top:1px solid var(--ink); padding:var(--s5) 0 var(--s6); color:var(--ink-soft); font-size:14px}
+  .fcols{display:flex; justify-content:space-between; flex-wrap:wrap; gap:30px}
+  .flinks{display:flex; gap:12px 26px; flex-wrap:wrap; align-items:center;
+    font-size:var(--fs-micro); font-weight:800; letter-spacing:.12em; text-transform:uppercase}
+  footer a{transition:color .18s ease}
+  footer a:hover{color:var(--green)}
+  .fnote{font-size:12.5px; color:var(--ink-faint); margin-top:10px}
+
+  /* зерно бумаги */
+  .grain{position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.04; mix-blend-mode:multiply;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
-  /* scroll reveal */
-  .rv{opacity:0; transform:translateY(22px); transition:opacity .65s ease, transform .65s cubic-bezier(.2,.7,.2,1)}
-  .rv-in{opacity:1; transform:none}
-
-  /* stats band */
-  .stats-wrap{padding:6px 0 44px}
-  .stats-band{display:grid; grid-template-columns:repeat(5,1fr); gap:16px;
-    background:linear-gradient(180deg,var(--surface),var(--bg2)); border:1px solid var(--line);
-    border-radius:var(--r-lg); padding:30px 24px; box-shadow:var(--sh)}
-  .stat{text-align:center; position:relative}
-  .stat + .stat::before{content:""; position:absolute; left:-8px; top:50%; transform:translateY(-50%); width:1px; height:42px; background:var(--line)}
-  .stat b{font-family:"Spectral",serif; font-weight:600; font-size:clamp(25px,3vw,33px); color:var(--text); display:block; line-height:1.05; letter-spacing:-.5px}
-  .stat b .u{color:var(--teal)}
-  /* ВАЖНО: было «.stat span» — правило подписи задевало и <span class="num"> внутри <b>,
-     из-за чего все числа рендерились 13.5px вместо 33px (крупным оставался только «24/7»,
-     у которого нет span). Ограничиваем прямым потомком. */
-  .stat > span{color:var(--muted); font-size:13.5px}
-  .stat b .u{font-size:.62em; vertical-align:baseline}
-
-  /* ecosystem app cards */
-  .apps{display:grid; grid-template-columns:1fr 1fr; gap:20px}
-  .appcard{position:relative; display:flex; flex-direction:column; overflow:hidden;
-    background:linear-gradient(180deg,var(--surface),var(--bg2)); border:1px solid var(--line);
-    border-radius:var(--r-lg); padding:28px; transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease}
-  .appcard::before{content:""; position:absolute; top:-30%; right:-15%; width:55%; height:72%;
-    background:radial-gradient(circle, var(--ac-glow), transparent 70%); opacity:.6; pointer-events:none}
-  .appcard:hover{transform:translateY(-6px); border-color:var(--ac); box-shadow:0 28px 64px -24px var(--ac-glow)}
-  .appcard-top{display:flex; align-items:center; gap:16px; margin-bottom:16px; position:relative; z-index:1}
-  .appicon{width:64px;height:64px;border-radius:17px; overflow:hidden; flex:0 0 auto; background:var(--surface2); box-shadow:0 10px 26px rgba(0,0,0,.45), inset 0 0 0 1px var(--line-strong)}
-  .appicon img{width:100%;height:100%;object-fit:cover; display:block}
-  .appcard h3{font-size:19px; font-weight:700; letter-spacing:-.2px; margin-bottom:5px}
-  .arate{display:inline-flex; align-items:center; gap:7px; font-size:13px; color:var(--muted)}
-  .arate b{color:var(--warn); font-weight:700}
-  .appdesc{color:var(--muted); font-size:14.5px; margin-bottom:16px; position:relative; z-index:1; flex:1}
-  .appchips{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; position:relative; z-index:1}
-  .appchip{font-size:12px; color:var(--ac); background:var(--ac-soft); border:1px solid var(--ac-line); padding:5px 11px; border-radius:999px; white-space:nowrap}
-  .appcard .abtn{position:relative; z-index:1; display:inline-flex; align-items:center; justify-content:center; gap:8px;
-    width:100%; padding:13px 22px; border-radius:13px; font-weight:700; font-size:15px; cursor:pointer;
-    background:var(--ac); color:#0a0e16; transition:transform .16s ease, box-shadow .16s ease, filter .16s ease}
-  .appcard .abtn:hover{transform:translateY(-2px); filter:brightness(1.07); box-shadow:0 14px 32px -8px var(--ac-glow)}
-
-  /* ===== richness pass ===== */
-  .seclabel{position:relative}
-  .seclabel::before{content:""; display:block; width:36px; height:2px; margin:0 auto 13px; border-radius:2px;
-    background:linear-gradient(90deg,transparent,var(--teal),transparent)}
-  .chat{box-shadow:0 24px 60px -28px rgba(60,70,55,.22), 0 0 56px -34px rgba(94,126,90,.28), inset 0 1px 0 rgba(255,255,255,.7)}
-  .feat .ic{background:linear-gradient(150deg, rgba(94,126,90,.16), rgba(201,154,110,.08));
-    box-shadow:inset 0 0 0 1px rgba(94,126,90,.14), 0 6px 18px -8px rgba(94,126,90,.25)}
-  .feat:hover .ic{box-shadow:inset 0 0 0 1px rgba(94,126,90,.32), 0 10px 26px -8px rgba(94,126,90,.4)}
-  .price{position:relative; overflow:hidden}
-  .price::before{content:""; position:absolute; top:0; left:50%; transform:translateX(-50%); width:130px; height:3px;
-    background:linear-gradient(90deg,var(--teal),var(--lav)); border-radius:0 0 5px 5px}
-  .hero h1 em{text-shadow:none}
-  footer{background:linear-gradient(180deg, transparent, rgba(94,126,90,.025))}
-  .logo .appmark{border-radius:9px; object-fit:cover; box-shadow:0 4px 14px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.07)}
-
-  /* rotating halo behind the chat */
-  .chat-shell{position:relative}
-  @property --ang{syntax:"<angle>"; inherits:false; initial-value:0deg}
-  .chat-shell::before{content:""; position:absolute; inset:-5px; border-radius:30px; z-index:0; pointer-events:none;
-    background:conic-gradient(from var(--ang,0deg), transparent 4%, rgba(94,126,90,.6), rgba(201,154,110,.5), rgba(94,126,90,.6), transparent 62%);
-    filter:blur(24px); opacity:.6; animation:auroraSpin 14s linear infinite}
-  @keyframes auroraSpin{to{--ang:360deg}}
-  @keyframes spin{to{transform:rotate(360deg)}}
-
-  /* ===================== v2: свет, глубина, первый экран ===================== */
-  /* 1. Карточки получают цветную тень и «подъём» — раньше они лежали плоско */
-  .feat, .pcard, .rev, .bcard, .step{box-shadow:var(--sh-card); transition:transform .24s cubic-bezier(.2,.7,.2,1), border-color .24s ease, box-shadow .24s ease}
-  .feat:hover, .pcard:hover, .rev:hover, .bcard:hover{box-shadow:var(--sh-card-h)}
-  .rev:hover{transform:translateY(-3px)}
-  .faq details{box-shadow:var(--sh-card)}
-
-  /* 2. Шапка: при прокрутке становится плотнее и обретает тень — даёт ощущение слоя */
-  header{transition:background .3s ease, box-shadow .3s ease, border-color .3s ease}
-  header.scrolled{background:rgba(255,255,255,.92); box-shadow:0 10px 30px -22px rgba(60,80,55,.5); border-bottom-color:transparent}
-
-  /* 3. Живое превью диалога в героe: реплики-примера визуально мягче настоящих,
-        чтобы никто не принял их за свой разговор */
-  @media(min-width:881px){ .hero h1 em{white-space:nowrap} }
-  .bubble.preview{opacity:.97}
-  .bubble.preview.bot{background:linear-gradient(180deg,#ffffff,var(--surface2))}
-  .preview-tag{align-self:center; margin-top:2px; font-size:11.5px; font-weight:600; letter-spacing:.3px;
-    color:var(--faint); background:rgba(94,126,90,.07); border:1px solid rgba(94,126,90,.14);
-    padding:5px 12px; border-radius:999px; animation:tagIn .5s ease both}
-  @keyframes tagIn{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
-  .msgs.is-preview{-webkit-mask-image:none}
-
-  /* 7. Карточки «Что внутри»: сгенерированные иллюстрации вместо векторных иконок */
-  .feat .ic{width:106px; height:106px; border-radius:20px; background:none; border:0;
-    box-shadow:none; padding:0; overflow:hidden; margin-bottom:15px}
-  .feat:hover .ic{box-shadow:none}
-  .feat .ic img{width:100%; height:100%; display:block; object-fit:cover}
-
-  /* 6. Темы обращений — плитки-ссылки на разборы в блоге */
-  .topics{display:grid; grid-template-columns:repeat(auto-fill,minmax(212px,1fr)); gap:12px}
-  .topic{display:flex; flex-direction:column; gap:3px; padding:15px 17px; border-radius:14px;
-    background:var(--surface); border:1px solid var(--line); box-shadow:var(--sh-card);
-    transition:transform .2s cubic-bezier(.2,.7,.2,1), border-color .2s ease, box-shadow .2s ease}
-  .topic b{font-size:15.5px; font-weight:700; letter-spacing:-.2px}
-  .topic span{font-size:13px; color:var(--muted); line-height:1.45}
-  .topic:hover{transform:translateY(-3px); border-color:rgba(94,126,90,.34); box-shadow:var(--sh-card-h)}
-  @media(max-width:560px){ .topics{grid-template-columns:1fr 1fr; gap:9px} .topic{padding:12px 13px} .topic b{font-size:14.5px} .topic span{font-size:12px} }
-
-  /* 5. Тёмный акцентный блок с телефонами.
-        Скриншоты приложения тёмные — на кремовом фоне они смотрелись чужеродно.
-        Тёмная секция превращает этот конфликт в приём: продукт становится акцентом. */
-  .showcase{position:relative; overflow:hidden; isolation:isolate;
-    background:radial-gradient(120% 90% at 50% -10%, #2f4a3b 0%, #24382d 45%, #1c2c24 100%); color:#EFEFE8}
-  .showcase .seclabel{color:#A9C7A2}
-  .showcase .seclabel::before{background:linear-gradient(90deg,transparent,#A9C7A2,transparent)}
-  .showcase h2{color:#F4F2EA}
-  .showcase .sub{color:rgba(239,239,232,.72)}
-  .sc-glow{position:absolute; inset:0; pointer-events:none; z-index:-1}
-  .sc-glow::before{content:""; position:absolute; width:760px; height:520px; left:50%; top:26%;
-    transform:translateX(-50%); border-radius:50%; filter:blur(90px); opacity:.5;
-    background:radial-gradient(circle, rgba(140,190,140,.42), transparent 68%)}
-  /* Без 3D-поворота: rotateY заставляет браузер растрировать слой и пересэмплировать
-     текст — на боковых экранах он становился мылом (замер: 579 против 12681 у прямого).
-     Глубину даём размером, вертикальной ступенькой и тенью. */
-  .phones{display:flex; align-items:flex-end; justify-content:center; gap:30px; margin-top:6px}
-  .ph{position:relative; margin:0; flex:0 0 auto}
-  .ph img{display:block; width:100%; height:auto; border-radius:20px;
-    box-shadow:0 40px 70px -30px rgba(0,0,0,.75), 0 0 0 1px rgba(255,255,255,.20), 0 0 34px -12px rgba(150,200,150,.28)}
-  .ph figcaption{margin-top:16px; text-align:center; font-size:13px; color:rgba(239,239,232,.62)}
-  .ph-main{width:258px; z-index:2}
-  .ph-side{width:206px; margin-bottom:38px;   /* ступенька вместо наклона */
-    transition:transform .35s cubic-bezier(.2,.7,.2,1)}
-  .ph-side img{box-shadow:0 30px 56px -28px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.16)}
-  .ph:hover{transform:translateY(-6px)}   /* трансформация только на hover — в покое картинка резкая */
-  .sc-cta{text-align:center; margin-top:38px}
-  .showcase .btn{background:#EFEFE8; color:#22352A}
-  .showcase .btn:hover{background:#ffffff}
-  @media(max-width:880px){
-    .phones{gap:14px}
-    .ph-main{width:200px} .ph-side{width:164px; margin-bottom:26px}
+  /* ---------------- адаптив ---------------- */
+  @media (max-width:1080px){
+    :root{--rail:124px; --colgap:38px}
+    .hero-grid{grid-template-columns:minmax(0,1fr); gap:var(--s5)}
+    .hero h1{max-width:none}
   }
-  @media(max-width:560px){
-    /* на узких экранах не прячем два экрана из трёх (мобильных большинство),
-       а даём пролистать их вбок; скроллится контейнер, страница не едет */
-    .phones{gap:14px; justify-content:flex-start; overflow-x:auto; scroll-snap-type:x mandatory;
-      padding:0 16px 10px; margin:0 -16px;   /* совпадает с .wrap{padding:0 16px} на этой ширине */
-      -webkit-overflow-scrolling:touch; scrollbar-width:none}
-    .phones::-webkit-scrollbar{display:none}
-    .ph{scroll-snap-align:center}
-    .ph-main{width:min(62vw,240px)}
-    .ph-side{width:min(52vw,200px); margin-bottom:0}
-  }
-
-  /* 4. Мягкий блик по верхней кромке ключевых блоков — «стекло», а не «бумага» */
-  .chat::after{content:""; position:absolute; left:0; right:0; top:0; height:1px; pointer-events:none;
-    background:linear-gradient(90deg,transparent,rgba(255,255,255,.9),transparent)}
-
-  /* 3D tilt for app cards */
-  .apps{perspective:1100px}
-  .appcard{transform-style:preserve-3d; will-change:transform}
-
-  /* final CTA */
-  .finalcta{position:relative; overflow:hidden; text-align:center; background:linear-gradient(180deg,var(--surface),var(--bg2));
-    border:1px solid var(--line-strong); border-radius:var(--r-lg); padding:56px 32px; box-shadow:var(--sh-glow)}
-  .finalcta .glow{position:absolute; inset:0; pointer-events:none;
-    background:radial-gradient(440px 220px at 50% -15%, rgba(94,126,90,.20), transparent 70%)}
-  .cta-band{position:relative; display:block; width:calc(100% + 64px); max-width:none; margin:-56px -32px 30px;
-    height:clamp(180px,26vw,300px); object-fit:cover; object-position:center 42%;
-    border-radius:var(--r-lg) var(--r-lg) 0 0}
-  .finalcta h2{margin-bottom:12px; position:relative}
-  .finalcta p{color:var(--muted); max-width:560px; margin:0 auto 26px; position:relative; font-size:16.5px}
-  .finalcta .btn{position:relative}
-
-  /* FAQ */
-  .faq{max-width:780px; margin:0 auto; display:flex; flex-direction:column; gap:12px}
-  .faq details{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:2px 22px; transition:border-color .2s ease}
-  .faq details[open]{border-color:var(--line-strong)}
-  .faq summary{cursor:pointer; list-style:none; padding:18px 0; font-weight:700; font-size:16.5px; color:var(--text);
-    display:flex; justify-content:space-between; align-items:center; gap:14px}
-  .faq summary::-webkit-details-marker{display:none}
-  .faq summary::after{content:"+"; color:var(--teal); font-size:24px; font-weight:400; line-height:1; flex:0 0 auto}
-  .faq details[open] summary::after{content:"\2212"}
-  .faq details p{margin:0; padding:0 0 18px; color:var(--muted); font-size:15px; line-height:1.65}
-
-  /* Отзывы */
-  .revs{display:flex; flex-wrap:wrap; gap:18px; justify-content:center; align-items:stretch}
-  .rev{flex:1 1 300px; max-width:362px; display:flex; flex-direction:column; text-align:left;
-    background:var(--surface); border:1px solid var(--line-strong); border-radius:20px; padding:22px 24px}
-  .rev .rhead{display:flex; align-items:baseline; gap:8px; margin-bottom:10px}
-  .rev .rname{font-weight:800; font-size:15px; color:var(--text)}
-  .rev .rstars{color:var(--lav); font-size:14px; letter-spacing:1px}
-  .rev .rdate{margin-left:auto; font-size:12.5px; color:var(--faint)}
-  .rev p{color:var(--muted); font-size:14px; line-height:1.62; margin:0}
-  .rev .rrole{display:inline-block; margin-top:12px; font-size:11px; font-weight:700; letter-spacing:.7px;
-    text-transform:uppercase; color:var(--teal-deep); background:rgba(201,154,110,.18); padding:4px 10px; border-radius:8px}
-  .revs-note{margin-top:18px; font-size:13px; color:var(--faint)}
-  .revs-note a{color:var(--teal-deep); font-weight:700}
-  /* Блог / статьи */
-  .blog-grid{display:flex; flex-wrap:wrap; gap:18px; justify-content:center}
-  .bcard{flex:1 1 300px; max-width:362px; display:flex; flex-direction:column; text-align:left;
-    background:var(--surface); border:1px solid var(--line-strong); border-radius:20px; padding:24px 24px 21px;
-    text-decoration:none; color:var(--text); transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease}
-  .bcard, .bcard:hover, .bcard *{text-decoration:none!important}
-  .bcard:hover{transform:translateY(-4px); border-color:var(--teal); box-shadow:var(--sh-glow)}
-  .bcard .btag{align-self:flex-start; font-size:11px; font-weight:700; letter-spacing:.7px; text-transform:uppercase;
-    color:var(--teal-deep); background:rgba(201,154,110,.18); padding:4px 10px; border-radius:8px; margin-bottom:14px}
-  .bcard h3{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:20.5px; line-height:1.25; letter-spacing:-.2px; margin-bottom:9px}
-  .bcard p{color:var(--muted); font-size:13.8px; line-height:1.6; margin:0 0 16px; flex:1}
-  .bcard .more{font-weight:700; font-size:14px; color:var(--teal-deep); display:inline-flex; align-items:center; gap:6px; transition:gap .18s ease}
-  .bcard:hover .more{gap:10px}
-  .blog-all{display:inline-flex; align-items:center; gap:7px; margin-top:24px; font-weight:700; color:var(--teal-deep); font-size:15px; transition:gap .18s ease}
-  .blog-all:hover{gap:11px}
-  /* ссылка «Блог» в шапке (слева, рядом с логотипом) */
-  .nav-left{display:flex; align-items:center; gap:32px}
-  .navlink{font-weight:700; font-size:17px; color:var(--text); white-space:nowrap; transition:color .15s ease}
-  .navlink:hover{color:var(--teal-deep)}
-  @media(max-width:560px){ .nav-left{gap:18px} .navlink{font-size:15.5px} }
-
   @media (max-width:880px){
-    .hero-grid{grid-template-columns:minmax(0,1fr); gap:34px}
-    .hero{padding:44px 0 20px}
+    :root{--s6:56px; --s7:72px}
+    .spread{grid-template-columns:minmax(0,1fr); gap:var(--s3)}
+    .rail{position:static; display:flex; align-items:baseline; gap:16px; flex-wrap:wrap;
+      padding-bottom:var(--s2); border-bottom:1px solid var(--rule)}
+    .rail .no{font-size:25px}
+    .rail .rule{display:none}
+    .rail .marg{width:100%; margin-top:6px; padding-top:8px; border-top:0}
     .chat{height:min(72vh,540px)}
-    section{padding:64px 0}
-    /* ореол теперь крутит градиент (не элемент) — за экран не вылезает, работает и на мобиле */
+    .final-grid{grid-template-columns:minmax(0,1fr); gap:var(--s3)}
+    .finalcta h2{max-width:none}
+    .apps{grid-template-columns:1fr; gap:var(--s4) 0}
+    .colophon{grid-template-columns:repeat(3,1fr)}
+    .stat{padding:18px 16px 16px}
+    .stat:nth-child(4){border-left:0; padding-left:0}
   }
   @media (max-width:560px){
-    .wrap{padding:0 16px}
-    section{padding:54px 0}
-    .sub{margin-bottom:38px; font-size:15.5px}
-    .seclabel{font-size:11.5px; letter-spacing:1.6px}
-    .header-cta{padding:9px 17px; font-size:14px}
-    .hero{padding:34px 0 16px}
-    .hero .eyebrow{margin-bottom:18px}
-    .hero p.lead{font-size:16px; margin-bottom:26px}
-    .cta-row{flex-direction:column; align-items:stretch}
-    .cta-row .btn{width:100%; justify-content:center; padding:14px 22px}
-    .trust{justify-content:center; gap:6px 12px; margin-top:22px}
-    .chat{height:min(78vh,560px); border-radius:20px}
+    .wrap{padding:0 18px}
+    section{padding:46px 0}
+    .standfirst{font-size:18px}
+    .hero{padding:34px 0 0}
+    .hero h1{letter-spacing:-1.2px}
+    .hero .lead{font-size:17px}
+    .hero .lead::first-letter{font-size:50px; margin-right:10px}
+    .cta-row{flex-direction:column; align-items:stretch; gap:18px}
+    .cta-row .btn{width:100%; justify-content:center}
+    .cta-row .tlink{align-self:flex-start}
+    .colophon{grid-template-columns:1fr 1fr}
+    .stat{padding:14px 12px}
+    .stat:nth-child(odd){border-left:0; padding-left:0}
+    .stat:nth-child(5){grid-column:1 / -1}
+    .stat b{font-size:27px}
+    .chat{height:min(78vh,540px)}
     .picker-grid{grid-template-columns:1fr}
     .pi .t small{white-space:normal}
-    .feat{padding:22px}
-    .steps{gap:28px 16px; margin-top:36px}
-    .price{padding:28px 22px}
-    .shot{width:48%; min-width:150px}
-    .fcols{flex-direction:column; gap:18px}
-    .stats-band{grid-template-columns:1fr 1fr; gap:26px 12px; padding:26px 16px}
-    .stat:nth-child(5){grid-column:1 / -1}
-    .stat + .stat::before{display:none}
-    .apps{grid-template-columns:1fr}
-    .appcard{padding:24px}
+    .topics{grid-template-columns:1fr}
+    .topic{flex-direction:column; gap:2px; align-items:flex-start}
+    .topic b{white-space:normal}
+    .fcols{flex-direction:column; gap:22px}
   }
   @media (prefers-reduced-motion:reduce){
     *{animation:none!important; transition:none!important; scroll-behavior:auto!important}
-    .rv{opacity:1!important; transform:none!important}
   }
 </style>
 <script type="application/ld+json">
@@ -575,299 +558,367 @@
         AI Therapist
       </div>
       <a class="navlink" href="blog/">Блог</a>
+      <a class="navlink sec" href="#personas">Психологи</a>
+      <a class="navlink sec" href="#faq">Вопросы</a>
     </div>
     <a class="rs-link rs-sm" id="dl-top" href="#"><img class="rustore-badge" src="assets/vendor/rustore-logo-color-dark.svg" alt="Скачайте AI Therapist из RuStore" width="111" height="40"></a>
   </div>
 </header>
 
-<!-- HERO -->
+<!-- 01 — ЗНАКОМСТВО -->
 <section class="hero">
-  <div class="aura" aria-hidden="true"></div>
-  <div class="wrap hero-grid">
-    <div>
-      <h1>Ваш личный <em>ИИ-психолог</em>. Понимает, поддерживает, помогает.</h1>
-      <p class="lead">Тёплый, внимательный разговор в любой момент — анонимно, без записи и без осуждения. Выберите психолога по душе и напишите первое сообщение прямо сейчас.</p>
-      <div class="cta-row">
-        <a class="btn" id="dl-hero" href="#">Скачать в RuStore</a>
-        <a class="btn ghost" href="#personas">Кто эти психологи →</a>
-      </div>
-      <div class="trust">
-        <span class="stars">★ 4.7</span> <span>95 оценок в RuStore</span>
-        <span class="sep">·</span> <span>Без регистрации</span>
-        <span class="sep">·</span> <span>24/7</span>
-      </div>
-    </div>
+  <div class="wrap">
+    <div class="kicker"><span class="micro">01 — Знакомство</span></div>
+    <h1>Разговор, который <em>всегда</em> можно начать.</h1>
 
-    <!-- Signature: рабочий чат -->
-    <div class="chat-shell">
-    <div class="chat" id="chat">
-      <div class="chat-top">
-        <div class="ava" id="c-ava">🧑‍⚕️</div>
-        <div class="chat-id">
-          <div class="nm" id="c-name">Андрей Петрович</div>
-          <div class="role"><span class="on"></span><span id="c-role">классический психолог · онлайн</span></div>
+    <div class="hero-grid">
+      <div>
+        <p class="lead">Тревога не спрашивает, рабочее ли сейчас время. AI&nbsp;Therapist — ИИ-психолог, с которым можно поговорить в три часа ночи: анонимно, без записи, без осуждения и без объяснений, почему вы вообще пишете.</p>
+        <div class="cta-row">
+          <a class="btn" id="dl-hero" href="#">Скачать в RuStore</a>
+          <a class="tlink" href="#personas">Восемь психологов на выбор →</a>
         </div>
-        <button class="switch" id="c-switch" aria-label="Сменить психолога"><span class="swl">Сменить</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
+        <p class="hero-marg">Мы не спрашиваем имя, телефон и почту. Переписка остаётся в вашем браузере и не сохраняется на наших серверах — стереть её можно вместе с историей браузера.</p>
       </div>
-      <div class="planbar" id="c-planbar" hidden></div>
-      <div class="chat-body">
-        <!-- ym-hide-content: переписка демо-чата не попадает в записи Вебвизора -->
-        <div class="msgs ym-hide-content" id="c-msgs"></div>
-        <div class="picker" id="c-picker" hidden>
-          <div class="picker-h"><span>Выберите психолога</span>
-            <button class="picker-close" id="c-pclose" aria-label="Закрыть">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+
+      <!-- врезка: рабочее демо прямо на полосе -->
+      <div class="chat-shell">
+        <div class="insert-h">
+          <b class="micro">Врезка — живое демо</b>
+          <i>отвечает по-настоящему</i>
+        </div>
+        <div class="chat" id="chat">
+          <div class="chat-top">
+            <div class="ava" id="c-ava">🧑‍⚕️</div>
+            <div class="chat-id">
+              <div class="nm" id="c-name">Андрей Петрович</div>
+              <div class="role"><span class="on"></span><span id="c-role">классический психолог · онлайн</span></div>
+            </div>
+            <button class="switch" id="c-switch" aria-label="Сменить психолога"><span class="swl">Сменить</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
           </div>
-          <div class="picker-grid" id="c-pgrid"></div>
+          <div class="planbar" id="c-planbar" hidden></div>
+          <div class="chat-body">
+            <!-- ym-hide-content: переписка демо-чата не попадает в записи Вебвизора -->
+            <div class="msgs ym-hide-content" id="c-msgs"></div>
+            <div class="picker" id="c-picker" hidden>
+              <div class="picker-h"><span>Выберите психолога</span>
+                <button class="picker-close" id="c-pclose" aria-label="Закрыть">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+              </div>
+              <div class="picker-grid" id="c-pgrid"></div>
+            </div>
+          </div>
+          <div class="agegate" id="c-agegate" hidden>
+            <input type="checkbox" id="c-adult">
+            <label for="c-adult">Мне есть 18 лет. Я понимаю, что это демо ИИ-помощника, и принимаю
+              <a href="oferta.html" target="_blank" rel="noopener">условия использования сайта</a>.</label>
+          </div>
+          <div class="composer">
+            <!-- ym-disable-keys: набор текста в поле не пишется Вебвизором -->
+            <textarea id="c-input" class="ym-disable-keys" rows="1" placeholder="Напишите, что вас беспокоит…" aria-label="Сообщение"></textarea>
+            <button class="send" id="c-send" aria-label="Отправить сообщение">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="agegate" id="c-agegate" hidden>
-        <input type="checkbox" id="c-adult">
-        <label for="c-adult">Мне есть 18 лет. Я понимаю, что это демо ИИ-помощника, и принимаю
-          <a href="oferta.html" target="_blank" rel="noopener">условия использования сайта</a>.</label>
-      </div>
-      <div class="composer">
-        <!-- ym-disable-keys: набор текста в поле не пишется Вебвизором -->
-        <textarea id="c-input" class="ym-disable-keys" rows="1" placeholder="Напишите, что вас беспокоит…" aria-label="Сообщение"></textarea>
-        <button class="send" id="c-send" aria-label="Отправить сообщение">
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        </button>
+        <p class="figcap">Пять сообщений бесплатно, без регистрации. Переписка остаётся в вашем браузере и не сохраняется на наших серверах.</p>
       </div>
     </div>
-    </div>
-  </div>
-</section>
 
-<!-- ЦИФРЫ -->
-<section class="stats-wrap">
-  <div class="wrap">
-    <div class="stats-band">
-      <div class="stat"><b><span class="num" data-count="7000">7 000</span><span class="u">+</span></b><span>установок приложения</span></div>
-      <div class="stat"><b><span class="num" data-count="4.7" data-dec="1">4.7</span><span class="u">★</span></b><span>рейтинг в RuStore</span></div>
-      <div class="stat"><b><span class="num" data-count="8">8</span></b><span>психологов на выбор</span></div>
+    <!-- выходные данные -->
+    <div class="colophon">
+      <div class="stat"><b class="tnum">7 000<span class="u">+</span></b><span>установок приложения</span></div>
+      <div class="stat"><b class="tnum">4,7<span class="u">★</span></b><span>рейтинг в RuStore</span></div>
+      <div class="stat"><b class="tnum">8</b><span>психологов на выбор</span></div>
       <div class="stat"><b>24/7</b><span>всегда рядом</span></div>
-      <div class="stat"><b><span class="num" data-count="100">100</span><span class="u">%</span></b><span>анонимно</span></div>
+      <div class="stat"><b class="tnum">100<span class="u">%</span></b><span>анонимно</span></div>
     </div>
   </div>
 </section>
 
-<!-- ФИЧИ -->
-<section>
-  <div class="wrap">
-    <div class="seclabel">Что внутри</div>
-    <h2>Поддержка, в которой чувствуешь человека</h2>
-    <p class="sub">Не сухой бот, а собеседник, который помнит контекст и подбирает слова под вас.</p>
-    <div class="grid">
-      <div class="feat"><div class="ic"><img src="assets/feat-razgovor.webp" alt="Два речевых облачка — разговор с ИИ-психологом" width="240" height="240" loading="lazy"></div><h3>Разговор с ИИ-психологом</h3><p>Понимает контекст беседы, поддерживает и помогает разобраться — спокойно и бережно.</p></div>
-      <div class="feat"><div class="ic"><img src="assets/feat-personas.webp" alt="Силуэты разных собеседников — восемь психологов на выбор" width="240" height="240" loading="lazy"></div><h3>Разные психологи на выбор</h3><p>Каждый со своим характером и подходом — от академичного до тёплого «по-домашнему».</p></div>
-      <div class="feat"><div class="ic"><img src="assets/feat-metody.webp" alt="Раскрытая книга и схема — опора на доказательные методы" width="240" height="240" loading="lazy"></div><h3>Доказательные методы</h3><p>Опора на КПТ, ACT, схематерапию, Mindfulness и CFT. Без эзотерики и обещаний «вылечить».</p></div>
-      <div class="feat"><div class="ic"><img src="assets/feat-golos.webp" alt="Микрофон со звуковыми волнами — голосовой ввод" width="240" height="240" loading="lazy"></div><h3>Голосовой ввод</h3><p>Говорите, а не печатайте — удобно, когда хочется просто выговориться.</p></div>
-      <div class="feat"><div class="ic"><img src="assets/feat-sessii.webp" alt="Папка с закладкой и облако — сохранение сессий" width="240" height="240" loading="lazy"></div><h3>Сохранение сессий</h3><p>Сохраняйте беседы и перечитывайте офлайн. Экспорт и импорт в текстовом формате.</p></div>
-      <div class="feat"><div class="ic"><img src="assets/feat-anonimnost.webp" alt="Щит с замком — полная анонимность" width="240" height="240" loading="lazy"></div><h3>Полная анонимность</h3><p>Без регистрации: мы не спрашиваем имя, телефон и email. Переписка не сохраняется на наших серверах и остаётся с вами.</p></div>
+<!-- 02 — ЧТО ВНУТРИ -->
+<section class="ruled">
+  <div class="wrap spread">
+    <div class="rail">
+      <span class="no">02</span>
+      <span class="rule"></span>
+      <span class="lb">Что внутри</span>
+      <span class="marg">Не бот с готовыми ответами, а собеседник, который держит нить разговора.</span>
+    </div>
+    <div>
+      <h2>Поддержка, в которой чувствуешь человека</h2>
+      <p class="standfirst">Он помнит, о чём вы говорили выше, и подбирает слова под вас — а не выдаёт один и тот же совет всем подряд.</p>
+      <div class="grid">
+        <div class="feat"><div class="ic"><img src="assets/feat-razgovor.webp" alt="Два речевых облачка — разговор с ИИ-психологом" width="240" height="240" loading="lazy"></div><h3>Разговор с ИИ-психологом</h3><p>Понимает контекст беседы, поддерживает и помогает разобраться — спокойно и бережно.</p></div>
+        <div class="feat"><div class="ic"><img src="assets/feat-personas.webp" alt="Силуэты разных собеседников — восемь психологов на выбор" width="240" height="240" loading="lazy"></div><h3>Разные психологи на выбор</h3><p>Каждый со своим характером и подходом — от академичного до тёплого «по-домашнему».</p></div>
+        <div class="feat"><div class="ic"><img src="assets/feat-metody.webp" alt="Раскрытая книга и схема — опора на доказательные методы" width="240" height="240" loading="lazy"></div><h3>Доказательные методы</h3><p>Опора на КПТ, ACT, схематерапию, Mindfulness и CFT. Без эзотерики и обещаний «вылечить».</p></div>
+        <div class="feat"><div class="ic"><img src="assets/feat-golos.webp" alt="Микрофон со звуковыми волнами — голосовой ввод" width="240" height="240" loading="lazy"></div><h3>Голосовой ввод</h3><p>Говорите, а не печатайте — удобно, когда хочется просто выговориться.</p></div>
+        <div class="feat"><div class="ic"><img src="assets/feat-sessii.webp" alt="Папка с закладкой и облако — сохранение сессий" width="240" height="240" loading="lazy"></div><h3>Сохранение сессий</h3><p>Сохраняйте беседы и перечитывайте офлайн. Экспорт и импорт в текстовом формате.</p></div>
+        <div class="feat"><div class="ic"><img src="assets/feat-anonimnost.webp" alt="Щит с замком — полная анонимность" width="240" height="240" loading="lazy"></div><h3>Полная анонимность</h3><p>Без регистрации: мы не спрашиваем имя, телефон и email. Переписка не сохраняется на наших серверах и остаётся с вами.</p></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ПЕРСОНЫ -->
-<section id="personas" style="background:var(--bg2)">
-  <div class="wrap">
-    <div class="seclabel">Психологи</div>
-    <h2>Выберите того, с кем легче</h2>
-    <p class="sub">У каждого свой характер и подход. Нажмите — и поговорите с ним в демо выше.</p>
-    <div class="pgrid" id="p-showcase">
-      <div class="pcard" data-i="0" style="--pc:#4f7a6f"><div class="pa">🧑‍⚕️</div><h4>Андрей Петрович</h4><p>Классический психолог</p><div class="try">Поговорить →</div></div>
-      <div class="pcard" data-i="1" style="--pc:#c75d8f"><div class="pa">💁‍♀️</div><h4>Лана</h4><p>Тёплая, вдохновляющая</p><div class="try">Поговорить →</div></div>
-      <div class="pcard" data-i="2" style="--pc:#c2902f"><div class="pa">👵</div><h4>Бабушка Тамара</h4><p>По-домашнему, с теплом</p><div class="try">Поговорить →</div></div>
-      <div class="pcard" data-i="3" style="--pc:#4f73b0"><div class="pa">💪</div><h4>Альфач</h4><p>Прямой, мотивирующий</p><div class="try">Поговорить →</div></div>
-      <div class="pcard" data-i="4" style="--pc:#7a6bcf"><div class="pa">🎨</div><h4>Дамиан</h4><p>Просто рядом</p><div class="try">Поговорить →</div></div>
-      <div class="pcard" data-i="5" style="--pc:#c97a52"><div class="pa">🐈</div><h4>Мурмелада</h4><p>Кошка-психолог</p><div class="try">Поговорить →</div></div>
-      <div class="pcard" data-i="6" style="--pc:#3f9472"><div class="pa">📈</div><h4>Аляз Шарбудитов</h4><p>Бизнес-коуч</p><div class="try">Поговорить →</div></div>
-      <div class="pcard" data-i="7" style="--pc:#6b7a8c"><div class="pa">🤖</div><h4>PSY-3000</h4><p>ИИ-аналитик</p><div class="try">Поговорить →</div></div>
+<!-- 03 — ПСИХОЛОГИ -->
+<section class="ruled" id="personas">
+  <div class="wrap spread">
+    <div class="rail">
+      <span class="no">03</span>
+      <span class="rule"></span>
+      <span class="lb">Психологи</span>
+      <span class="marg">Нажмите на имя — и он ответит вам во врезке наверху.</span>
+    </div>
+    <div>
+      <h2>Выберите того, с кем легче</h2>
+      <p class="standfirst">Одному нужен спокойный профессионал, другому — чтобы просто побыли рядом и не лезли с советами. Характер собеседника здесь такая же настройка, как всё остальное.</p>
+      <div class="pgrid" id="p-showcase">
+        <div class="pcard" data-i="0" style="--pc:#4f7a6f"><div class="pa">🧑‍⚕️</div><div class="pt"><h4>Андрей Петрович</h4><p>Классический психолог</p></div><span class="try">Поговорить</span></div>
+        <div class="pcard" data-i="1" style="--pc:#c75d8f"><div class="pa">💁‍♀️</div><div class="pt"><h4>Лана</h4><p>Тёплая, вдохновляющая</p></div><span class="try">Поговорить</span></div>
+        <div class="pcard" data-i="2" style="--pc:#c2902f"><div class="pa">👵</div><div class="pt"><h4>Бабушка Тамара</h4><p>По-домашнему, с теплом</p></div><span class="try">Поговорить</span></div>
+        <div class="pcard" data-i="3" style="--pc:#4f73b0"><div class="pa">💪</div><div class="pt"><h4>Альфач</h4><p>Прямой, мотивирующий</p></div><span class="try">Поговорить</span></div>
+        <div class="pcard" data-i="4" style="--pc:#7a6bcf"><div class="pa">🎨</div><div class="pt"><h4>Дамиан</h4><p>Просто рядом</p></div><span class="try">Поговорить</span></div>
+        <div class="pcard" data-i="5" style="--pc:#c97a52"><div class="pa">🐈</div><div class="pt"><h4>Мурмелада</h4><p>Кошка-психолог</p></div><span class="try">Поговорить</span></div>
+        <div class="pcard" data-i="6" style="--pc:#3f9472"><div class="pa">📈</div><div class="pt"><h4>Аляз Шарбудитов</h4><p>Бизнес-коуч</p></div><span class="try">Поговорить</span></div>
+        <div class="pcard" data-i="7" style="--pc:#6b7a8c"><div class="pa">🤖</div><div class="pt"><h4>PSY-3000</h4><p>ИИ-аналитик</p></div><span class="try">Поговорить</span></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- КАК РАБОТАЕТ -->
-<section>
-  <div class="wrap">
-    <div class="seclabel">Как это работает</div>
-    <h2>Три шага — и вам уже легче</h2>
-    <div class="steps">
-      <div class="step"><div class="stepn">1</div><h3>Выберите психолога</h3><p>Восемь характеров и подходов. Можно менять в любой момент.</p></div>
-      <div class="step"><div class="stepn">2</div><h3>Напишите, что чувствуете</h3><p>Своими словами, как другу. ИИ выслушает и поддержит, не осуждая.</p></div>
-      <div class="step"><div class="stepn">3</div><h3>Получите поддержку</h3><p>Спокойный диалог и доказательные практики, чтобы разобраться в себе.</p></div>
+<!-- 04 — ПОРЯДОК ДЕЙСТВИЙ -->
+<section class="ruled">
+  <div class="wrap spread">
+    <div class="rail">
+      <span class="no">04</span>
+      <span class="rule"></span>
+      <span class="lb">Порядок действий</span>
+      <span class="marg">Ни анкет, ни тестов, ни «расскажите о себе в двух словах».</span>
+    </div>
+    <div>
+      <h2>Три шага — и вам уже легче</h2>
+      <div class="steps">
+        <div class="step"><span class="stepn">Шаг I</span><h3>Выберите психолога</h3><p>Восемь характеров и подходов. Можно менять в любой момент — прямо посреди разговора.</p></div>
+        <div class="step"><span class="stepn">Шаг II</span><h3>Напишите, что чувствуете</h3><p>Своими словами, как другу. Формулировать красиво не нужно: он выслушает и не осудит.</p></div>
+        <div class="step"><span class="stepn">Шаг III</span><h3>Получите поддержку</h3><p>Спокойный диалог и доказательные практики, чтобы разложить состояние на части и разобраться.</p></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- С ЧЕМ ПРИХОДЯТ — показывает применимость и раздаёт вес на статьи блога -->
-<section id="topics">
-  <div class="wrap">
-    <div class="seclabel">С чем приходят</div>
-    <h2>О чём с ним чаще всего говорят</h2>
-    <p class="sub">Здесь можно начать с любой из этих тем — а можно просто рассказать, как есть, своими словами.</p>
-    <div class="topics">
-      <a class="topic" href="blog/kak-spravitsya-s-trevogoy.html"><b>Тревога</b><span>не отпускает напряжение</span></a>
-      <a class="topic" href="blog/panicheskaya-ataka-chto-delat.html"><b>Паническая атака</b><span>накрывает внезапно</span></a>
-      <a class="topic" href="blog/bessonnitsa-pri-trevoge.html"><b>Бессонница</b><span>мысли не дают уснуть</span></a>
-      <a class="topic" href="blog/emotsionalnoe-vygoranie.html"><b>Выгорание</b><span>ничего не радует в работе</span></a>
-      <a class="topic" href="blog/depressiya-priznaki-chto-delat.html"><b>Депрессия</b><span>тяжесть не проходит неделями</span></a>
-      <a class="topic" href="blog/osennyaya-depressiya.html"><b>Осенняя хандра</b><span>с темнотой пропали силы</span></a>
-      <a class="topic" href="blog/apatiya.html"><b>Апатия</b><span>нет сил и ничего не хочется</span></a>
-      <a class="topic" href="blog/kak-spravitsya-s-odinochestvom.html"><b>Одиночество</b><span>не с кем поговорить</span></a>
-      <a class="topic" href="blog/kak-perezhit-rasstavanie.html"><b>Расставание</b><span>не получается отпустить</span></a>
-      <a class="topic" href="blog/toksichnye-otnosheniya.html"><b>Токсичные отношения</b><span>рядом становится хуже</span></a>
-      <a class="topic" href="blog/kak-perezhit-smert-blizkogo.html"><b>Утрата</b><span>ушёл близкий человек</span></a>
-      <a class="topic" href="blog/kak-povysit-samootsenku.html"><b>Самооценка</b><span>вечно себя ругаю</span></a>
-      <a class="topic" href="blog/navyazchivye-mysli.html"><b>Навязчивые мысли</b><span>крутится одно и то же</span></a>
-      <a class="topic" href="blog/prokrastinatsiya.html"><b>Прокрастинация</b><span>всё откладываю на потом</span></a>
-      <a class="topic" href="blog/stress-na-rabote.html"><b>Стресс на работе</b><span>напряжение не отпускает</span></a>
-      <a class="topic" href="blog/sindrom-samozvantsa.html"><b>Синдром самозванца</b><span>кажется, что я обманщик</span></a>
+<!-- 05 — УКАЗАТЕЛЬ ТЕМ -->
+<section class="ruled" id="topics">
+  <div class="wrap spread">
+    <div class="rail">
+      <span class="no">05</span>
+      <span class="rule"></span>
+      <span class="lb">Указатель тем</span>
+      <span class="marg">У каждой строки — подробный разбор в блоге.</span>
     </div>
-    <p class="sub" style="margin:26px auto 0">У каждой темы есть подробный разбор — в <a href="blog/" style="color:var(--teal-deep); font-weight:700">блоге</a>.</p>
+    <div>
+      <h2>О чём с ним чаще всего говорят</h2>
+      <p class="standfirst">Можно начать с любой из этих тем — а можно просто рассказать, как есть, своими словами.</p>
+      <div class="topics">
+        <a class="topic" href="blog/kak-spravitsya-s-trevogoy.html"><b>Тревога</b><span>не отпускает напряжение</span></a>
+        <a class="topic" href="blog/panicheskaya-ataka-chto-delat.html"><b>Паническая атака</b><span>накрывает внезапно</span></a>
+        <a class="topic" href="blog/bessonnitsa-pri-trevoge.html"><b>Бессонница</b><span>мысли не дают уснуть</span></a>
+        <a class="topic" href="blog/emotsionalnoe-vygoranie.html"><b>Выгорание</b><span>ничего не радует в работе</span></a>
+        <a class="topic" href="blog/depressiya-priznaki-chto-delat.html"><b>Депрессия</b><span>тяжесть не проходит неделями</span></a>
+        <a class="topic" href="blog/osennyaya-depressiya.html"><b>Осенняя хандра</b><span>с темнотой пропали силы</span></a>
+        <a class="topic" href="blog/apatiya.html"><b>Апатия</b><span>нет сил и ничего не хочется</span></a>
+        <a class="topic" href="blog/kak-spravitsya-s-odinochestvom.html"><b>Одиночество</b><span>не с кем поговорить</span></a>
+        <a class="topic" href="blog/kak-perezhit-rasstavanie.html"><b>Расставание</b><span>не получается отпустить</span></a>
+        <a class="topic" href="blog/toksichnye-otnosheniya.html"><b>Токсичные отношения</b><span>рядом становится хуже</span></a>
+        <a class="topic" href="blog/kak-perezhit-smert-blizkogo.html"><b>Утрата</b><span>ушёл близкий человек</span></a>
+        <a class="topic" href="blog/kak-povysit-samootsenku.html"><b>Самооценка</b><span>вечно себя ругаю</span></a>
+        <a class="topic" href="blog/navyazchivye-mysli.html"><b>Навязчивые мысли</b><span>крутится одно и то же</span></a>
+        <a class="topic" href="blog/prokrastinatsiya.html"><b>Прокрастинация</b><span>всё откладываю на потом</span></a>
+        <a class="topic" href="blog/stress-na-rabote.html"><b>Стресс на работе</b><span>напряжение не отпускает</span></a>
+        <a class="topic" href="blog/sindrom-samozvantsa.html"><b>Синдром самозванца</b><span>кажется, что я обманщик</span></a>
+      </div>
+      <p class="after-index">Полный каталог разборов — в <a href="blog/">блоге</a>.</p>
+    </div>
   </div>
 </section>
 
-<!-- СКРИНШОТЫ — тёмный акцентный блок -->
+<!-- 06 — ПРИЛОЖЕНИЕ (тёмный разворот) -->
 <section class="showcase">
-  <div class="sc-glow" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="seclabel">Приложение</div>
-    <h2>Полная версия — в RuStore</h2>
-    <p class="sub">Голос, сохранение сессий, тонкая настройка психологов и безлимит в Премиуме.</p>
-    <div class="phones">
-      <figure class="ph ph-side"><img src="assets/screenshots/phone-dnevnik.webp" alt="Дневник настроения в приложении AI Therapist: оценка дня и график динамики за месяц" width="760" height="1484" loading="lazy"><figcaption>Дневник настроения и динамика</figcaption></figure>
-      <figure class="ph ph-main"><img src="assets/screenshots/phone-razgovor.webp" alt="Разговор с ИИ-психологом в приложении AI Therapist: разбор ссоры по шагам" width="760" height="1539" loading="lazy"><figcaption>Разговор, который помнит контекст</figcaption></figure>
-      <figure class="ph ph-side"><img src="assets/screenshots/phone-nastroyki.webp" alt="Настройка характера ответов: длина, подача, подход КПТ или психоанализ, обращение на вы или на ты" width="760" height="1579" loading="lazy"><figcaption>Тонкая настройка под себя</figcaption></figure>
+  <div class="wrap spread">
+    <div class="rail">
+      <span class="no">06</span>
+      <span class="rule"></span>
+      <span class="lb">Приложение</span>
+      <span class="marg">Демо на сайте — короткая проба. Всё остальное живёт здесь.</span>
     </div>
-    <div class="sc-cta"><a class="btn" id="dl-shots" href="#">Скачать в RuStore</a></div>
+    <div>
+      <h2>Полная версия — в RuStore</h2>
+      <p class="standfirst">Голос вместо клавиатуры, сохранение сессий, дневник настроения и тонкая настройка того, как именно с вами разговаривают.</p>
+      <div class="phones">
+        <figure class="ph"><img src="assets/screenshots/phone-dnevnik.webp" alt="Дневник настроения в приложении AI Therapist: оценка дня и график динамики за месяц" width="760" height="1579" loading="lazy"><figcaption>Дневник настроения и динамика</figcaption></figure>
+        <figure class="ph"><img src="assets/screenshots/phone-razgovor.webp" alt="Разговор с ИИ-психологом в приложении AI Therapist: разбор ссоры по шагам" width="760" height="1579" loading="lazy"><figcaption>Разговор, который помнит контекст</figcaption></figure>
+        <figure class="ph"><img src="assets/screenshots/phone-nastroyki.webp" alt="Настройка характера ответов: длина, подача, подход КПТ или психоанализ, обращение на вы или на ты" width="760" height="1579" loading="lazy"><figcaption>Тонкая настройка под себя</figcaption></figure>
+      </div>
+      <div class="sc-cta"><a class="btn" id="dl-shots" href="#">Скачать в RuStore</a></div>
+    </div>
   </div>
 </section>
 
-<!-- ОТЗЫВЫ -->
+<!-- 07 — ОТЗЫВЫ -->
 <section id="reviews">
-  <div class="wrap">
-    <div class="seclabel">Отзывы</div>
-    <h2>Что пишут пользователи</h2>
-    <p class="sub">Рейтинг 4.7 и 95 оценок в RuStore. Ниже — несколько отзывов дословно, как они опубликованы в магазине.</p>
-    <div class="revs">
-      <div class="rev">
-        <div class="rhead"><span class="rname">Николай</span><span class="rstars">★★★★★</span><span class="rdate">14.07.2026</span></div>
-        <p>«Долго не мог справиться с тревогой, постоянно себя накручивал. Решил попробовать ИИ психолога. Неожиданно стало легче выговорился, получил нормальные советы и постепенно научился спокойнее реагировать на ситуации. Сейчас чувствую себя намного лучше. Не думал что приложение реально сможет помочь.»</p>
-      </div>
-      <div class="rev">
-        <div class="rhead"><span class="rname">Егор</span><span class="rstars">★★★★</span><span class="rdate">13.07.2026</span></div>
-        <p>«Я сам работаю психологом и ради интереса протестировал уже немало моделей психологов. Честно говоря, ожидал очередной набор шаблонных ответов, но здесь уровень действительно приятно удивил. Если так пойдёт дальше, скоро начну переживать за свою профессию 😄 Ниже 4 звёзд рука просто не поднялась поставить.»</p>
-        <span class="rrole">Практикующий психолог</span>
-      </div>
-      <div class="rev">
-        <div class="rhead"><span class="rname">Ilya</span><span class="rstars">★★★★★</span><span class="rdate">13.07.2026</span></div>
-        <p>«Обновление супер. Пользуюсь приложением уже давно и сразу заметил разницу. Раньше, если переписка длинная, психолог забывал имена путал и факты. Сейчас помнит прошлые разговоры, учитывает их в ответах и общение стало намного живее»</p>
-      </div>
+  <div class="wrap spread">
+    <div class="rail">
+      <span class="no">07</span>
+      <span class="rule"></span>
+      <span class="lb">Отзывы</span>
+      <span class="marg">Дословно, как опубликованы в магазине.</span>
     </div>
-    <p class="revs-note" style="text-align:center">Отзывы отражают личный опыт пользователей и не являются обещанием результата. <a href="https://www.rustore.ru/catalog/app/com.example.aitherapist" target="_blank" rel="noopener">Все отзывы в RuStore →</a></p>
-  </div>
-</section>
-
-<!-- ДРУГИЕ ПРИЛОЖЕНИЯ -->
-<section id="apps" style="background:var(--bg2)">
-  <div class="wrap">
-    <div class="seclabel">Экосистема</div>
-    <h2>Другие наши приложения</h2>
-    <p class="sub">Сделаны той же командой — с тем же вниманием к человеку и приватности.</p>
-    <div class="apps">
-      <article class="appcard" style="--ac:#b8811f;--ac-glow:rgba(184,129,31,.34);--ac-soft:rgba(184,129,31,.11);--ac-line:rgba(184,129,31,.30)">
-        <div class="appcard-top">
-          <div class="appicon"><img src="assets/apps/metacards.webp" alt="Иконка приложения Метакарты" loading="lazy"></div>
-          <div>
-            <h3>Метакарты</h3>
-            <span class="arate"><b>★ 5.0</b> · МАК с ИИ-психологом</span>
-          </div>
+    <div>
+      <h2>Что пишут пользователи</h2>
+      <p class="standfirst">Рейтинг 4,7 и 95 оценок в RuStore.</p>
+      <div class="revs">
+        <div class="rev">
+          <q>Долго не мог справиться с тревогой, постоянно себя накручивал. Решил попробовать ИИ психолога. Неожиданно стало легче выговорился, получил нормальные советы и постепенно научился спокойнее реагировать на ситуации. Сейчас чувствую себя намного лучше. Не думал что приложение реально сможет помочь.</q>
+          <div class="rhead"><span class="rname">Николай</span><span class="rstars">★★★★★</span><span class="rdate">14.07.2026</span></div>
         </div>
-        <p class="appdesc">Метафорические ассоциативные карты и ИИ-проводник для самопознания и рефлексии. Практики под любой запрос — эмоции, отношения, страхи, цели. Четыре колоды с авторскими иллюстрациями и дневник сессий.</p>
-        <div class="appchips"><span class="appchip">МАК-карты</span><span class="appchip">4 колоды</span><span class="appchip">Дневник</span><span class="appchip">Без регистрации</span></div>
-        <a class="abtn" href="https://www.rustore.ru/catalog/app/com.metacards.app" target="_blank" rel="noopener">Скачать в RuStore →</a>
-      </article>
-
-      <article class="appcard" style="--ac:#7a6bcf;--ac-glow:rgba(122,107,207,.34);--ac-soft:rgba(122,107,207,.11);--ac-line:rgba(122,107,207,.30)">
-        <div class="appcard-top">
-          <div class="appicon"><img src="assets/apps/fateai.webp" alt="Иконка приложения Fate AI" loading="lazy"></div>
-          <div>
-            <h3>Fate AI</h3>
-            <span class="arate"><b>★ 4.9</b> · гадание и астрология</span>
-          </div>
+        <div class="rev">
+          <q>Я сам работаю психологом и ради интереса протестировал уже немало моделей психологов. Честно говоря, ожидал очередной набор шаблонных ответов, но здесь уровень действительно приятно удивил. Если так пойдёт дальше, скоро начну переживать за свою профессию 😄 Ниже 4 звёзд рука просто не поднялась поставить.</q>
+          <div class="rhead"><span class="rname">Егор</span><span class="rstars">★★★★</span><span class="rdate">13.07.2026</span></div>
+          <div class="rrole">Практикующий психолог</div>
         </div>
-        <p class="appdesc">Таро, гороскопы, сонник и натальная карта — нового поколения. Четыре ИИ-проводника: таролог с раскладами, гадалка, астролог и толкователь снов. Можно задавать уточняющие вопросы вживую.</p>
-        <div class="appchips"><span class="appchip">Таро</span><span class="appchip">Гороскоп</span><span class="appchip">Натальная карта</span><span class="appchip">Сонник</span></div>
-        <a class="abtn" href="https://www.rustore.ru/catalog/app/com.fateai.app" target="_blank" rel="noopener">Скачать в RuStore →</a>
-      </article>
+        <div class="rev">
+          <q>Обновление супер. Пользуюсь приложением уже давно и сразу заметил разницу. Раньше, если переписка длинная, психолог забывал имена путал и факты. Сейчас помнит прошлые разговоры, учитывает их в ответах и общение стало намного живее</q>
+          <div class="rhead"><span class="rname">Ilya</span><span class="rstars">★★★★★</span><span class="rdate">13.07.2026</span></div>
+        </div>
+      </div>
+      <p class="revs-note">Отзывы отражают личный опыт пользователей и не являются обещанием результата. <a href="https://www.rustore.ru/catalog/app/com.example.aitherapist" target="_blank" rel="noopener">Все отзывы в RuStore →</a></p>
     </div>
   </div>
 </section>
 
-<!-- БЛОГ -->
-<section id="blog-teaser">
-  <div class="wrap">
-    <div class="seclabel">Блог</div>
-    <h2>Статьи о ментальном здоровье</h2>
-    <p class="sub">Простые техники самопомощи и доказательные подходы — понятным языком.</p>
-    <!-- Витрина: показываем ТОЛЬКО 3 новейшие статьи (новейшая — первой). Полный каталог — в /blog/. При добавлении новой: вставить карточку сверху и удалить нижнюю. -->
-    <div class="blog-grid">
-      <a class="bcard" href="blog/osennyaya-depressiya.html">
-        <span class="btag">Осенняя депрессия</span>
-        <h3>Осенняя депрессия: почему накрывает осенью и 8 способов справиться</h3>
-        <p>Чем сезонная депрессия отличается от хандры, почему осенью нет сил и хочется спать, как работает светотерапия и что делать в тёмные месяцы.</p>
-        <span class="more">Читать →</span>
-      </a>
-      <a class="bcard" href="blog/kak-perezhit-smert-blizkogo.html">
-        <span class="btag">Утрата</span>
-        <h3>Как пережить смерть близкого человека: 9 шагов, которые помогают</h3>
-        <p>Сколько длится горе, что делать в первые дни, как справиться с чувством вины, что говорить горюющему и когда нужна помощь специалиста.</p>
-        <span class="more">Читать →</span>
-      </a>
-      <a class="bcard" href="blog/toksichnye-otnosheniya.html">
-        <span class="btag">Отношения</span>
-        <h3>Токсичные отношения: 12 признаков и как из них выйти</h3>
-        <p>Чем токсичные отношения отличаются от абьюзивных, что такое газлайтинг и цикл качелей, почему трудно уйти и как выйти безопасно.</p>
-        <span class="more">Читать →</span>
-      </a>
+<!-- 08 — ЭКОСИСТЕМА -->
+<section class="ruled" id="apps">
+  <div class="wrap spread">
+    <div class="rail">
+      <span class="no">08</span>
+      <span class="rule"></span>
+      <span class="lb">Экосистема</span>
+      <span class="marg">Та же команда, то же отношение к приватности.</span>
     </div>
-    <p class="sub" style="margin:22px auto 0">Тревожитесь и не знаете, с чего начать? Загляните в <a href="blog/trevoga-polnyy-gid.html" style="color:var(--teal-deep); font-weight:700">полный гид по тревоге</a> — там карта всех состояний и материалов.</p>
-    <div style="text-align:center; margin-top:18px"><a class="blog-all" href="blog/">Все статьи →</a></div>
-  </div>
-</section>
+    <div>
+      <h2>Другие наши приложения</h2>
+      <div class="apps">
+        <article class="appcard">
+          <div class="appcard-top">
+            <div class="appicon"><img src="assets/apps/metacards.webp" alt="Иконка приложения Метакарты" loading="lazy"></div>
+            <div>
+              <h3>Метакарты</h3>
+              <span class="arate"><b>★ 5,0</b> · МАК с ИИ-психологом</span>
+            </div>
+          </div>
+          <p class="appdesc">Метафорические ассоциативные карты и ИИ-проводник для самопознания и рефлексии. Практики под любой запрос — эмоции, отношения, страхи, цели. Четыре колоды с авторскими иллюстрациями и дневник сессий.</p>
+          <div class="appchips"><span class="appchip">МАК-карты</span><span class="appchip">4 колоды</span><span class="appchip">Дневник</span><span class="appchip">Без регистрации</span></div>
+          <a class="abtn" href="https://www.rustore.ru/catalog/app/com.metacards.app" target="_blank" rel="noopener">Скачать в RuStore →</a>
+        </article>
 
-<!-- FAQ -->
-<section id="faq">
-  <div class="wrap">
-    <div class="seclabel">Вопросы</div>
-    <h2>Частые вопросы</h2>
-    <p class="sub">Коротко о главном — об анонимности, цене и о том, что такое ИИ-психолог.</p>
-    <div class="faq">
-      <details open><summary>Что такое AI Therapist?</summary><p>AI Therapist — это приложение-чат с ИИ-психологом для анонимной эмоциональной поддержки 24/7. Можно выбрать одного из восьми психологов с разными характерами и подходами и просто поговорить о том, что беспокоит.</p></details>
-      <details><summary>Это бесплатно?</summary><p>Да, начать можно бесплатно. Есть платный премиум с безлимитными сообщениями и расширенными возможностями — он оформляется в приложении.</p></details>
-      <details><summary>Это анонимно?</summary><p>Да. Регистрация не нужна: имя, телефон и email мы не спрашиваем, а история переписки хранится только на вашем устройстве и не сохраняется на наших серверах. Сайт использует обезличенную веб-аналитику для подсчёта посещаемости — содержимое переписки в неё не попадает. Подробнее — в <a href="privacy.html">политике конфиденциальности</a>.</p></details>
-      <details><summary>ИИ-психолог заменяет настоящего специалиста?</summary><p>Нет. Это инструмент самопомощи и эмоциональной поддержки — он не заменяет профессиональную медицинскую или психотерапевтическую помощь. В кризисной ситуации обратитесь к специалисту или на линию экстренной психологической помощи.</p></details>
-      <details><summary>На каких методах основаны ответы?</summary><p>Ответы опираются на доказательные подходы: когнитивно-поведенческую терапию (КПТ), ACT, схематерапию, практики осознанности (Mindfulness) и CFT.</p></details>
-      <details><summary>Можно попробовать без установки?</summary><p>Да, прямо на сайте работает демо-чат: выберите психолога и напишите сообщение. Полная версия с безлимитом, голосовым вводом и сохранением сессий — в RuStore.</p></details>
+        <article class="appcard">
+          <div class="appcard-top">
+            <div class="appicon"><img src="assets/apps/fateai.webp" alt="Иконка приложения Fate AI" loading="lazy"></div>
+            <div>
+              <h3>Fate AI</h3>
+              <span class="arate"><b>★ 4,9</b> · гадание и астрология</span>
+            </div>
+          </div>
+          <p class="appdesc">Таро, гороскопы, сонник и натальная карта — нового поколения. Четыре ИИ-проводника: таролог с раскладами, гадалка, астролог и толкователь снов. Можно задавать уточняющие вопросы вживую.</p>
+          <div class="appchips"><span class="appchip">Таро</span><span class="appchip">Гороскоп</span><span class="appchip">Натальная карта</span><span class="appchip">Сонник</span></div>
+          <a class="abtn" href="https://www.rustore.ru/catalog/app/com.fateai.app" target="_blank" rel="noopener">Скачать в RuStore →</a>
+        </article>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ФИНАЛЬНЫЙ ПРИЗЫВ -->
-<section>
-  <div class="wrap">
-    <div class="finalcta">
-      <div class="glow" aria-hidden="true"></div>
-      <img class="cta-band" src="assets/cta-band.webp" alt="Вечер, тёплая комната: человек с телефоном под пледом у окна" width="1400" height="547" loading="lazy">
+<!-- 09 — БЛОГ -->
+<section class="ruled" id="blog-teaser">
+  <div class="wrap spread">
+    <div class="rail">
+      <span class="no">09</span>
+      <span class="rule"></span>
+      <span class="lb">Блог</span>
+      <span class="marg">Разборы состояний простым языком, без «просто не думай об этом».</span>
+    </div>
+    <div>
+      <h2>Статьи о ментальном здоровье</h2>
+      <!-- Витрина: показываем ТОЛЬКО 3 новейшие статьи (новейшая — первой). Полный каталог — в /blog/. При добавлении новой: вставить карточку сверху и удалить нижнюю. -->
+      <div class="blog-grid">
+        <a class="bcard" href="blog/osennyaya-depressiya.html">
+          <span class="btag">Осенняя депрессия</span>
+          <h3>Осенняя депрессия: почему накрывает осенью и 8 способов справиться</h3>
+          <p>Чем сезонная депрессия отличается от хандры, почему осенью нет сил и хочется спать, как работает светотерапия и что делать в тёмные месяцы.</p>
+          <span class="more">Читать →</span>
+        </a>
+        <a class="bcard" href="blog/kak-perezhit-smert-blizkogo.html">
+          <span class="btag">Утрата</span>
+          <h3>Как пережить смерть близкого человека: 9 шагов, которые помогают</h3>
+          <p>Сколько длится горе, что делать в первые дни, как справиться с чувством вины, что говорить горюющему и когда нужна помощь специалиста.</p>
+          <span class="more">Читать →</span>
+        </a>
+        <a class="bcard" href="blog/toksichnye-otnosheniya.html">
+          <span class="btag">Отношения</span>
+          <h3>Токсичные отношения: 12 признаков и как из них выйти</h3>
+          <p>Чем токсичные отношения отличаются от абьюзивных, что такое газлайтинг и цикл качелей, почему трудно уйти и как выйти безопасно.</p>
+          <span class="more">Читать →</span>
+        </a>
+      </div>
+      <div class="blog-after">
+        <span><b>Не знаете, с чего начать?</b><br>Откройте <a href="blog/trevoga-polnyy-gid.html">полный гид по тревоге</a> — там карта всех состояний.</span>
+        <a class="all" href="blog/">Все статьи →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 — ВОПРОСЫ -->
+<section class="ruled" id="faq">
+  <div class="wrap spread">
+    <div class="rail">
+      <span class="no">10</span>
+      <span class="rule"></span>
+      <span class="lb">Вопросы</span>
+      <span class="marg">Коротко об анонимности, цене и границах метода.</span>
+    </div>
+    <div>
+      <h2>Частые вопросы</h2>
+      <div class="faq">
+        <details open><summary>Что такое AI Therapist?</summary><p>AI Therapist — это приложение-чат с ИИ-психологом для анонимной эмоциональной поддержки 24/7. Можно выбрать одного из восьми психологов с разными характерами и подходами и просто поговорить о том, что беспокоит.</p></details>
+        <details><summary>Это бесплатно?</summary><p>Да, начать можно бесплатно. Есть платный премиум с безлимитными сообщениями и расширенными возможностями — он оформляется в приложении.</p></details>
+        <details><summary>Это анонимно?</summary><p>Да. Регистрация не нужна: имя, телефон и email мы не спрашиваем, а история переписки хранится только на вашем устройстве и не сохраняется на наших серверах. Сайт использует обезличенную веб-аналитику для подсчёта посещаемости — содержимое переписки в неё не попадает. Подробнее — в <a href="privacy.html">политике конфиденциальности</a>.</p></details>
+        <details><summary>ИИ-психолог заменяет настоящего специалиста?</summary><p>Нет. Это инструмент самопомощи и эмоциональной поддержки — он не заменяет профессиональную медицинскую или психотерапевтическую помощь. В кризисной ситуации обратитесь к специалисту или на линию экстренной психологической помощи.</p></details>
+        <details><summary>На каких методах основаны ответы?</summary><p>Ответы опираются на доказательные подходы: когнитивно-поведенческую терапию (КПТ), ACT, схематерапию, практики осознанности (Mindfulness) и CFT.</p></details>
+        <details><summary>Можно попробовать без установки?</summary><p>Да, прямо на сайте работает демо-чат: выберите психолога и напишите сообщение. Полная версия с безлимитом, голосовым вводом и сохранением сессий — в RuStore.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ФИНАЛЬНЫЙ РАЗВОРОТ -->
+<section class="ruled">
+  <div class="wrap finalcta">
+    <img class="cta-band" src="assets/cta-band.webp" alt="Вечер, тёплая комната: человек с телефоном под пледом у окна" width="1400" height="547" loading="lazy">
+    <div class="final-grid">
       <h2>Начните бесплатно прямо сейчас</h2>
-      <p>Без регистрации. Выберите психолога, поговорите — а полная версия с безлимитом, голосовым вводом и сохранением сессий ждёт в RuStore.</p>
-      <a class="btn" id="dl-final" href="#">Скачать в RuStore</a>
+      <div>
+        <p>Без регистрации и без объяснений. Выберите психолога и напишите первое сообщение — а полная версия с безлимитом, голосовым вводом и сохранением сессий ждёт в RuStore.</p>
+        <a class="btn" id="dl-final" href="#">Скачать в RuStore</a>
+      </div>
     </div>
-    <div class="note">AI Therapist — приложение для самопомощи и эмоциональной поддержки. Оно не заменяет профессиональную медицинскую или психотерапевтическую помощь. Если вы в кризисной ситуации, обратитесь к специалисту или на линию экстренной психологической помощи.</div>
+    <div class="note">
+      <p>AI Therapist — приложение для самопомощи и эмоциональной поддержки. Оно не заменяет профессиональную медицинскую или психотерапевтическую помощь.</p>
+      <p>Если вы в кризисной ситуации, обратитесь к специалисту или на линию экстренной психологической помощи:<br>
+        <span class="tel"><b>112</b> — при угрозе жизни</span><span class="tel"><b>+7 (495) 989-50-50</b> — ЦЭПП МЧС России</span></p>
+    </div>
   </div>
 </section>
 
@@ -876,6 +927,7 @@
     <div>
       <div class="logo" style="margin-bottom:12px"><img class="appmark" src="assets/apps/aitherapist.webp" alt="" width="34" height="34"> AI Therapist</div>
       © 2026 AI Therapist. Все права защищены.
+      <div class="fnote">Сделано в России. Приложение для Android — в RuStore.</div>
     </div>
     <div class="flinks">
       <a href="blog/">Блог</a>
@@ -1283,57 +1335,10 @@ selectPersona(0);
 probeDirect(); // фоновая проба прямого доступа — решит «прямой/прокси» до первого сообщения
 if(FORCE_PROXY){ addBubble("bot","🔧 Тестовый режим: все запросы идут через резервный Яндекс-прокси (открой консоль F12 — увидишь «[net] через Яндекс-прокси»)."); }
 
-/* v2: уплотнение шапки при прокрутке */
-(function(){
-  const h = document.querySelector('header'); if(!h) return;
-  const onScroll = () => h.classList.toggle('scrolled', window.scrollY > 12);
-  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
-})();
-
-/* scroll-reveal — прогрессивно и с уважением к reduced-motion */
-(function(){
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  if (!('IntersectionObserver' in window)) return;
-  const els = document.querySelectorAll('.feat, .pcard, .step, .appcard, .stat, .shot, .price, .rev, .bcard, .faq details, section > .wrap > .seclabel, section > .wrap > h2, section > .wrap > .sub');
-  els.forEach(el => {
-    el.classList.add('rv');
-    const sibs = [...el.parentElement.children].filter(c => c.classList.contains('rv'));
-    el.style.transitionDelay = Math.min(sibs.indexOf(el), 6) * 55 + 'ms';
-  });
-  const io = new IntersectionObserver((ents, o) => {
-    ents.forEach(e => { if (e.isIntersecting) { e.target.classList.add('rv-in'); o.unobserve(e.target); } });
-  }, { threshold:0.12, rootMargin:'0px 0px -40px 0px' });
-  els.forEach(el => io.observe(el));
-})();
-
-/* анимация чисел (count-up при прокрутке) */
-(function(){
-  const nums = document.querySelectorAll('.num[data-count]');
-  if(!nums.length || !('IntersectionObserver' in window)) return;
-  if(reduceMotion) return;
-  const animate = (el) => {
-    const target = parseFloat(el.dataset.count), dec = +(el.dataset.dec||0), dur = 1100, t0 = performance.now();
-    const fmt = (v) => { const t = v.toFixed(dec); return dec ? t : t.replace(/\B(?=(\d{3})+(?!\d))/g, ' '); };
-    const tick = (t) => { let p = Math.min((t-t0)/dur,1); p = 1-Math.pow(1-p,3);
-      el.textContent = fmt(target*p); if(p<1) requestAnimationFrame(tick); else el.textContent = fmt(target); };
-    requestAnimationFrame(tick);
-  };
-  const io = new IntersectionObserver((ents,o)=>{ ents.forEach(e=>{ if(e.isIntersecting){ animate(e.target); o.unobserve(e.target);} }); },{threshold:.6});
-  nums.forEach(n=>io.observe(n));
-})();
-
-/* 3D-наклон карточек приложений по курсору */
-if (!reduceMotion){
-  document.querySelectorAll('.appcard').forEach(card => {
-    card.addEventListener('pointermove', e => {
-      if (e.pointerType === 'touch') return;
-      const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left)/r.width - .5, y = (e.clientY - r.top)/r.height - .5;
-      card.style.transform = `translateY(-6px) rotateX(${(-y*6).toFixed(2)}deg) rotateY(${(x*6).toFixed(2)}deg)`;
-    });
-    card.addEventListener('pointerleave', () => { card.style.transform = ''; });
-  });
-}
+/* Появление блоков по скроллу, count-up цифр и 3D-наклон карточек намеренно убраны:
+   это узнаваемый словарь шаблонных лендингов. Страница читается как печатный
+   разворот — содержимое на месте сразу, движение только там, где оно несёт смысл
+   (печать реплик в чате). */
 </script>
 
 <!-- Yandex.Metrika -->
