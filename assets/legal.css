@@ -241,13 +241,22 @@ blockquote.q cite, blockquote.q footer{display:block; margin-top:10px; font-fami
   color:var(--ink-faint); margin:0 0 var(--s1)}
 .quiz .stem{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:23px; color:var(--ink);
   margin:0 0 var(--s3); line-height:1.25; letter-spacing:-.3px; max-width:34ch}
-.quiz fieldset{border:0; margin:0; padding:0; min-width:0}
-.q{border-top:1px solid var(--rule-soft); padding:var(--s3) 0 var(--s2); margin:0}
-.q legend{font-size:17px; font-weight:600; color:var(--ink); padding:0 0 var(--s2);
+/* ⚠️ Селектор обязан быть НЕ МЕНЕЕ специфичным, чем «.quiz fieldset»:
+   раньше вопросы описывались просто как «.q», и сброс fieldset (0,1,1)
+   перебивал его (0,1,0) — отступы и линейка между вопросами не работали
+   вовсе, вопросы слипались. Не упрощать обратно до «.q». */
+.quiz fieldset{margin:0; min-width:0}
+/* Воздуха между вопросами нужно заметно больше, чем между абзацами текста:
+   иначе последний вариант ответа читается как начало следующего вопроса. */
+.quiz .q{border:0; border-top:1px solid var(--rule); padding:var(--s4) 0}
+.quiz .q:first-of-type{border-top:0; padding-top:var(--s2)}
+.q legend{font-size:17px; font-weight:600; color:var(--ink); padding:0 0 var(--s3);
   display:block; width:100%; position:relative; padding-left:40px; line-height:1.4}
 .q legend i{position:absolute; left:0; top:0; font-family:"Spectral",Georgia,serif; font-style:normal;
   font-weight:600; font-size:16px; color:var(--sand); margin:0}
-.opts{display:grid; grid-template-columns:repeat(auto-fit,minmax(158px,1fr)); gap:8px; padding-left:40px}
+/* 132px подобрано так, чтобы пятибалльная шкала (PSS-10, CBI) укладывалась
+   в один ряд, а не оставляла последний вариант висеть на отдельной строке */
+.opts{display:grid; grid-template-columns:repeat(auto-fit,minmax(132px,1fr)); gap:8px; padding-left:40px}
 .opts label{display:flex; align-items:center; gap:10px; border:1px solid var(--rule); border-radius:2px;
   padding:11px 14px; font-size:14.5px; color:var(--ink-soft); cursor:pointer; background:none;
   transition:border-color .18s ease, background .18s ease, color .18s ease}
