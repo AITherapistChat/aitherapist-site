@@ -89,7 +89,9 @@ def build(t):
 <meta property="og:url" content="{url}">
 <meta property="og:site_name" content="AI Therapist">
 <meta property="og:locale" content="ru_RU">
-<meta property="og:image" content="{SITE}/assets/og.png">
+<meta property="og:image" content="{SITE}/assets/testy/{cover}-cover.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../assets/fonts/manrope-400-800-cyrillic.woff2">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../assets/fonts/spectral-600-cyrillic.woff2">
@@ -116,6 +118,10 @@ def build(t):
   <div class="intro">
     <p>{intro}</p>
   </div>
+
+  <figure>
+    <img src="../assets/testy/{cover}-cover.webp" alt="{cover_alt}" width="1200" height="630">
+  </figure>
 
   <!-- ym-hide-content: ответы на тест не попадают в записи Вебвизора -->
   <section class="quiz ym-hide-content" id="quiz" aria-labelledby="quiz-stem">
@@ -179,7 +185,7 @@ def build(t):
 """.format(title=t["title"], desc=t["desc"], ogdesc=t.get("ogdesc", t["desc"]),
            url=url, SITE=SITE, ld=json.dumps(ld, ensure_ascii=False, indent=2),
            crumb=t["crumb"], h1=t["h1"], mod_ru=t["mod_ru"], mins=t["mins"],
-           intro=t["intro"], scale_name=t["scale_name"], nq=len(t["data"]["questions"]),
+           intro=t["intro"], cover=t["cover"], cover_alt=t["cover_alt"], scale_name=t["scale_name"], nq=len(t["data"]["questions"]),
            stem=t["stem"], max=t["data"]["max"], ticks=t["ticks"], crisis=CRISIS,
            body=t["body"], cta=t["cta"], faq_html=faq_html, eeat=t["eeat"],
            sources=t["sources"], flinks=flinks,
