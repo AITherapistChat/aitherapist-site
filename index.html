@@ -563,7 +563,7 @@
       <a class="navlink sec" href="#personas">Психологи</a>
       <a class="navlink sec" href="#faq">Вопросы</a>
     </div>
-    <a class="rs-link rs-sm" id="dl-top" href="#"><img class="rustore-badge" src="assets/vendor/rustore-logo-color-dark.svg" alt="Скачайте AI Therapist из RuStore" width="111" height="40"></a>
+    <a class="rs-link rs-sm" id="dl-top" href="#" target="_blank" rel="noopener"><img class="rustore-badge" src="assets/vendor/rustore-logo-color-dark.svg" alt="Скачайте AI Therapist из RuStore" width="111" height="40"></a>
   </div>
 </header>
 
@@ -577,7 +577,7 @@
       <div>
         <p class="lead">Тревога не спрашивает, рабочее ли сейчас время. AI&nbsp;Therapist — ИИ-психолог, с которым можно поговорить в три часа ночи: анонимно, без записи, без осуждения и без объяснений, почему вы вообще пишете.</p>
         <div class="cta-row">
-          <a class="btn" id="dl-hero" href="#">Скачать в RuStore</a>
+          <a class="btn" id="dl-hero" href="#" target="_blank" rel="noopener">Скачать в RuStore</a>
           <a class="tlink" href="#personas">Восемь психологов на выбор →</a>
         </div>
         <p class="hero-marg">Мы не спрашиваем имя, телефон и почту. Переписка остаётся в вашем браузере и не сохраняется на наших серверах — стереть её можно вместе с историей браузера.</p>
@@ -763,7 +763,7 @@
         <figure class="ph"><img src="assets/screenshots/phone-razgovor.webp" alt="Разговор с ИИ-психологом в приложении AI Therapist: разбор ссоры по шагам" width="760" height="1579" loading="lazy"><figcaption>Разговор, который помнит контекст</figcaption></figure>
         <figure class="ph"><img src="assets/screenshots/phone-nastroyki.webp" alt="Настройка характера ответов: длина, подача, подход КПТ или психоанализ, обращение на вы или на ты" width="760" height="1579" loading="lazy"><figcaption>Тонкая настройка под себя</figcaption></figure>
       </div>
-      <div class="sc-cta"><a class="btn" id="dl-shots" href="#">Скачать в RuStore</a></div>
+      <div class="sc-cta"><a class="btn" id="dl-shots" href="#" target="_blank" rel="noopener">Скачать в RuStore</a></div>
     </div>
   </div>
 </section>
@@ -914,7 +914,7 @@
       <h2>Начните бесплатно прямо сейчас</h2>
       <div>
         <p>Без регистрации и без объяснений. Выберите психолога и напишите первое сообщение — а полная версия с безлимитом, голосовым вводом и сохранением сессий ждёт в RuStore.</p>
-        <a class="btn" id="dl-final" href="#">Скачать в RuStore</a>
+        <a class="btn" id="dl-final" href="#" target="_blank" rel="noopener">Скачать в RuStore</a>
       </div>
     </div>
     <div class="note">
@@ -1163,7 +1163,7 @@ function showLimit(){
   const n = document.createElement("div");
   n.className = "limit-note";
   n.innerHTML = `<p>Демо на сегодня закончилось. В приложении — безлимит, все психологи, голосовой ввод и сохранение сессий.</p>
-    <a class="btn" href="${RUSTORE_URL}">Скачать в RuStore →</a>`;
+    <a class="btn" href="${RUSTORE_URL}" target="_blank" rel="noopener">Скачать в RuStore →</a>`;
   msgsEl.appendChild(n); msgsEl.scrollTop = msgsEl.scrollHeight;
   inputEl.disabled = true; $("c-send").disabled = true;
   inputEl.placeholder = "Продолжить можно в приложении";
@@ -1339,6 +1339,21 @@ $("c-adult").checked = isAdult;
 selectPersona(0);
 probeDirect(); // фоновая проба прямого доступа — решит «прямой/прокси» до первого сообщения
 if(FORCE_PROXY){ addBubble("bot","🔧 Тестовый режим: все запросы идут через резервный Яндекс-прокси (открой консоль F12 — увидишь «[net] через Яндекс-прокси»)."); }
+
+/* Цель «переход в RuStore» — главная конверсия сайта.
+   Слушатель делегированный, поэтому считает и кнопку, которую showLimit()
+   создаёт уже после загрузки. Ссылки на другие наши приложения (Метакарты,
+   Fate AI) намеренно не попадают: они ведут на другие com.*-адреса, иначе
+   число установок AI Therapist было бы завышено.
+   Кнопка — в параметре цели, чтобы видеть, какая из них работает. */
+document.addEventListener("click", function(e){
+  var a = e.target.closest && e.target.closest('a[href*="com.example.aitherapist"]');
+  if(!a) return;
+  var where = a.id ? a.id.replace("dl-","") : (a.closest(".limit-note") ? "limit" : "other");
+  if(window.ym && window.__metrikaId){
+    try{ ym(window.__metrikaId, "reachGoal", "rustore_click", {button: where}); }catch(_){ }
+  }
+}, true);
 
 /* Появление блоков по скроллу, count-up цифр и 3D-наклон карточек намеренно убраны:
    это узнаваемый словарь шаблонных лендингов. Страница читается как печатный
