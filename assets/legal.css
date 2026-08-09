@@ -6,60 +6,307 @@
 @font-face{font-family:'Spectral';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/spectral-600-cyrillic.woff2) format('woff2');unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116}
 @font-face{font-family:'Spectral';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/spectral-600-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
 
-/* Общий стиль юридических страниц AI Therapist — в одной палитре с лендингом */
+/* ================================================================
+   БЛОГ И ЮР-СТРАНИЦЫ — та же редакционная система, что и главная
+   («печатный разворот», см. CLAUDE.md). Здесь она в формате длинного
+   чтения: одна колонка набора, линейки вместо карточек, рубрики
+   капителью, знаки списков — охрой.
+
+   ⚠️ Весь словарь статей живёт ЗДЕСЬ. Инлайн-блоки <style> из статей
+   убраны: 18 копий одних и тех же правил расходились между собой
+   (у .tldr и blockquote.q было по 4 разных описания). Новой статье
+   свой <style> не нужен — берите классы отсюда.
+
+   🚫 Не возвращать: скруглённые карточки с тенями, blur-стекло,
+   подъём на hover, кружки-счётчики с заливкой, пилюли-теги.
+   ================================================================ */
 :root{
-  --bg:#F7F4EE; --bg2:#EFEBE1; --surface:#FFFFFF; --surface2:#F7F5F0;
-  --text:#2C332E; --read:#3c463e; --muted:#56625A; --faint:#838d83;
-  --teal:#557A51; --teal-deep:#41633E; --lav:#C99A6E;
-  --line:rgba(44,51,46,.10); --line-strong:rgba(44,51,46,.17);
+  /* бумага и типографская краска — те же токены, что в index.html */
+  --paper:#F6F2EA; --paper2:#EDE7DA; --paper3:#E3DBC9; --card:#FFFFFF; --dark:#1C2720;
+  --ink:#1B201A; --ink-soft:#525A4E; --ink-faint:#8B9285;
+  --green:#3A5836; --green-br:#557A51; --sand:#A66E38; --warn:#A9761C;
+  --rule:rgba(27,32,26,.22); --rule-soft:rgba(27,32,26,.11);
+  /* алиасы под старые имена: на них завязаны инлайн-стили в разметке */
+  --bg:#F6F2EA; --bg2:#EDE7DA; --surface:#FFFFFF; --surface2:#F1EDE3;
+  --text:#1B201A; --read:#2B322A; --muted:#525A4E; --faint:#8B9285;
+  --teal:#557A51; --teal-deep:#3A5836; --lav:#A66E38;
+  --line:rgba(27,32,26,.11); --line-strong:rgba(27,32,26,.22);
+  --fs-micro:11px;
+  --s1:8px; --s2:14px; --s3:22px; --s4:34px; --s5:52px; --s6:78px;
+  --measure:820px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth; overflow-x:hidden}
 body{
   font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-  background:var(--bg); color:var(--read); line-height:1.7; font-size:16px;
-  -webkit-font-smoothing:antialiased;
+  background:var(--paper); color:var(--ink-soft); line-height:1.72; font-size:17px;
+  -webkit-font-smoothing:antialiased; hanging-punctuation:first last;
 }
-a{color:var(--teal-deep); text-decoration:none}
-a:hover{text-decoration:underline}
-::selection{background:rgba(94,126,90,.22)}
-:focus-visible{outline:2px solid var(--teal); outline-offset:3px; border-radius:6px}
+p{text-wrap:pretty}
+a{color:var(--green); text-decoration:none; border-bottom:1px solid var(--rule); transition:border-color .18s ease}
+a:hover{text-decoration:none; border-color:var(--green)}
+::selection{background:rgba(58,88,54,.18)}
+:focus-visible{outline:2px solid var(--green); outline-offset:3px}
 svg{display:block}
+img{max-width:100%}
+.micro{font-size:var(--fs-micro); font-weight:800; letter-spacing:.2em; text-transform:uppercase; line-height:1.5}
 
-/* header */
-.lhead{position:sticky; top:0; z-index:20; padding:16px 0;
-  background:rgba(255,255,255,.82); backdrop-filter:blur(14px); border-bottom:1px solid var(--line)}
-.lhead .row{max-width:780px; margin:0 auto; padding:0 22px; display:flex; align-items:center; justify-content:space-between}
-.logo{display:flex; align-items:center; gap:11px; font-weight:800; font-size:18px; letter-spacing:-.3px; color:var(--text)}
-.mark{width:30px;height:30px;border-radius:9px; background:linear-gradient(150deg,var(--teal),var(--teal-deep));
-  display:flex;align-items:center;justify-content:center; color:#062019}
-.logo .appmark{width:34px;height:34px;border-radius:9px; object-fit:cover; box-shadow:0 4px 14px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.07)}
-.back{display:inline-flex; align-items:center; gap:7px; color:var(--muted); font-size:14px; font-weight:600}
-.back:hover{color:var(--text); text-decoration:none}
+/* ---------------- шапка: плотная бумага, без стекла ---------------- */
+.lhead{position:sticky; top:0; z-index:20; padding:14px 0;
+  background:var(--paper); border-bottom:1px solid var(--ink)}
+.lhead .row{max-width:var(--measure); margin:0 auto; padding:0 26px;
+  display:flex; align-items:center; justify-content:space-between; gap:18px}
+.logo{display:flex; align-items:center; gap:11px; font-family:"Spectral",Georgia,serif;
+  font-weight:600; font-size:21px; letter-spacing:-.3px; color:var(--ink);
+  border:0; white-space:nowrap}
+.logo:hover{border:0}
+.mark{width:30px;height:30px;border-radius:3px; background:var(--green);
+  display:flex;align-items:center;justify-content:center; color:var(--paper)}
+.logo .appmark{width:34px;height:34px;border-radius:3px; object-fit:cover}
+.back{display:inline-flex; align-items:center; gap:7px; color:var(--ink-soft); border:0;
+  font-size:var(--fs-micro); font-weight:800; letter-spacing:.16em; text-transform:uppercase; white-space:nowrap}
+.back:hover{color:var(--green); border:0}
 
-/* content */
-.legal{max-width:780px; margin:0 auto; padding:46px 22px 72px}
-.legal h1{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:clamp(26px,4vw,36px);
-  color:var(--text); letter-spacing:-.4px; line-height:1.15; margin-bottom:8px}
-.legal .date{font-size:14px; color:var(--faint); margin-bottom:30px}
-.legal h2{font-size:18px; font-weight:700; color:var(--teal-deep); margin:34px 0 12px; letter-spacing:-.2px}
-.legal p{margin-bottom:12px}
-.legal ul{padding-left:22px; margin-bottom:14px}
+/* ---------------- полоса набора ---------------- */
+.legal{max-width:var(--measure); margin:0 auto; padding:var(--s5) 26px var(--s6)}
+.legal .crumbs, .crumbs{font-size:var(--fs-micro); font-weight:800; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--ink-faint); margin-bottom:var(--s3); line-height:1.6}
+.legal .crumbs a, .crumbs a{color:var(--ink-faint); border:0}
+.legal .crumbs a:hover, .crumbs a:hover{color:var(--green)}
+.legal h1{font-family:"Spectral",Georgia,serif; font-weight:600;
+  font-size:clamp(32px,4.6vw,52px); color:var(--ink); letter-spacing:-1.3px;
+  line-height:1.04; margin-bottom:var(--s3); text-wrap:balance}
+.legal .date{font-size:var(--fs-micro); font-weight:800; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--ink-faint); margin-bottom:var(--s4); padding-bottom:var(--s2);
+  border-bottom:1px solid var(--rule)}
+.legal h2{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:29px;
+  color:var(--ink); letter-spacing:-.6px; line-height:1.18;
+  margin:var(--s5) 0 var(--s2); padding-top:var(--s3); border-top:1px solid var(--rule);
+  scroll-margin-top:84px; text-wrap:balance}
+.legal h3{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:20px;
+  color:var(--ink); letter-spacing:-.2px; line-height:1.25; margin:var(--s4) 0 var(--s1)}
+.legal p{margin-bottom:var(--s2)}
+.legal ul, .legal ol{padding-left:22px; margin-bottom:var(--s3)}
 .legal li{margin-bottom:7px}
-.legal strong{color:var(--text); font-weight:700}
-.legal .intro{background:var(--surface); border:1px solid var(--line-strong); border-radius:16px; padding:20px 22px; margin-bottom:26px}
+.legal ::marker{color:var(--sand)}
+.legal strong{color:var(--ink); font-weight:700}
+
+/* лид-врез: прямой ответ в начале статьи (под featured snippet) */
+.legal .intro{border-left:2px solid var(--ink); padding:2px 0 2px var(--s3); margin-bottom:var(--s4)}
+.legal .intro p{font-family:"Spectral",Georgia,serif; font-style:italic; font-weight:500;
+  font-size:20px; line-height:1.5; color:var(--ink-soft); margin-bottom:10px}
 .legal .intro p:last-child{margin-bottom:0}
-.legal .req{background:var(--bg2); border:1px solid var(--line); border-radius:14px; padding:18px 22px}
+.legal .intro strong{font-style:normal; font-weight:600; color:var(--ink)}
 
-/* footer */
-footer{border-top:1px solid var(--line); padding:40px 0; color:var(--muted); font-size:14px}
-footer .row{max-width:780px; margin:0 auto; padding:0 22px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px}
-.flinks{display:flex; gap:22px; flex-wrap:wrap; align-items:center}
-footer a{color:var(--muted)} footer a:hover{color:var(--text)}
+/* оглавление — нумерованный указатель на линейках, без плашки */
+.toc{margin:var(--s4) 0; padding:var(--s3) 0; border-top:2px solid var(--ink); border-bottom:1px solid var(--rule)}
+.toc b{display:block; font-size:var(--fs-micro); font-weight:800; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--ink-faint); margin-bottom:var(--s2)}
+.toc ol{margin:0; padding-left:0; list-style:none; counter-reset:toc;
+  columns:2; column-gap:var(--s4)}
+.toc li{margin-bottom:9px; break-inside:avoid; padding-left:34px; position:relative}
+.toc li::before{counter-increment:toc; content:counter(toc,decimal-leading-zero);
+  position:absolute; left:0; top:0; font-family:"Spectral",Georgia,serif; font-weight:600;
+  font-size:14px; color:var(--sand)}
+.toc a{color:var(--ink); border:0}
+.toc a:hover{color:var(--green); border:0}
 
-@media (max-width:560px){
-  .legal{padding:34px 16px 56px}
-  .lhead .row, footer .row{padding:0 16px}
-  footer .row{flex-direction:column; gap:14px}
+/* иллюстрации */
+figure{margin:var(--s4) 0}
+figure img{width:100%; height:auto; display:block; border-radius:3px}
+figure.narrow{max-width:480px; margin-left:auto; margin-right:auto}
+figure.sq{max-width:540px; margin-left:auto; margin-right:auto}
+figure.wide{max-width:700px; margin-left:auto; margin-right:auto}
+/* широкие полосы-баннеры: выходят за колонку набора, чтобы подписи оставались читаемыми */
+figure.bleed{width:min(1100px, calc(100vw - 32px)); max-width:1100px; margin-left:50%; transform:translateX(-50%)}
+figcaption{font-size:var(--fs-micro); font-weight:800; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--ink-faint); text-align:left; margin-top:10px; line-height:1.55}
+
+/* призыв — полоса на двух линейках, а не карточка */
+.cta-box{margin:var(--s5) 0; padding:var(--s4) 0; text-align:left;
+  border-top:2px solid var(--ink); border-bottom:2px solid var(--ink)}
+.cta-box p{margin:0 0 var(--s3)!important; color:var(--ink)!important;
+  font-family:"Spectral",Georgia,serif; font-size:21px; line-height:1.4; max-width:44ch}
+.cta-box .btn, .nf .btn{display:inline-flex; align-items:center; gap:9px; border-radius:2px;
+  background:var(--green); color:var(--paper); border:1px solid var(--green);
+  font-weight:700; font-size:15px; line-height:1; padding:15px 27px;
+  transition:background .2s ease, border-color .2s ease}
+.cta-box .btn:hover, .nf .btn:hover{background:var(--ink); border-color:var(--ink)}
+.nf .btn.ghost{background:transparent; color:var(--ink); border-color:var(--rule)}
+.nf .btn.ghost:hover{background:transparent; color:var(--green); border-color:var(--green)}
+
+/* нумерованные шаги: цифра антиквой охрой, без кружка с заливкой */
+.steps-list{counter-reset:step; list-style:none; padding-left:0; margin:var(--s3) 0}
+.steps-list li{position:relative; padding-left:46px; margin-bottom:var(--s3)}
+.steps-list li::before{counter-increment:step; content:counter(step,decimal-leading-zero);
+  position:absolute; left:0; top:1px; font-family:"Spectral",Georgia,serif; font-weight:600;
+  font-size:17px; color:var(--sand); letter-spacing:.02em}
+
+/* таблицы — только горизонтальные линейки */
+.cmp{width:100%; border-collapse:collapse; margin:var(--s3) 0; font-size:15px}
+.cmp th, .cmp td{border:0; border-bottom:1px solid var(--rule-soft);
+  padding:12px 16px 12px 0; text-align:left; vertical-align:top}
+.cmp th{border-bottom:2px solid var(--ink); background:none; color:var(--ink);
+  font-size:var(--fs-micro); font-weight:800; letter-spacing:.13em; text-transform:uppercase}
+.cmp td:first-child{background:none; color:var(--ink); font-weight:600}
+.cmp tr:last-child td{border-bottom:0}
+
+/* врезки на боковой линейке — вместо плашек со скруглением */
+.note, .sos, .tip, .tldr, .example, .reassure, .card, blockquote.q, .vid{
+  margin:var(--s4) 0; padding:2px 0 2px var(--s3); border-left:2px solid var(--rule); border-radius:0;
+  background:none; font-size:16px; color:var(--ink-soft)}
+.tip, .tldr, .card{border-left-color:var(--green)}
+.note, .sos{border-left-color:var(--warn)}
+.reassure{border-left-color:var(--green)}
+.sos b{color:var(--warn)}
+.tldr b, .card b.t, .checklist b{display:block; font-size:var(--fs-micro); font-weight:800;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:10px}
+.tldr p, .reassure p{margin:0!important; color:var(--ink-soft)!important; font-size:16px}
+.tldr ul{margin:0; padding-left:20px}
+.tldr li{margin-bottom:5px}
+.example b{color:var(--ink); font-weight:700}
+.vid h3{margin-top:0}
+.vid .marks{font-size:14.5px; color:var(--ink-faint); margin-top:6px}
+
+/* выносная цитата */
+blockquote.q{border-left-color:var(--sand); font-family:"Spectral",Georgia,serif;
+  font-style:italic; font-weight:500; font-size:20px; line-height:1.5; color:var(--ink)}
+blockquote.q p{margin:0!important; color:inherit!important}
+blockquote.q cite, blockquote.q footer{display:block; margin-top:10px; font-family:"Manrope",sans-serif;
+  font-style:normal; font-size:var(--fs-micro); font-weight:800; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--ink-faint)}
+
+/* списки-отметки: знак охрой, без карточки */
+.check, .todo, .checklist{list-style:none; padding:0; margin:var(--s3) 0;
+  background:none; border:0; border-top:1px solid var(--rule); border-radius:0}
+.checklist{border-top:0}
+.checklist ul{list-style:none; margin:0; padding:0; border-top:1px solid var(--rule)}
+.check li, .todo li, .checklist li{position:relative; padding:11px 0 11px 32px; margin:0;
+  border-bottom:1px solid var(--rule-soft); font-size:16px}
+.check li:last-child, .todo li:last-child, .checklist li:last-child{border-bottom:0}
+.check li::before{content:"✓"; position:absolute; left:2px; top:11px; color:var(--sand); font-weight:800}
+.todo li::before, .checklist li::before{content:"\2610"; position:absolute; left:0; top:9px;
+  color:var(--sand); font-size:18px; line-height:1.3; font-weight:400}
+
+/* хронология */
+.timeline{list-style:none; padding:0; margin:var(--s3) 0; border-left:1px solid var(--rule)}
+.timeline li{position:relative; padding:0 0 var(--s3) var(--s3)}
+.timeline li::before{content:""; position:absolute; left:-4px; top:9px; width:7px; height:7px;
+  border-radius:0; background:var(--sand)}
+.timeline b{display:block; font-size:var(--fs-micro); font-weight:800; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--ink); margin-bottom:4px}
+
+/* цифры-факты — строкой на линейке, как выходные данные на главной */
+.facts{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:0;
+  margin:var(--s4) 0; border-top:2px solid var(--ink); border-bottom:1px solid var(--rule)}
+.facts div{background:none; border:0; border-left:1px solid var(--rule-soft);
+  border-radius:0; padding:var(--s3) var(--s3) 18px; text-align:left}
+.facts div:first-child{border-left:0; padding-left:0}
+.facts b{display:block; font-family:"Spectral",Georgia,serif; font-weight:600; font-size:31px;
+  color:var(--ink); line-height:1; letter-spacing:-.8px; margin-bottom:8px;
+  font-variant-numeric:tabular-nums lining-nums}
+.facts span{display:block; font-size:var(--fs-micro); font-weight:800; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--ink-faint); line-height:1.45}
+
+/* карта гида (trevoga-polnyy-gid) — указатель, а не сетка карточек */
+.guide{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:0 var(--s4); margin:var(--s4) 0}
+.guide a{display:flex; flex-direction:column; background:none; border:0;
+  border-top:1px solid var(--rule-soft); border-radius:0; padding:var(--s3) 0;
+  color:var(--ink); transition:background .18s ease}
+.guide a:hover{background:var(--paper2); border-top-color:var(--rule-soft)}
+.guide b{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:19px;
+  line-height:1.22; letter-spacing:-.2px; margin-bottom:7px}
+.guide span{font-size:14.5px; color:var(--ink-faint); line-height:1.55; flex:1}
+.guide em{display:block; margin-top:var(--s2); font-style:normal; font-size:var(--fs-micro);
+  font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--green)}
+
+/* блок требований на юр-страницах */
+.legal .req{background:none; border:0; border-left:2px solid var(--rule); border-radius:0;
+  padding:2px 0 2px var(--s3); font-size:15.5px; line-height:1.85}
+
+/* E-E-A-T — сноска в конце полосы */
+.eeat{font-size:13px; line-height:1.7; color:var(--ink-faint);
+  border-top:1px solid var(--rule); margin-top:var(--s5); padding-top:var(--s3); max-width:78ch}
+.eeat p{margin-bottom:8px}
+.eeat a{color:var(--green)}
+
+/* ---------------- хаб блога ---------------- */
+.clusternav{display:flex; flex-wrap:wrap; gap:10px 26px; max-width:var(--measure);
+  margin:var(--s3) auto var(--s1); justify-content:flex-start; padding:0 26px}
+.clusternav a{font-size:var(--fs-micro); font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-soft); background:none; border:0; border-bottom:1px solid var(--rule);
+  border-radius:0; padding:0 0 4px; transition:color .18s ease, border-color .18s ease}
+.clusternav a:hover{color:var(--green); border-color:var(--green); background:none}
+.cluster{max-width:var(--measure); margin:0 auto; padding:0 26px}
+.cluster-h{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:27px;
+  letter-spacing:-.5px; color:var(--ink); margin:var(--s5) 0 6px; padding-top:var(--s3);
+  border-top:1px solid var(--ink); scroll-margin-top:84px; display:flex; align-items:baseline; gap:12px}
+.cluster-sub{color:var(--ink-faint); font-size:15px; margin:0 0 var(--s3)}
+.posts{max-width:var(--measure); margin:0 auto; padding:0 26px;
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:var(--s4) var(--s4)}
+.post-card{display:flex; flex-direction:column; background:none; border:0;
+  border-top:1px solid var(--rule-soft); border-radius:0; padding:var(--s3) 0 0;
+  color:var(--ink); transition:none}
+.post-card, .post-card:hover, .post-card:focus, .post-card *{text-decoration:none!important}
+.post-card:hover{border-color:var(--rule-soft); transform:none; box-shadow:none}
+.post-card .tag{align-self:flex-start; font-size:var(--fs-micro); font-weight:800; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--sand); background:none; padding:0;
+  border-radius:0; margin-bottom:var(--s2)}
+.post-card h3{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:21.5px;
+  line-height:1.2; letter-spacing:-.35px; margin:0 0 10px; transition:color .18s ease}
+.post-card:hover h3{color:var(--green)}
+.post-card p{margin:0 0 var(--s3); color:var(--ink-soft); font-size:14.5px; line-height:1.6; flex:1}
+.post-card .more{font-size:var(--fs-micro); font-weight:800; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--green); display:inline-block}
+.post-card:hover .more{gap:0}
+
+/* ---------------- 404 ---------------- */
+.nf{text-align:left; padding:var(--s3) 0 0}
+.nf .code{font-family:"Spectral",Georgia,serif; font-size:clamp(72px,12vw,132px); line-height:.9;
+  color:var(--sand); margin:0 0 var(--s3); letter-spacing:-4px}
+.nf h1{margin:0 0 var(--s2)}
+.nf p.lead{color:var(--ink-soft); margin:0 0 var(--s4); max-width:52ch; font-size:18px}
+.nf .btn{margin:0 14px 12px 0}
+.nf-links{background:none; border:0; border-top:2px solid var(--ink); border-radius:0;
+  padding:var(--s3) 0 0; margin:var(--s5) 0 0; max-width:none; text-align:left}
+.nf-links b{display:block; font-size:var(--fs-micro); font-weight:800; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--ink-faint); margin-bottom:var(--s2)}
+.nf-links ul{margin:0; padding-left:20px}
+.nf-links li{margin-bottom:8px}
+.nf-links li:last-child{margin-bottom:0}
+
+/* ---------------- колофон ---------------- */
+footer{border-top:1px solid var(--ink); padding:var(--s4) 0 var(--s5);
+  color:var(--ink-soft); font-size:14px}
+footer .row{max-width:var(--measure); margin:0 auto; padding:0 26px;
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:22px}
+.flinks{display:flex; gap:12px 26px; flex-wrap:wrap; align-items:center;
+  font-size:var(--fs-micro); font-weight:800; letter-spacing:.12em; text-transform:uppercase}
+footer a{color:var(--ink-soft); border:0}
+footer a:hover{color:var(--green); border:0}
+
+/* ---------------- адаптив ---------------- */
+@media (max-width:700px){
+  body{font-size:16px}
+  .legal{padding:var(--s4) 20px var(--s5)}
+  .lhead .row, footer .row, .cluster, .posts, .clusternav{padding-left:20px; padding-right:20px}
+  .legal h1{letter-spacing:-.9px}
+  .legal h2{font-size:25px; margin-top:var(--s4)}
+  .legal .intro p{font-size:18px}
+  .toc ol{columns:1}
+  .cta-box p{font-size:19px}
+  blockquote.q{font-size:18px}
+  .facts{grid-template-columns:1fr 1fr}
+  .facts div{padding:18px 16px 14px}
+  .facts div:nth-child(odd){border-left:0; padding-left:0}
+  /* таблицы на телефоне листаются вбок, страница не едет */
+  .cmp{display:block; overflow-x:auto; white-space:nowrap; font-size:14.5px}
+  .cmp td, .cmp th{white-space:normal; min-width:150px}
+  footer .row{flex-direction:column; gap:16px}
 }
-@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+@media (max-width:430px){
+  .logo{font-size:19px} .logo .appmark{width:28px;height:28px}
+  .back{font-size:10px}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important; transition:none!important}}
