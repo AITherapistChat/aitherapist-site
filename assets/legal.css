@@ -299,7 +299,7 @@ blockquote.q cite, blockquote.q footer{display:block; margin-top:10px; font-fami
   text-decoration:none; border-bottom:1px solid var(--rule); transition:border-color .18s ease}
 .res .again:hover{border-color:var(--green)}
 
-/* указатель тестов */
+/* указатель тестов / подходов */
 .tests{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:0 var(--s4); margin:var(--s4) 0}
 .tests a{display:flex; flex-direction:column; border-top:1px solid var(--rule-soft);
   padding:var(--s3) 0; color:var(--ink); border-bottom:0; transition:background .18s ease}
@@ -309,6 +309,21 @@ blockquote.q cite, blockquote.q footer{display:block; margin-top:10px; font-fami
 .tests span{font-size:14.5px; color:var(--ink-faint); line-height:1.55; flex:1}
 .tests em{display:block; margin-top:var(--s2); font-style:normal; font-size:var(--fs-micro);
   font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--green)}
+
+/* .tests.covers — вариант с миниатюрами: оглавление в ОДНУ колонку, картинка слева.
+   ⚠️ Модификатор обязателен: базовый .tests используется и без картинок
+   (хаб /podhody/), а сетка «96px 1fr» без <img> загоняет заголовок в узкую
+   колонку. В две колонки такой список тоже не ставим — рядом с картинкой
+   текстовой колонке нужна ширина, иначе описание рвётся на 2-3 слова. */
+.tests.covers{display:block; border-bottom:1px solid var(--rule-soft)}
+.tests.covers a{display:grid; grid-template-columns:96px 1fr; gap:0 var(--s3); align-items:start}
+.tests.covers img{grid-row:1 / span 3; width:96px; height:96px; display:block; border-radius:2px}
+.tests.covers span{flex:none}
+.tests.covers em{margin-top:var(--s1)}
+@media(max-width:520px){
+  .tests.covers a{grid-template-columns:68px 1fr; gap:0 var(--s2)}
+  .tests.covers img{width:68px; height:68px}
+}
 
 /* ---------------- хаб блога ---------------- */
 .clusternav{display:flex; flex-wrap:wrap; gap:10px 26px; max-width:var(--measure);
