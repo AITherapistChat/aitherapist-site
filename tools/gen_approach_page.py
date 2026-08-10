@@ -38,6 +38,8 @@ DISCLAIMER = ('AI Therapist — приложение для самопомощи
 
 def build(a):
     url = "%s/%s/%s" % (SITE, OUT, a["slug"])
+    # обложка 1200x630 = og:image и одновременно картинка на странице (один файл на оба применения)
+    cover = a["slug"].replace(".html", "")
     faq_html = "\n".join('  <h3>%s</h3>\n  <p>%s</p>\n' % (q, ans) for q, ans in a["faq"])
     faq_ld = [{"@type": "Question", "name": q,
                "acceptedAnswer": {"@type": "Answer", "text": strip_tags(ans)}}
@@ -47,6 +49,7 @@ def build(a):
         {"@type": "Article", "headline": a["title"], "description": a["desc"],
          "inLanguage": "ru-RU", "datePublished": a["published"], "dateModified": a["modified"],
          "mainEntityOfPage": {"@type": "WebPage", "@id": url},
+         "image": "%s/assets/%s/%s-cover.webp" % (SITE, OUT, cover),
          "author": {"@id": SITE + "/#organization"},
          "publisher": {"@id": SITE + "/#organization"},
          "about": {"@type": "Thing", "name": a["about"]}},
@@ -76,7 +79,9 @@ def build(a):
 <meta property="og:url" content="{url}">
 <meta property="og:site_name" content="AI Therapist">
 <meta property="og:locale" content="ru_RU">
-<meta property="og:image" content="{SITE}/assets/og.png">
+<meta property="og:image" content="{SITE}/assets/podhody/{cover}-cover.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../assets/fonts/manrope-400-800-cyrillic.woff2">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../assets/fonts/spectral-600-cyrillic.woff2">
@@ -103,6 +108,10 @@ def build(a):
   <div class="intro">
     <p>{intro}</p>
   </div>
+
+  <figure>
+    <img src="../assets/podhody/{cover}-cover.webp" alt="{cover_alt}" width="1200" height="630">
+  </figure>
 
   <div class="toc">
     <b>Содержание</b>
@@ -149,6 +158,7 @@ def build(a):
            ld=json.dumps(ld, ensure_ascii=False, indent=2),
            crumb=a["crumb"], h1=a["h1"], mod_ru=a["mod_ru"], mins=a["mins"],
            intro=a["intro"], toc=a["toc"], body=a["body"], cta=a["cta"],
+           cover=cover, cover_alt=a["cover_alt"],
            faq_html=faq_html, disclaimer=DISCLAIMER, eeat=a["eeat"],
            sources=a["sources"], flinks=flinks, metrika=METRIKA)
 
