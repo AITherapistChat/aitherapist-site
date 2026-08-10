@@ -140,6 +140,7 @@ def build(t):
     <div class="ticks" aria-hidden="true">{ticks}</div>
     <div class="lvl" id="res-level"></div>
     <div id="res-text"></div>
+    <div id="res-multi"></div>
     <button type="button" class="again" id="res-again">Пройти заново</button>
   </section>
 
@@ -186,7 +187,7 @@ def build(t):
            url=url, SITE=SITE, ld=json.dumps(ld, ensure_ascii=False, indent=2),
            crumb=t["crumb"], h1=t["h1"], mod_ru=t["mod_ru"], mins=t["mins"],
            intro=t["intro"], cover=t["cover"], cover_alt=t["cover_alt"], scale_name=t["scale_name"], nq=len(t["data"]["questions"]),
-           stem=t["stem"], max=t["data"]["max"], ticks=t["ticks"], crisis=CRISIS,
+           stem=t["stem"], max=t["data"].get("max", 0), ticks=t.get("ticks", ""), crisis=CRISIS,
            body=t["body"], cta=t["cta"], faq_html=faq_html, eeat=t["eeat"],
            sources=t["sources"], flinks=flinks,
            data=json.dumps(t["data"], ensure_ascii=False, indent=1), metrika=METRIKA)

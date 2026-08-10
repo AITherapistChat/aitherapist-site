@@ -298,6 +298,22 @@ blockquote.q cite, blockquote.q footer{display:block; margin-top:10px; font-fami
   font:800 var(--fs-micro)/1 "Manrope",system-ui,sans-serif; letter-spacing:.14em; text-transform:uppercase;
   text-decoration:none; border-bottom:1px solid var(--rule); transition:border-color .18s ease}
 .res .again:hover{border-color:var(--green)}
+/* .res.multi — опросник с несколькими независимыми шкалами (DASS-21).
+   Единой суммы у такого теста не существует, поэтому верхний блок с общим
+   баллом скрывается, а результат собирается движком из блоков .sub —
+   у каждого свой балл, своя полоса и своя расшифровка. */
+.res.multi > .score, .res.multi > .scale, .res.multi > .ticks, .res.multi > .lvl{display:none}
+.sub{border-top:1px solid var(--rule); padding-top:var(--s4); margin-top:var(--s4)}
+.sub:first-child{border-top:0; padding-top:0; margin-top:0}
+.sub-h{display:flex; align-items:baseline; justify-content:space-between; gap:var(--s2)}
+.sub-h b{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:23px;
+  color:var(--ink); letter-spacing:-.4px}
+.sub-h span{font-size:var(--fs-micro); font-weight:800; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--ink-faint); white-space:nowrap}
+.sub-h em{font-style:normal; font-family:"Spectral",Georgia,serif; font-size:34px;
+  letter-spacing:-1px; color:var(--ink); margin-right:6px;
+  font-variant-numeric:tabular-nums lining-nums}
+.res .sub .lvl{font-size:21px; margin-bottom:var(--s1)}
 
 /* указатель тестов / подходов */
 .tests{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:0 var(--s4); margin:var(--s4) 0}
