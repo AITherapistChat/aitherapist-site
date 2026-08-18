@@ -1,0 +1,34 @@
+# Публикация сайта в Yandex Object Storage.
+# GitHub Pages в РФ фильтруется по TLS, поэтому боевая отдача — бакет за Yandex CDN,
+# а GitHub остаётся исходником: push в main → синхронизация бакета с репозиторием.
+# Секреты репозитория: YC_S3_KEY_ID, YC_S3_SECRET (статические ключи сервисного
+# аккаунта с ролью storage.editor). Имя бакета — в переменной YC_S3_BUCKET.
+name: Deploy to Yandex Object Storage
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-yc
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install boto3
+
+      - name: Sync bucket
+        env:
+          YC_S3_KEY_ID: ${{ secrets.YC_S3_KEY_ID }}
+          YC_S3_SECRET: ${{ secrets.YC_S3_SECRET }}
+          YC_S3_BUCKET: ${{ vars.YC_S3_BUCKET || 'aitherapist.ru' }}
+        run: python tools/deploy_s3.py --prune
