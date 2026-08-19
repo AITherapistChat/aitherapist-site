@@ -1,6 +1,16 @@
 {
  "articles": [
   {
+   "title": "Алкоголь и тревога: почему наутро хуже и как выйти из круга",
+   "description": "Почему алкоголь снимает тревогу на час, а наутро возвращает её сильнее, что такое похмельная тревога, как разорвать круг «тревога — выпить — ещё больше тревоги» и почему резко бросать при ежедневном употреблении опасно.",
+   "image": "https://aitherapist.ru/assets/blog/alkogol-i-trevoga-cover.webp",
+   "url": "https://aitherapist.ru/blog/alkogol-i-trevoga.html",
+   "date": "2026-08-19",
+   "minutes": 12,
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Детские травмы: 7 следов во взрослой жизни и что с ними делать",
    "description": "Как детские травмы влияют на взрослую жизнь: почему повторяются одни и те же отношения, откуда берутся стыд и тревога, что такое шкала ACE, 7 шагов к восстановлению и когда нужен специалист.",
    "image": "https://aitherapist.ru/assets/blog/detskie-travmy-cover.webp",
@@ -166,7 +176,7 @@
    "image": "https://aitherapist.ru/assets/blog/anxiety-cover.webp",
    "url": "https://aitherapist.ru/blog/kak-spravitsya-s-trevogoy.html",
    "date": "2026-06-26",
-   "minutes": 13,
+   "minutes": 14,
    "w": 820,
    "h": 399
   },
