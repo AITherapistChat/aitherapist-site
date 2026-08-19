@@ -1,6 +1,14 @@
 {
  "articles": [
   {
+   "title": "Детские травмы: 7 следов во взрослой жизни и что с ними делать",
+   "description": "Как детские травмы влияют на взрослую жизнь: почему повторяются одни и те же отношения, откуда берутся стыд и тревога, что такое шкала ACE, 7 шагов к восстановлению и когда нужен специалист.",
+   "image": "https://aitherapist.ru/assets/blog/detskie-travmy-cover.webp",
+   "url": "https://aitherapist.ru/blog/detskie-travmy.html",
+   "date": "2026-08-19",
+   "minutes": 12
+  },
+  {
    "title": "Осенняя депрессия: почему накрывает осенью и 8 способов справиться",
    "description": "Осенняя депрессия и осенняя хандра: чем они отличаются, 9 признаков, почему осенью хочется спать и нет сил, как проявляется у женщин, мужчин и подростков, светотерапия, витамин D, 8 шагов и план на осень.",
    "image": "https://aitherapist.ru/assets/blog/osennyaya-depressiya-cover.webp",
@@ -36,7 +44,7 @@
    "image": "https://aitherapist.ru/assets/blog/depressiya-cover.webp",
    "url": "https://aitherapist.ru/blog/depressiya-priznaki-chto-delat.html",
    "date": "2026-07-29",
-   "minutes": 18,
+   "minutes": 19,
    "w": 960,
    "h": 640
   },
