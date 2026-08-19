@@ -359,6 +359,9 @@ blockquote.q cite, blockquote.q footer{display:block; margin-top:10px; font-fami
   border-top:1px solid var(--rule-soft); border-radius:0; padding:var(--s3) 0 0;
   color:var(--ink); transition:none}
 .post-card, .post-card:hover, .post-card:focus, .post-card *{text-decoration:none!important}
+.post-card .thumb{display:block; width:100%; height:auto; aspect-ratio:3/2; object-fit:cover;
+  border-radius:2px; margin:0 0 var(--s3); background:var(--paper2)}
+
 .post-card:hover{border-color:var(--rule-soft); transform:none; box-shadow:none}
 .post-card .tag{align-self:flex-start; font-size:var(--fs-micro); font-weight:800; letter-spacing:.16em;
   text-transform:uppercase; color:var(--sand); background:none; padding:0;

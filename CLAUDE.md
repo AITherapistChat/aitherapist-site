@@ -1,16 +1,65 @@
 # AI Therapist — лендинг + веб-демо (CLAUDE.md)
 
 Маркетинговый сайт и веб-версия чата для Android-приложения **AI Therapist** (ИИ-психолог).
-Живёт на **GitHub Pages**, домен **https://aitherapist.ru**. Репозиторий: `AITherapistChat/aitherapist-site` (ветка `main`).
+Домен **https://aitherapist.ru**. Репозиторий: `AITherapistChat/aitherapist-site` (ветка `main`).
+Отдача статики — **Yandex Object Storage + CDN** (переехали с GitHub Pages 19.08.2026), см. раздел «Хостинг».
 
 > Текущий статус/незакрытые задачи — в авто-памяти (`site-status-handoff.md`). Здесь — стабильное «как всё устроено».
 
+## Хостинг (переезд завершён 19.08.2026)
+
+**Зачем переехали.** GitHub Pages в РФ фильтруется по TLS: TCP на 80 порт отвечает мгновенно, а TLS-хендшейк к `185.199.108-111.153` то виснет до таймаута, то тянется 2–6 с, причём «мёртвый» адрес плавает между замерами — виснет примерно каждое 8–10 соединение. Под VPN всё быстро. Отсюда жалобы «лагает и не открывается».
+
+**Как устроено теперь.** Роли разделены: **GitHub — склад исходников и история**, **Yandex Object Storage — витрина**, с которой посетители забирают страницы.
+- Бакет `aitherapist.ru` (каталог `default` облака, там же функция-прокси `aitherapistweb`), публичное чтение, website hosting: index=`index.html`, error=`404.html`. Каталоги вида `/blog/` бакет закрывает сам, отдавая `index.html`.
+- ⚠️ **Бакет не прощает URL без расширения**, в отличие от Pages. Все ссылки сайта и все 39 URL в `sitemap.xml` — либо `.html`-файлы, либо каталоги со слэшем; при добавлении страниц эту форму держать.
+- Публичная DNS-зона `aitherapist-ru` в Cloud DNS, делегирование с reg.ru применилось 19.08.2026. Смена NS понадобилась потому, что CDN даёт `CNAME`, а CNAME на корне зоны reg.ru не поддерживает — в Cloud DNS для этого есть `ANAME`. Сейчас корень — `ANAME` на CDN, `www` — `CNAME` туда же. TTL держим **300–600**, чтобы откат занимал минуты.
+- CDN: провайдер **`ourcdn`** (`gcore` отвечает «is deprecated»), ресурс `bc8rg4cc6omurvbp75wa`, группа источников — на website-эндпоинт бакета. Сертификат Let's Encrypt из Certificate Manager (`fpqol59oca8nq3dmrrmh`, `aitherapist.ru` + `www`), редирект HTTP→HTTPS включён.
+- ⚠️ **Записи `_acme-challenge.*` в зоне не удалять** — это CNAME-делегирование валидации в Certificate Manager, на них держится автопродление сертификата.
+- ⚠️ **Origin получает `Host: aitherapist.ru.website.yandexcloud.net`** (опция `hostOptions.host`). YC по умолчанию включает `forwardHostHeader`, и тогда бакет не включает website-логику: `/blog/` перестаёт отдавать `index.html`, а 404 не уходит на `404.html`. Не сбрасывать.
+- ⚠️ **CDN кэширует статику сутками** (`Cache-Control` ставит `deploy_s3.py`; edge его уважает, `edgeCacheSettings=0`). HTML и карты — `no-cache`, поэтому статьи и тексты обновляются сразу, **а вот правка `assets/legal.css`, `assets/quiz.js` или картинки под тем же именем доедет до посетителей только через сутки.** После такой правки чистить кэш: `POST https://cdn.api.cloud.yandex.net/cdn/v1/cache/bc8rg4cc6omurvbp75wa:purge` с телом `{"paths":["/*"]}` (на `/cdn/v1/cache:purge` — 404).
+
+**Полная картина — что происходит при обычной правке сайта:**
+
+```
+    вы правите файлы  →  git push origin main
+                              │
+              ┌───────────────┴───────────────┐
+              ▼                               ▼
+      GitHub Pages                   GitHub Actions
+   (резерв для отката)          .github/workflows/deploy-yc.yml
+   фильтруется в РФ по TLS          → tools/deploy_s3.py
+                                          │ льёт изменившееся
+                                          ▼
+                              бакет aitherapist.ru (Object Storage)
+                                  website hosting, index/404
+                                          │
+                                          ▼
+                                 Yandex CDN (ourcdn)
+                              + сертификат из Certificate Manager
+                                          │
+                     DNS: зона aitherapist-ru в Cloud DNS (ANAME, TTL 300)
+                                          │
+                                          ▼
+                        посетитель → https://aitherapist.ru
+```
+
+Правая ветка — боевая с 19.08.2026; левая продолжает собираться и остаётся резервом. Один `git push` кормит обе, поэтому переключение домена туда-обратно — это только правка записи в зоне, содержимое всегда свежее в обоих местах.
+
+**Откат на Pages** (если понадобится): в зоне `aitherapist-ru` заменить `ANAME aitherapist.ru → 28d9113b160ecf16.topology.gslb.yccdn.ru` на четыре `A` — `185.199.108.153`, `.109.153`, `.110.153`, `.111.153`, а `www` вернуть на `CNAME aitherapistchat.github.io.`. При TTL 300 возврат занимает минуты.
+
+**Демо-чат в этой схеме живёт отдельно** и переездом статики не затронут: браузер бьёт в `chat-web` (Supabase), при сетевой ошибке/таймауте `apiFetch` уходит на Яндекс-прокси `aitherapistweb` (non-streaming, отсюда «фейк-печать»). Со временем бэкенд тоже уедет в РФ — тогда фолбэк станет не нужен.
+
+- ⚠️ **Домен нельзя переключать на HTTP-отдачу даже на минуту:** у `chat-web` в CORS жёстко прибит `https://aitherapist.ru`, и по `http://` чат отвалится. По той же причине на временном адресе бакета демо-чат не работает — это ожидаемо.
+
 ## Деплой
-- **Фронт:** просто `git push origin main` → GitHub Pages пересобирает ~1 мин. (Пуш в `main` требует явного разрешения пользователя.)
+- **Фронт:** по-прежнему просто `git push origin main`. Дальше расходится в два места: GitHub Pages пересобирает себя, а workflow `.github/workflows/deploy-yc.yml` синхронизирует бакет (секреты репозитория `YC_S3_KEY_ID` / `YC_S3_SECRET`). (Пуш в `main` требует явного разрешения пользователя.)
+- **Заливка вручную:** `python tools/deploy_s3.py` (`--dry-run` — показать план, `--prune` — удалить из бакета лишнее). Льёт только изменившееся (сверка по MD5/ETag), сам проставляет Content-Type (mimetypes на Windows врёт про `.webp` и `.woff2`) и Cache-Control: HTML и карты — `no-cache`, статика — сутки, шрифты — месяц. Служебное (`tools/`, `supabase/`, `yandex/`, `CLAUDE.md`, `BRIEF.md`, `CNAME`) в бакет не попадает — список в `SKIP_DIRS`/`SKIP_FILES`.
+- **Yandex Cloud API:** ⚠️ OAuth-токен Яндекс ID для API бесполезен — с 01.06.2026 его не меняют на IAM. Работает только авторизованный ключ сервисного аккаунта (`site-deploy`): JWT PS256 → `POST /iam/v1/tokens` → IAM-токен на час. Ключ — вне репозитория, у пользователя на диске. Статические ключи S3 создаются на `/iam/aws-compatibility/v1/accessKeys` (на `/iam/v1/accessKeys` — 404).
 - **Supabase Edge Functions:** npx supabase CLI на этой Windows-машине НЕ работает. Деплой только через **Management API curl**:
   `curl -X POST "https://api.supabase.com/v1/projects/efniwpfjdfktfczgdpxm/functions/deploy?slug=<name>" -H "Authorization: Bearer <sbp>" -F 'metadata={"name":"<name>","entrypoint_path":"index.ts","verify_jwt":false};type=application/json' -F "file=@supabase/functions/<name>/index.ts;type=application/typescript"`
 - **БД/секреты/цены:** тоже Management API (`/database/query`, `/secrets`). Прод-деплой бэкенда — только с явного разрешения пользователя.
-- Проверять прод после пуша: `curl https://aitherapist.ru/...` (Pages кэширует ~1–2 мин).
+- Проверять прод после пуша: `curl https://aitherapist.ru/...` (Pages кэширует ~1–2 мин; у бакета HTML отдаётся с `no-cache`, но CDN может держать свой кэш).
 
 ## Структура
 - `index.html` — весь лендинг + демо-чат (инлайн CSS/JS).
