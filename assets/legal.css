@@ -48,7 +48,7 @@ a:hover{text-decoration:none; border-color:var(--green)}
 ::selection{background:rgba(58,88,54,.18)}
 :focus-visible{outline:2px solid var(--green); outline-offset:3px}
 svg{display:block}
-img{max-width:100%}
+img{max-width:100%; height:auto}
 .micro{font-size:var(--fs-micro); font-weight:800; letter-spacing:.2em; text-transform:uppercase; line-height:1.5}
 
 /* ---------------- шапка: плотная бумага, без стекла ---------------- */
