@@ -28,7 +28,8 @@ CRISIS = ('Опросник не ставит диагноз и не замен�
           'невыносимо тяжело или появляются мысли о том, чтобы причинить себе вред, позвоните: '
           '<strong>112</strong> — при угрозе жизни; <strong>+7 (495) 989-50-50</strong> — '
           'круглосуточная линия ЦЭПП МЧС России; <strong>8-800-2000-122</strong> — детям, '
-          'подросткам и их родителям; <strong>051</strong> (с мобильного 8 (495) 051) — для Москвы.')
+          'подросткам и их родителям; <strong>051</strong> (с мобильного 8 (495) 051) — для Москвы.'
+          ' Куда ещё можно обратиться бесплатно — <a href="../besplatnaya-psihologicheskaya-pomoshch.html">в справочнике помощи</a>.')
 
 METRIKA = """<!-- Yandex.Metrika -->
 <script type="text/javascript">
@@ -93,6 +94,7 @@ def build(t):
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="preload" as="image" fetchpriority="high" href="../assets/testy/{cover}-cover.webp">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../assets/fonts/manrope-400-800-cyrillic.woff2">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../assets/fonts/spectral-600-cyrillic.woff2">
 <link rel="icon" type="image/webp" href="../assets/apps/aitherapist.webp">
@@ -120,7 +122,7 @@ def build(t):
   </div>
 
   <figure>
-    <img src="../assets/testy/{cover}-cover.webp" alt="{cover_alt}" width="1200" height="630">
+    <img src="../assets/testy/{cover}-cover.webp" alt="{cover_alt}" width="1200" height="630" fetchpriority="high">
   </figure>
 
   <!-- ym-hide-content: ответы на тест не попадают в записи Вебвизора -->

@@ -33,7 +33,8 @@ DISCLAIMER = ('AI Therapist — приложение для самопомощи
               'на принципы доказательных подходов, но не проводит психотерапию и не заменяет '
               'работу со специалистом. Если вы в кризисной ситуации, обратитесь за помощью: '
               '<strong>112</strong> — при угрозе жизни; <strong>+7 (495) 989-50-50</strong> — '
-              'круглосуточная линия ЦЭПП МЧС России.')
+              'круглосуточная линия ЦЭПП МЧС России. Куда ещё можно обратиться бесплатно — '
+              '<a href="../besplatnaya-psihologicheskaya-pomoshch.html">в справочнике помощи</a>.')
 
 
 def build(a):
@@ -83,6 +84,7 @@ def build(a):
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="preload" as="image" fetchpriority="high" href="../assets/podhody/{cover}-cover.webp">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../assets/fonts/manrope-400-800-cyrillic.woff2">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../assets/fonts/spectral-600-cyrillic.woff2">
 <link rel="icon" type="image/webp" href="../assets/apps/aitherapist.webp">
@@ -110,7 +112,7 @@ def build(a):
   </div>
 
   <figure>
-    <img src="../assets/podhody/{cover}-cover.webp" alt="{cover_alt}" width="1200" height="630">
+    <img src="../assets/podhody/{cover}-cover.webp" alt="{cover_alt}" width="1200" height="630" fetchpriority="high">
   </figure>
 
   <div class="toc">
