@@ -22,6 +22,11 @@ JPEG_DIR = os.path.join(ROOT, 'assets', 'dzen')
 SITE = 'https://aitherapist.ru/'
 MAX_IMG_W = 1200
 
+# Статьи, написанные ДО подключения ленты, приезжают в Дзен черновиками:
+# иначе при первом чтении ленты он опубликовал бы весь архив разом.
+# Всё, что появится позже этой даты, публикуется автоматически.
+DRAFT_BEFORE = '2026-08-23'
+
 # блоки, которые в Дзене не нужны: навигация по странице и наша служебка
 DROP_CLASSES = ('crumbs', 'date', 'toc', 'eeat')
 
@@ -153,6 +158,7 @@ def build():
         items.append({
             'url': url, 'title': m['title'], 'descr': m['descr'],
             'date': rfc822(m['mod'] or m['date']), 'cover': cover, 'body': body,
+            'draft': (m['mod'] or m['date'] or '')[:10] < DRAFT_BEFORE,
         })
 
     esc = lambda s: html.escape(s, quote=True)
@@ -174,6 +180,8 @@ def build():
                   '<category>format-article</category>',
                   '<category>noindex</category>',
                   '<category>comment-all</category>']
+        if it['draft']:
+            parts.append('<category>native-draft</category>')
         if it['cover']:
             parts.append('<enclosure url="%s%s" type="image/jpeg" length="0"/>' % (SITE, it['cover']))
         parts += ['<content:encoded><![CDATA[%s]]></content:encoded>' % it['body'],
@@ -193,5 +201,7 @@ if __name__ == '__main__':
     jpegs = os.listdir(JPEG_DIR) if os.path.exists(JPEG_DIR) else []
     total = sum(os.path.getsize(os.path.join(JPEG_DIR, f)) for f in jpegs) / 1024 / 1024
     print('картинок сконвертировано: %d (%.1f МБ)' % (len(jpegs), total))
+    print('черновиками: %d, сразу в публикацию: %d'
+          % (sum(1 for i in items if i['draft']), sum(1 for i in items if not i['draft'])))
     short = [i['title'] for i in items if len(i['body']) < 2000]
     print('подозрительно короткие:', short or 'нет')
