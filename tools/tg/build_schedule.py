@@ -89,9 +89,13 @@ def to_html(text):
     return res
 
 
+# посты, которых нет в вэкашном плане (там они ставились отдельно)
+EXTRA = [('2026-08-27', '19:05', 'app', '')]
+
+
 def build():
     items = []
-    for date, hhmm, key, text in PLAN:
+    for date, hhmm, key, text in PLAN + EXTRA:
         # телеграмный текст, если он написан; иначе — автоперевод вэкашного
         body = TG.get(key) or to_html(text)
         items.append({
@@ -100,6 +104,7 @@ def build():
             'image': IMG_BASE + key + '.jpg',
             'html': body,
         })
+    items.sort(key=lambda i: i['when'])
     with open(OUT, 'w', encoding='utf-8') as f:
         json.dump(items, f, ensure_ascii=False, indent=1)
     return items
