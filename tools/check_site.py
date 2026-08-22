@@ -61,6 +61,10 @@ def pages():
         p = p.replace('\\', '/')
         if '.git' in p or p.startswith('assets/') or p.startswith('tools/'):
             continue
+        # файлы подтверждения прав на сайт (Дзен, Вебмастер, Google) — не страницы:
+        # у них нет и не должно быть h1, canonical и записи в sitemap
+        if re.match(r'^(zen_|yandex_|google[0-9a-f]{16})', os.path.basename(p)):
+            continue
         out.append(p)
     return sorted(out)
 
