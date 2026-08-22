@@ -1,0 +1,45 @@
+name: Посты в телеграм-канал
+
+# У Телеграма нет отложки для ботов, поэтому расписание держим здесь:
+# воркфлоу просыпается, смотрит tools/tg/schedule.json и публикует то, чему
+# подошло время. Что уже ушло — записано в tools/tg/posted.json, повтор
+# ничего не задваивает, а пропущенный запуск ничего не теряет.
+on:
+  schedule:
+    - cron: '5 9,16,20 * * *'   # UTC → 12:05, 19:05 и 23:05 по Москве
+  workflow_dispatch:            # и кнопкой вручную
+
+permissions:
+  contents: write
+
+concurrency:
+  group: telegram-posts
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Опубликовать всё, чему подошло время
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python tools/tg/post_due.py
+
+      - name: Запомнить, что опубликовано
+        run: |
+          if [[ -n "$(git status --porcelain tools/tg/posted.json)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add tools/tg/posted.json
+            git commit -m "tg: отметка об опубликованных постах"
+            git push
+          else
+            echo "новых публикаций не было"
+          fi
