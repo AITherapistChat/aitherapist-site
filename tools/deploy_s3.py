@@ -36,7 +36,7 @@ BUCKET = os.environ.get("YC_S3_BUCKET", "aitherapist.ru")
 
 # Папки и файлы, которых на проде быть не должно.
 SKIP_DIRS = {".git", ".github", ".claude", "tools", "supabase", "yandex", "__pycache__"}
-SKIP_FILES = {"CLAUDE.md", "BRIEF.md", ".gitignore", ".nojekyll", "CNAME",
+SKIP_FILES = {"CLAUDE.md", "BRIEF.md", "VK.md", ".gitignore", ".nojekyll", "CNAME",
               "assets/og-card.html"}
 
 # Content-Type для того, что mimetypes на Windows угадывает неверно или никак.
