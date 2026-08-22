@@ -15,7 +15,7 @@ import os, sys, json, datetime, urllib.request, urllib.parse
 HERE = os.path.dirname(os.path.abspath(__file__))
 SCHEDULE = os.path.join(HERE, 'schedule.json')
 POSTED = os.path.join(HERE, 'posted.json')
-LOCAL_KEYS = r'C:\Users\XE\Desktop\gpt\сайт\вк доступ группа\телеграм бот.txt'
+LOCAL_KEYS = r'C:\Users\XE\Desktop\gpt\сайт\TG бот\токен.txt'
 MSK = datetime.timedelta(hours=3)
 
 

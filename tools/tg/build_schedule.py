@@ -13,6 +13,7 @@ import os, sys, json, re, html, datetime
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, '..', 'vk'))
 from month import PLAN  # noqa: E402
+from posts_tg import POSTS as TG  # noqa: E402
 
 IMG_BASE = 'https://aitherapist.ru/assets/social/'
 OUT = os.path.join(HERE, 'schedule.json')
@@ -91,11 +92,13 @@ def to_html(text):
 def build():
     items = []
     for date, hhmm, key, text in PLAN:
+        # телеграмный текст, если он написан; иначе — автоперевод вэкашного
+        body = TG.get(key) or to_html(text)
         items.append({
             'id': '%s-%s' % (date, key),
             'when': '%s %s' % (date, hhmm),
             'image': IMG_BASE + key + '.jpg',
-            'html': to_html(text),
+            'html': body,
         })
     with open(OUT, 'w', encoding='utf-8') as f:
         json.dump(items, f, ensure_ascii=False, indent=1)
