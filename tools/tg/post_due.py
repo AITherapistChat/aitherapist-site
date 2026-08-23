@@ -9,14 +9,29 @@
   переменные окружения TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID (так в GitHub Actions),
   либо локальный файл — токен первой строкой, @канал второй:
   C:\\Users\\XE\\Desktop\\gpt\\сайт\\вк доступ группа\\телеграм бот.txt
+
+⚠️ Адрес картинки — raw.githubusercontent.com, а не aitherapist.ru. Это не описка:
+серверы Телеграма не могут скачать с нашего домена ничего — ни картинку, ни страницу
+(проверено 23.08.2026: википедия превью получает, любой адрес на aitherapist.ru — нет,
+а sendPhoto по такому URL отвечает 400). Похоже на фильтрацию между Телеграмом
+и Yandex CDN. Именно из-за этого пост stress-rabota 23.08.2026 вышел без картинки,
+а пост про прокрастинацию 22.08.2026 — с картинкой главной страницы: og.png у Телеграма
+давно лежала в кэше, а свежие файлы он взять не смог.
+
+⚠️ Перед отправкой адрес картинки проверяется. Нет файла — пост не уходит вовсе
+и ждёт следующего запуска крона, а в лог уходит ошибка. Тихо подставленная
+чужая картинка хуже, чем пост на несколько часов позже.
 """
-import os, sys, json, datetime, urllib.request, urllib.parse
+import os, re, sys, json, datetime, urllib.request, urllib.parse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SCHEDULE = os.path.join(HERE, 'schedule.json')
 POSTED = os.path.join(HERE, 'posted.json')
 LOCAL_KEYS = r'C:\Users\XE\Desktop\gpt\сайт\TG бот\токен.txt'
 MSK = datetime.timedelta(hours=3)
+
+# тем же юзер-агентом за картинкой пойдёт и сам Телеграм
+UA = 'TelegramBot (like TwitterBot)'
 
 
 def keys():
@@ -26,7 +41,12 @@ def keys():
         return tok.strip(), chat.strip()
     with open(LOCAL_KEYS, encoding='utf-8') as f:
         lines = [l.strip() for l in f if l.strip()]
-    return lines[0], lines[1]
+    # во второй строке лежит ссылка на канал — Телеграму нужен из неё @username
+    chat = lines[1]
+    m = re.search(r'(?:t\.me/|^@?)([A-Za-z0-9_]{4,})/?$', chat)
+    if m:
+        chat = '@' + m.group(1)
+    return lines[0], chat
 
 
 def api(token, method, payload):
@@ -36,6 +56,17 @@ def api(token, method, payload):
         data=data, headers={'Content-Type': 'application/json'})
     with urllib.request.urlopen(req, timeout=40) as r:
         return json.loads(r.read().decode('utf-8'))
+
+
+def image_ok(url):
+    """Лежит ли картинка на месте. Иначе Телеграм покажет чужую."""
+    try:
+        req = urllib.request.Request(url, method='HEAD', headers={'User-Agent': UA})
+        with urllib.request.urlopen(req, timeout=20) as r:
+            return r.status == 200 and r.headers.get('Content-Type', '').startswith('image/')
+    except Exception as e:
+        print('   картинка недоступна:', e)
+        return False
 
 
 def load(path, default):
@@ -65,7 +96,13 @@ def main():
           '| в плане:', len(schedule), '| опубликовано ранее:', len(posted),
           '| к публикации:', len(due))
 
+    failed = []
     for item in due:
+        # без картинки не публикуем вовсе — пост подождёт следующего запуска
+        if not image_ok(item['image']):
+            print('  ПРОПУСК, картинки нет на сайте:', item['id'], item['image'])
+            failed.append(item['id'])
+            continue
         if dry:
             print('  [dry-run]', item['id'])
             continue
@@ -88,6 +125,12 @@ def main():
     if not dry and due:
         with open(POSTED, 'w', encoding='utf-8') as f:
             json.dump(posted, f, ensure_ascii=False, indent=1)
+
+    # падаем только после того, как записано опубликованное, иначе отметка потеряется
+    # и следующий запуск задвоит то, что уже ушло
+    if failed:
+        print('::error::телеграм: не опубликовано %d — %s' % (len(failed), ', '.join(failed)))
+        sys.exit(1)
 
 
 if __name__ == '__main__':

@@ -15,7 +15,9 @@ sys.path.insert(0, os.path.join(HERE, '..', 'vk'))
 from month import PLAN  # noqa: E402
 from posts_tg import POSTS as TG  # noqa: E402
 
-IMG_BASE = 'https://aitherapist.ru/assets/social/'
+# ⚠️ Не aitherapist.ru: с нашего домена Телеграм картинку скачать не может — подробности
+# в шапке post_due.py. Файл тот же самый, просто взятый из репозитория.
+IMG_BASE = 'https://raw.githubusercontent.com/AITherapistChat/aitherapist-site/main/assets/social/'
 OUT = os.path.join(HERE, 'schedule.json')
 
 # осмысленный текст ссылки вместо голого адреса

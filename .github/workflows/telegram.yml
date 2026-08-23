@@ -33,6 +33,9 @@ jobs:
         run: python tools/tg/post_due.py
 
       - name: Запомнить, что опубликовано
+        # if: always() — предыдущий шаг падает, если у какого-то поста не нашлась картинка;
+        # остальные при этом уже ушли, и их отметку надо сохранить, иначе задвоятся
+        if: always()
         run: |
           if [[ -n "$(git status --porcelain tools/tg/posted.json)" ]]; then
             git config user.name "github-actions[bot]"
