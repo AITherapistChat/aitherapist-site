@@ -13,12 +13,13 @@
 Картинки: у нас всё в WebP, Дзен его не принимает, поэтому скрипт кладёт
 JPEG-копии в assets/dzen/ и ссылается на них.
 """
-import os, re, io, sys, html, datetime, email.utils
+import os, re, io, sys, json, html, datetime, email.utils
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BLOG = os.path.join(ROOT, 'blog')
 OUT = os.path.join(ROOT, 'dzen.xml')
 JPEG_DIR = os.path.join(ROOT, 'assets', 'dzen')
+STATE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dzen_sent.json')
 SITE = 'https://aitherapist.ru/'
 MAX_IMG_W = 1200
 
@@ -26,6 +27,21 @@ MAX_IMG_W = 1200
 # иначе при первом чтении ленты он опубликовал бы весь архив разом.
 # Всё, что появится позже этой даты, публикуется автоматически.
 DRAFT_BEFORE = '2026-08-23'
+
+# ⚠️ Дзен забирает из ленты только СВЕЖИЕ материалы («за последние два-три дня»,
+# справка rss-modify) и молча пропускает всё, что старше. 26.08.2026 на этом
+# и погорели: из 19 статей архива в черновики приехали только 8 — те, что были
+# датированы 19 и 21 августа, а одиннадцать с датами июня-августа он проигнорировал.
+#
+# Поэтому статье старше FRESH_DAYS в ЛЕНТУ (не на сайте!) проставляется сегодняшняя
+# дата — это дата публикации копии в Дзене, настоящие datePublished/dateModified
+# страницы не трогаются. Проставленная дата один раз записывается в dzen_sent.json
+# и дальше не меняется: повторно отправленный материал Дзен всё равно не берёт,
+# а плавающая дата выглядела бы как правка.
+#
+# На флаг черновика это не влияет — он считается по НАСТОЯЩЕЙ дате статьи,
+# иначе весь передатированный архив ушёл бы в публикацию пачкой.
+FRESH_DAYS = 3
 
 # Единственный работающий канал из Дзена на сайт — переходы живых людей:
 # ссылки там nofollow, а копия ещё и noindex. Поэтому в конце каждой статьи
@@ -81,6 +97,15 @@ def body_html(page):
     # врезки — в цитаты, это Дзен показывает нормально
     b = re.sub(r'<div[^>]*class="[^"]*\b(note|tip|tldr|sos|example|reassure|cta-box)\b[^"]*"[^>]*>(.*?)</div>',
                r'<blockquote>\2</blockquote>', b, flags=re.S)
+    # подпись под картинкой: без обёртки её текст сливается с соседним абзацем
+    b = re.sub(r'<figcaption[^>]*>(.*?)</figcaption>', r'<p><i>\1</i></p>', b, flags=re.S)
+    # подпись под цитатой: <footer> внутри <p> — недопустимая вложенность, курсив надёжнее
+    b = re.sub(r'</?footer[^>]*>', lambda m: '</i>' if m.group(0).startswith('</') else '<i>', b)
+    # карточки гида: <a><b>заголовок</b><span>описание</span><em>Начать отсюда</em></a>.
+    # «Начать отсюда →» — экранный жест, в тексте статьи он бессмыслен.
+    b = re.sub(r'<a href="([^"]+)"[^>]*>\s*<b>(.*?)</b>\s*<span>(.*?)</span>'
+               r'\s*(?:<em>.*?</em>)?\s*</a>',
+               r'<p><a href="\1"><b>\2</b></a> — \3</p>', b, flags=re.S)
     b = re.sub(r'</?(figure|figcaption|section|div|span)[^>]*>', '', b)
     b = re.sub(r'\sid="[^"]*"', '', b)
     b = re.sub(r'\sclass="[^"]*"', '', b)
@@ -105,9 +130,61 @@ def body_html(page):
     b = re.sub(r'href="(?!https?:|mailto:|#)([^"]+)"', r'href="%sblog/\1"' % SITE, b)
 
     b = tables_to_lists(b)
+    b = wrap_loose(b)
 
     b = re.sub(r'\n{2,}', '\n', b)
     return b.strip()
+
+
+# Блочные теги: внутри них текст стоит сам по себе и склеиться не может.
+BLOCK = {'p', 'h2', 'h3', 'h4', 'ul', 'ol', 'li', 'table', 'thead', 'tbody', 'tr',
+         'td', 'th', 'blockquote', 'img', 'hr'}
+# Контейнеры, где текст может оказаться голым: корень статьи и наши врезки.
+LOOSE_IN = {None, 'blockquote'}
+
+
+def wrap_loose(b):
+    """Заворачивает в <p> текст, лежащий в контейнере без блочной обёртки.
+
+    ⚠️ Ради этого всё и затевалось: Дзен не расставляет переносы сам, и голая
+    ссылка-кнопка из .cta-box слипалась со следующим абзацем — получалось
+    «Начать разговор бесплатноЕсли самое трудное…». То же с текстом врезок,
+    который в статьях написан прямо внутри <div>, и с подписями к картинкам.
+    Правило общее, а не заплатка на кнопку: любая новая разметка в статье
+    приедет в Дзен разделённой.
+    """
+    out, stack, p_open = [], [], False
+    for tok in re.split(r'(<[^>]+>)', b):
+        if not tok:
+            continue
+        if tok.startswith('<'):
+            name = re.match(r'</?\s*(\w+)', tok)
+            name = name.group(1).lower() if name else ''
+            closing = tok.startswith('</')
+            ctx = stack[-1] if stack else None
+            if name in BLOCK:
+                if p_open:                      # блок прерывает абзац
+                    out.append('</p>'); p_open = False
+                if closing:
+                    if stack and stack[-1] == name:
+                        stack.pop()
+                elif name not in ('img', 'hr') and not tok.endswith('/>'):
+                    stack.append(name)
+                out.append(tok)
+                continue
+            if closing and p_open and ctx in LOOSE_IN:
+                out.append(tok); continue
+            if not closing and ctx in LOOSE_IN and not p_open:
+                out.append('<p>'); p_open = True
+            out.append(tok)
+            continue
+        ctx = stack[-1] if stack else None
+        if tok.strip() and ctx in LOOSE_IN and not p_open:
+            out.append('<p>'); p_open = True
+        out.append(tok)
+    if p_open:
+        out.append('</p>')
+    return ''.join(out)
 
 
 def tables_to_lists(b):
@@ -145,6 +222,34 @@ def meta(page):
     }
 
 
+def load_state():
+    if os.path.exists(STATE):
+        return json.load(io.open(STATE, encoding='utf-8'))
+    return {}
+
+
+def save_state(state):
+    io.open(STATE, 'w', encoding='utf-8').write(
+        json.dumps(state, ensure_ascii=False, indent=2, sort_keys=True) + chr(10))
+
+
+def feed_date(slug, real_iso, state):
+    """Дата для ленты: своя у статей, которые Дзен иначе сочтёт несвежими.
+
+    Возвращает (RFC822-дата, передатирована ли)."""
+    if slug in state:
+        return state[slug], state[slug][5:16] != rfc822(real_iso)[5:16]
+    now = datetime.datetime.now(datetime.timezone.utc)
+    try:
+        age = (now - datetime.datetime.strptime(real_iso[:10], '%Y-%m-%d')
+               .replace(tzinfo=datetime.timezone.utc)).days
+    except ValueError:
+        age = 0
+    stamped = age > FRESH_DAYS
+    state[slug] = email.utils.format_datetime(now) if stamped else rfc822(real_iso)
+    return state[slug], stamped
+
+
 def rfc822(iso):
     for f in ('%Y-%m-%d', '%Y-%m-%dT%H:%M:%S'):
         try:
@@ -155,6 +260,7 @@ def rfc822(iso):
 
 
 def build():
+    state = load_state()
     items = []
     for name in sorted(os.listdir(BLOG)):
         if not name.endswith('.html') or name == 'index.html':
@@ -167,11 +273,15 @@ def build():
             continue
         cover = webp_to_jpeg(m['cover'].replace(SITE, '')) if m['cover'] else None
         url = SITE + 'blog/' + name
+        real = m['mod'] or m['date'] or ''
+        date, stamped = feed_date(name[:-5], real, state)
         items.append({
             'url': url, 'title': m['title'], 'descr': m['descr'],
-            'date': rfc822(m['mod'] or m['date']), 'cover': cover, 'body': body + TAIL,
-            'draft': (m['mod'] or m['date'] or '')[:10] < DRAFT_BEFORE,
+            'date': date, 'stamped': stamped, 'cover': cover, 'body': body + TAIL,
+            'draft': real[:10] < DRAFT_BEFORE,
         })
+
+    save_state(state)
 
     esc = lambda s: html.escape(s, quote=True)
     parts = ['<?xml version="1.0" encoding="UTF-8"?>',
@@ -215,5 +325,10 @@ if __name__ == '__main__':
     print('картинок сконвертировано: %d (%.1f МБ)' % (len(jpegs), total))
     print('черновиками: %d, сразу в публикацию: %d'
           % (sum(1 for i in items if i['draft']), sum(1 for i in items if not i['draft'])))
+    fresh = [i['url'].split('/')[-1] for i in items if i['stamped']]
+    if fresh:
+        print('передатировано сегодняшним числом (иначе Дзен сочтёт несвежим): %d' % len(fresh))
+        for f in fresh:
+            print('   ', f)
     short = [i['title'] for i in items if len(i['body']) < 2000]
     print('подозрительно короткие:', short or 'нет')
