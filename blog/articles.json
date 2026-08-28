@@ -1,6 +1,16 @@
 {
  "articles": [
   {
+   "title": "Как поддержать человека в горе: что говорить и чего не говорить",
+   "description": "Что сказать человеку после смерти близкого и чего говорить не стоит: готовые фразы для сообщения, помощь делами и поддержка спустя месяцы.",
+   "image": "https://aitherapist.ru/assets/blog/podderzhka-v-gore-cover.webp",
+   "url": "https://aitherapist.ru/blog/kak-podderzhat-cheloveka-v-gore.html",
+   "date": "2026-08-28",
+   "minutes": 24,
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Постоянное чувство вины: 7 шагов, чтобы перестать себя грызть",
    "description": "Откуда берётся постоянное чувство вины, чем она отличается от стыда, как отличить здоровую вину от токсичной и 7 шагов, чтобы перестать себя грызть.",
    "image": "https://aitherapist.ru/assets/blog/chuvstvo-viny-cover.webp",
@@ -136,7 +146,7 @@
    "image": "https://aitherapist.ru/assets/blog/impostor-cover.webp",
    "url": "https://aitherapist.ru/blog/sindrom-samozvantsa.html",
    "date": "2026-07-03",
-   "minutes": 12,
+   "minutes": 13,
    "w": 799,
    "h": 451
   },
