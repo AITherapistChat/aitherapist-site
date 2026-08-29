@@ -1,12 +1,22 @@
 {
  "articles": [
   {
+   "title": "Личные границы: 8 шагов, чтобы перестать всем угождать",
+   "description": "Что такое личные границы, как понять, что их не хватает, чем граница отличается от ультиматума и 8 шагов, чтобы говорить «нет» без вины и скандалов.",
+   "image": "https://aitherapist.ru/assets/blog/lichnye-granitsy-cover.webp",
+   "url": "https://aitherapist.ru/blog/lichnye-granitsy.html",
+   "date": "2026-08-29",
+   "minutes": 18,
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Как поддержать человека в горе: что говорить и чего не говорить",
    "description": "Что сказать человеку после смерти близкого и чего говорить не стоит: готовые фразы для сообщения, помощь делами и поддержка спустя месяцы.",
    "image": "https://aitherapist.ru/assets/blog/podderzhka-v-gore-cover.webp",
    "url": "https://aitherapist.ru/blog/kak-podderzhat-cheloveka-v-gore.html",
    "date": "2026-08-28",
-   "minutes": 24,
+   "minutes": 23,
    "w": 1200,
    "h": 630
   },
