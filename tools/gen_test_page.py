@@ -76,7 +76,9 @@ def build(t):
         {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Главная", "item": SITE + "/"},
             {"@type": "ListItem", "position": 2, "name": "Тесты", "item": SITE + "/" + OUT + "/"},
-            {"@type": "ListItem", "position": 3, "name": t["crumb"]}]},
+            # ⚠️ item обязателен и у последнего элемента: без него Яндекс не формирует
+            # навигационную цепочку в сниппете (Google допускает, Яндекс — нет)
+            {"@type": "ListItem", "position": 3, "name": t["crumb"], "item": url}]},
         {"@type": "FAQPage", "mainEntity": faq_ld}]}
 
     flinks = "\n".join('      <a href="%s"%s>%s</a>' %

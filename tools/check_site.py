@@ -134,6 +134,7 @@ def main():
     inlinks = Counter()
     words = {}
     titles, descs = {}, {}
+    crumbs = {}   # файл → элементы BreadcrumbList
     # версии кэш-бастера: {'legal.css': {'20260819': [страницы...]}}
     assetv = {'legal.css': {}, 'quiz.js': {}}
 
@@ -173,6 +174,17 @@ def main():
         if not d and not is_404:
             err(f, 'нет meta description')
         titles.setdefault(t, []).append(f)
+        # ⚠️ имена локальных переменных здесь не сокращать: d и n в этой функции
+        # уже заняты описанием страницы и счётчиками
+        for blk in ld_blocks(s):
+            try:
+                ld_doc = json.loads(blk)
+            except Exception:
+                continue
+            ld_nodes = ld_doc.get('@graph', [ld_doc]) if isinstance(ld_doc, dict) else ld_doc
+            for node in ld_nodes:
+                if isinstance(node, dict) and node.get('@type') == 'BreadcrumbList':
+                    crumbs[f] = node.get('itemListElement', [])
         descs.setdefault(d, []).append(f)
         if len(t) > TITLE_MAX:
             warn(f, 'title %d символов (>%d) — хвост обрежется в выдаче' % (len(t), TITLE_MAX))
@@ -319,6 +331,15 @@ def main():
         if len(real) > 1:
             err('кэш', '%s с разными версиями (%s) — правку увидят не все'
                 % (asset, ', '.join(real)))
+
+    # --- навигационная цепочка целиком ---
+    # ⚠️ 29.08.2026 Вебмастер показывал «Навигационная цепочка» несформированной,
+    # хотя BreadcrumbList стоял на 42 страницах: у последнего элемента не было item
+    # с URL. Google это допускает, Яндекс цепочку в сниппете при этом не строит.
+    for f, els in crumbs.items():
+        bad = [e.get('name', '?') for e in els if 'item' not in e]
+        if bad:
+            err(f, 'в навигационной цепочке нет item (URL) у: %s' % ', '.join(bad))
 
     # --- пересечение интентов у страниц-ответов на запрос ---
     # ⚠️ 29.08.2026 Яндекс выбросил testy/stress-pss-10 и testy/depressiya-trevoga-stress-dass-21

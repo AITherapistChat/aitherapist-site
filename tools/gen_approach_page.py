@@ -57,7 +57,8 @@ def build(a):
         {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Главная", "item": SITE + "/"},
             {"@type": "ListItem", "position": 2, "name": "Подходы", "item": SITE + "/" + OUT + "/"},
-            {"@type": "ListItem", "position": 3, "name": a["crumb"]}]},
+            # ⚠️ item обязателен и у последнего элемента — см. комментарий в gen_test_page.py
+            {"@type": "ListItem", "position": 3, "name": a["crumb"], "item": url}]},
         {"@type": "FAQPage", "mainEntity": faq_ld}]}
 
     flinks = "\n".join('      <a href="%s"%s>%s</a>' %
