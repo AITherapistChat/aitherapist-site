@@ -320,6 +320,31 @@ def main():
             err('кэш', '%s с разными версиями (%s) — правку увидят не все'
                 % (asset, ', '.join(real)))
 
+    # --- пересечение интентов у страниц-ответов на запрос ---
+    # ⚠️ 29.08.2026 Яндекс выбросил testy/stress-pss-10 и testy/depressiya-trevoga-stress-dass-21
+    # как «малоценные или маловостребованные». Индекс риска у обеих был выше порога — метрика
+    # «слова × входящие» этого класса поломок не видит. Причина была в другом: обе страницы
+    # заходили в title с одного и того же запроса и конкурировали между собой, а DASS-21 ещё
+    # и с PHQ-9. В каталогах /testy/ и /podhody/ правило простое: одна страница — один интент,
+    # поэтому головное слово заголовка (до двоеточия или тире) обязано быть уникальным.
+    STOP_LEAD = {'тест', 'на', 'по', 'в', 'и', 'или', 'онлайн', 'бесплатно',
+                 'шкала', 'шкале', 'опросник', 'с', 'для'}
+    lead = {}
+    for v, fs in titles.items():
+        for f in fs:
+            if f.split('/')[0] not in ('testy', 'podhody') or f.endswith('index.html'):
+                continue
+            # ⚠️ не называть переменную words — так зовётся словарь объёмов страниц,
+            # на котором ниже строится таблица риска
+            lw = re.findall(r'[А-Яа-яЁёA-Za-z0-9-]+', re.split(r'[:—]', v)[0].lower())
+            lw = [w for w in lw if w not in STOP_LEAD]
+            if lw:
+                lead.setdefault(lw[0][:6], []).append(f)
+    for key, fs in sorted(lead.items()):
+        if len(fs) > 1:
+            warn('интент', 'заголовки начинаются с одного и того же («%s…»): %s'
+                 % (key, ', '.join(sorted(fs))))
+
     # --- дубли title / description ---
     for label, d in (('title', titles), ('description', descs)):
         for v, fs in d.items():
