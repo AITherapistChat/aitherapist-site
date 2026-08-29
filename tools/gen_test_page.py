@@ -24,6 +24,15 @@ FOOTER_LINKS = [
     ("https://max.ru/u/f9LHodD0cOLipAu8wObtKCFFNq0tcwTb1FXJH4-p1ZsA73YJgBBY1-SNVxM", "MAX"),
 ]
 
+# ⚠️ Кэш-бастер для legal.css и quiz.js. CDN отдаёт статику сутками, а браузер
+# посетителя держит её и дольше, поэтому правка CSS или движка опросников доедет
+# до вернувшегося посетителя только со сменой этого номера. Одно значение на оба
+# файла: они мелкие, лишняя перезагрузка ничего не стоит, а два счётчика разъедутся.
+# ⚠️ Меняя его, менять и в 31 странице, написанной руками (блог, юр-страницы,
+# главная, testy/trevozhnost-gad-7.html) — check_site.py следит, чтобы версия
+# на всём сайте была одна.
+ASSET_V = '20260819'
+
 CRISIS = ('Опросник не ставит диагноз и не заменяет консультацию. Если вам прямо сейчас '
           'невыносимо тяжело или появляются мысли о том, чтобы причинить себе вред, позвоните: '
           '<strong>112</strong> — при угрозе жизни; <strong>+7 (495) 989-50-50</strong> — '
@@ -98,7 +107,7 @@ def build(t):
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../assets/fonts/manrope-400-800-cyrillic.woff2">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../assets/fonts/spectral-600-cyrillic.woff2">
 <link rel="icon" type="image/webp" href="../assets/apps/aitherapist.webp">
-<link rel="stylesheet" href="../assets/legal.css">
+<link rel="stylesheet" href="../assets/legal.css?v={ASSET_V}">
 <script type="application/ld+json">
 {ld}
 </script>
@@ -179,7 +188,7 @@ def build(t):
 <script type="application/json" id="quiz-data">
 {data}
 </script>
-<script src="../assets/quiz.js" defer></script>
+<script src="../assets/quiz.js?v={ASSET_V}" defer></script>
 
 {metrika}
 
@@ -189,7 +198,7 @@ def build(t):
            url=url, SITE=SITE, ld=json.dumps(ld, ensure_ascii=False, indent=2),
            crumb=t["crumb"], h1=t["h1"], mod_ru=t["mod_ru"], mins=t["mins"],
            intro=t["intro"], cover=t["cover"], cover_alt=t["cover_alt"], scale_name=t["scale_name"], nq=len(t["data"]["questions"]),
-           stem=t["stem"], max=t["data"].get("max", 0), ticks=t.get("ticks", ""), crisis=CRISIS,
+           stem=t["stem"], max=t["data"].get("max", 0), ticks=t.get("ticks", ""), crisis=CRISIS, ASSET_V=ASSET_V,
            body=t["body"], cta=t["cta"], faq_html=faq_html, eeat=t["eeat"],
            sources=t["sources"], flinks=flinks,
            data=json.dumps(t["data"], ensure_ascii=False, indent=1), metrika=METRIKA)

@@ -18,6 +18,8 @@
   width/height  — если не совпадают с реальным файлом, вёрстку дёргает при загрузке.
   Индекс риска  — «слов × входящих». Ниже ~4000 страницы у нас уже выпадали
                   как «малоценные», см. память seo-maloc-page-incident.
+  Кэш-бастер    — legal.css и quiz.js обязаны иметь ?v= и одну версию на весь
+                  сайт, иначе правка не доедет до вернувшегося посетителя.
   Sitemap       — страница без записи в карте не индексируется.
 
 Выход 1, если есть ошибки (в --strict — и если есть предупреждения).
@@ -132,6 +134,8 @@ def main():
     inlinks = Counter()
     words = {}
     titles, descs = {}, {}
+    # версии кэш-бастера: {'legal.css': {'20260819': [страницы...]}}
+    assetv = {'legal.css': {}, 'quiz.js': {}}
 
     try:
         from PIL import Image
@@ -242,6 +246,15 @@ def main():
                     except Exception:
                         pass
 
+        # --- кэш-бастер у общих CSS/JS ---
+        # CDN держит статику сутками, браузер посетителя — дольше, поэтому правка
+        # legal.css или quiz.js без смены ?v= до вернувшегося посетителя не доедет.
+        # 29.08.2026 нашлось: 14 страниц тестов и подходов ссылались на legal.css
+        # без версии вовсе, а quiz.js был без версии на всех десяти тестах.
+        for asset in ('legal.css', 'quiz.js'):
+            for ref in re.findall(r'assets/%s(\?v=[0-9]+)?' % re.escape(asset), s):
+                assetv[asset].setdefault(ref[3:] if ref else '', []).append(f)
+
         # --- ссылки ---
         for href in set(re.findall(r'href="([^"]+)"', s)):
             if href.startswith(('http', 'mailto:', 'tel:', '#', '${')):
@@ -255,6 +268,12 @@ def main():
                 tgt += 'index.html'
             if os.path.isdir(tgt):
                 tgt += '/index.html'
+            # ⚠️ Ссылка на корень пишется как "../" или "./", и normpath сводит её
+            # к ".", а не к "". Без этой строки главная получала ключ "./index.html"
+            # и считалась отдельной страницей: в таблице у неё стояло 4 входящих
+            # вместо 86, и она выглядела самой слабой страницей сайта.
+            if tgt.startswith('./'):
+                tgt = tgt[2:]
             if not os.path.exists(tgt):
                 err(f, 'битая ссылка: %s' % href)
             elif tgt.endswith('.html') and tgt != f:
@@ -290,6 +309,16 @@ def main():
                 url = SITE + '/' + f[:-len('index.html')]
             if '<loc>%s</loc>' % url not in sitemap:
                 err(f, 'нет в sitemap.xml')
+
+    # --- кэш-бастер: версия обязана быть и обязана быть одна на весь сайт ---
+    for asset, vers in assetv.items():
+        if '' in vers:
+            err('кэш', '%s без ?v= на %d стр.: %s'
+                % (asset, len(vers['']), ', '.join(sorted(set(vers[''])))))
+        real = sorted(v for v in vers if v)
+        if len(real) > 1:
+            err('кэш', '%s с разными версиями (%s) — правку увидят не все'
+                % (asset, ', '.join(real)))
 
     # --- дубли title / description ---
     for label, d in (('title', titles), ('description', descs)):

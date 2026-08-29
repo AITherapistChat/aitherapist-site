@@ -18,7 +18,7 @@
 import io, json, os, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from gen_test_page import METRIKA, strip_tags, SITE  # noqa: E402
+from gen_test_page import METRIKA, strip_tags, SITE, ASSET_V  # noqa: E402
 
 OUT = "podhody"
 
@@ -88,7 +88,7 @@ def build(a):
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../assets/fonts/manrope-400-800-cyrillic.woff2">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../assets/fonts/spectral-600-cyrillic.woff2">
 <link rel="icon" type="image/webp" href="../assets/apps/aitherapist.webp">
-<link rel="stylesheet" href="../assets/legal.css">
+<link rel="stylesheet" href="../assets/legal.css?v={ASSET_V}">
 <script type="application/ld+json">
 {ld}
 </script>
@@ -156,7 +156,7 @@ def build(a):
 
 </body>
 </html>
-""".format(title=a["title"], desc=a["desc"], url=url, SITE=SITE,
+""".format(title=a["title"], desc=a["desc"], url=url, SITE=SITE, ASSET_V=ASSET_V,
            ld=json.dumps(ld, ensure_ascii=False, indent=2),
            crumb=a["crumb"], h1=a["h1"], mod_ru=a["mod_ru"], mins=a["mins"],
            intro=a["intro"], toc=a["toc"], body=a["body"], cta=a["cta"],
