@@ -31,7 +31,7 @@ FOOTER_LINKS = [
 # ⚠️ Меняя его, менять и в 31 странице, написанной руками (блог, юр-страницы,
 # главная, testy/trevozhnost-gad-7.html) — check_site.py следит, чтобы версия
 # на всём сайте была одна.
-ASSET_V = '20260819'
+ASSET_V = '20260831'
 
 CRISIS = ('Опросник не ставит диагноз и не заменяет консультацию. Если вам прямо сейчас '
           'невыносимо тяжело или появляются мысли о том, чтобы причинить себе вред, позвоните: '
@@ -110,6 +110,7 @@ def build(t):
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../assets/fonts/spectral-600-cyrillic.woff2">
 <link rel="icon" type="image/webp" href="../assets/apps/aitherapist.webp">
 <link rel="stylesheet" href="../assets/legal.css?v={ASSET_V}">
+<script src="../assets/goals.js?v={ASSET_V}" defer></script>
 <script type="application/ld+json">
 {ld}
 </script>
@@ -154,6 +155,13 @@ def build(t):
     <div class="lvl" id="res-level"></div>
     <div id="res-text"></div>
     <div id="res-multi"></div>
+    <div class="res-next">
+      <p><b>Что с этим делать дальше.</b> Балл — не диагноз, а точка отсчёта: смысл он приобретает в динамике, когда видно, растёт он или падает. В приложении AI Therapist есть дневник состояния, упражнения на основе приёмов КПТ и разговор с ИИ-психологом — можно пройти шкалу повторно через пару недель и сравнить.</p>
+      <div class="cta-btns">
+        <a class="btn" href="../#chat">Обсудить результат бесплатно</a>
+        <a class="btn ghost" href="https://www.rustore.ru/catalog/app/com.example.aitherapist" target="_blank" rel="noopener" data-goal="result">Скачать в RuStore</a>
+      </div>
+    </div>
     <button type="button" class="again" id="res-again">Пройти заново</button>
   </section>
 
@@ -163,7 +171,7 @@ def build(t):
 
   <div class="cta-box">
     <p>{cta}</p>
-    <a class="btn" href="../#chat">Попробовать бесплатно</a>
+    <div class="cta-btns"><a class="btn" href="../#chat">Попробовать бесплатно</a><a class="btn ghost" href="https://www.rustore.ru/catalog/app/com.example.aitherapist" target="_blank" rel="noopener" data-goal="cta">Скачать в RuStore</a></div>
   </div>
 
   <h2 id="faq">Частые вопросы</h2>

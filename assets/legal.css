@@ -132,8 +132,13 @@ figcaption{font-size:var(--fs-micro); font-weight:800; letter-spacing:.13em; tex
   font-weight:700; font-size:15px; line-height:1; padding:15px 27px;
   transition:background .2s ease, border-color .2s ease}
 .cta-box .btn:hover, .nf .btn:hover{background:var(--ink); border-color:var(--ink)}
-.nf .btn.ghost{background:transparent; color:var(--ink); border-color:var(--rule)}
-.nf .btn.ghost:hover{background:transparent; color:var(--green); border-color:var(--green)}
+.cta-box .btn.ghost, .nf .btn.ghost{background:transparent; color:var(--ink); border-color:var(--rule)}
+.cta-box .btn.ghost:hover, .nf .btn.ghost:hover{background:transparent; color:var(--green); border-color:var(--green)}
+/* Две кнопки в призыве: демо-чат (основная) и установка из RuStore (вторичная).
+   Вторая заведена 31.08.2026 под рекламу в Директе — до этого «переход в RuStore»
+   с контентных страниц был невозможен, конверсию кампании считать было не с чего.
+   row-gap обязателен: на телефоне кнопки переносятся и без него слипаются. */
+.cta-btns{display:flex; flex-wrap:wrap; gap:12px 14px; align-items:center}
 
 /* нумерованные шаги: цифра антиквой охрой, без кружка с заливкой */
 .steps-list{counter-reset:step; list-style:none; padding-left:0; margin:var(--s3) 0}
@@ -281,6 +286,19 @@ blockquote.q cite, blockquote.q footer{display:block; margin-top:10px; font-fami
   border:0; border-top:2px solid var(--ink); border-bottom:1px solid var(--rule);
   background:none; scroll-margin-top:84px}
 .res.on{display:block}
+/* «Что дальше» под результатом теста. Заведено 31.08.2026 под рекламу в Директе:
+   момент сразу после балла — точка максимальной мотивации, и именно на ней
+   считается конверсия кампании (цель rustore_click, data-goal="result").
+   Внутри .res, поэтому до показа результата скрыт вместе с ним. */
+.res-next{margin:var(--s4) 0 0; padding:var(--s3) 0 0; border-top:1px solid var(--rule)}
+.res-next p{margin:0 0 var(--s3)!important}
+.res-next .btn{display:inline-flex; align-items:center; gap:9px; border-radius:2px;
+  background:var(--green); color:var(--paper); border:1px solid var(--green);
+  font-weight:700; font-size:15px; line-height:1; padding:15px 27px;
+  transition:background .2s ease, border-color .2s ease}
+.res-next .btn:hover{background:var(--ink); border-color:var(--ink)}
+.res-next .btn.ghost{background:transparent; color:var(--ink); border-color:var(--rule)}
+.res-next .btn.ghost:hover{background:transparent; color:var(--green); border-color:var(--green)}
 .res .score{font-family:"Spectral",Georgia,serif; font-weight:600; font-size:64px; line-height:1;
   color:var(--ink); letter-spacing:-2px; font-variant-numeric:tabular-nums lining-nums}
 .res .score small{font-size:var(--fs-micro); font-weight:800; letter-spacing:.16em; text-transform:uppercase;

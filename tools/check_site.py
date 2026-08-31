@@ -136,7 +136,7 @@ def main():
     titles, descs = {}, {}
     crumbs = {}   # файл → элементы BreadcrumbList
     # версии кэш-бастера: {'legal.css': {'20260819': [страницы...]}}
-    assetv = {'legal.css': {}, 'quiz.js': {}}
+    assetv = {'legal.css': {}, 'quiz.js': {}, 'goals.js': {}}
 
     try:
         from PIL import Image
@@ -263,7 +263,7 @@ def main():
         # legal.css или quiz.js без смены ?v= до вернувшегося посетителя не доедет.
         # 29.08.2026 нашлось: 14 страниц тестов и подходов ссылались на legal.css
         # без версии вовсе, а quiz.js был без версии на всех десяти тестах.
-        for asset in ('legal.css', 'quiz.js'):
+        for asset in ('legal.css', 'quiz.js', 'goals.js'):
             for ref in re.findall(r'assets/%s(\?v=[0-9]+)?' % re.escape(asset), s):
                 assetv[asset].setdefault(ref[3:] if ref else '', []).append(f)
 

@@ -25,7 +25,8 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../assets/fonts/manrope-400-800-cyrillic.woff2">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../assets/fonts/spectral-600-cyrillic.woff2">
 <link rel="icon" type="image/webp" href="../assets/apps/aitherapist.webp">
-<link rel="stylesheet" href="../assets/legal.css?v=20260819">
+<link rel="stylesheet" href="../assets/legal.css?v=20260831">
+<script src="../assets/goals.js?v=20260831" defer></script>
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -119,6 +120,13 @@
     <div class="ticks" aria-hidden="true"><span>0</span><span>5</span><span>10</span><span>15</span><span>21</span></div>
     <div class="lvl" id="res-level"></div>
     <div id="res-text"></div>
+    <div class="res-next">
+      <p><b>Что с этим делать дальше.</b> Балл — не диагноз, а точка отсчёта: смысл он приобретает в динамике, когда видно, растёт он или падает. В приложении AI Therapist есть дневник состояния, упражнения на основе приёмов КПТ и разговор с ИИ-психологом — можно пройти шкалу повторно через пару недель и сравнить.</p>
+      <div class="cta-btns">
+        <a class="btn" href="../#chat">Обсудить результат бесплатно</a>
+        <a class="btn ghost" href="https://www.rustore.ru/catalog/app/com.example.aitherapist" target="_blank" rel="noopener" data-goal="result">Скачать в RuStore</a>
+      </div>
+    </div>
     <button type="button" class="again" id="res-again">Пройти заново</button>
   </section>
 
@@ -185,7 +193,7 @@
 
   <div class="cta-box">
     <p>Тревога не проходит от того, что о ней молчат. Расскажите, что происходит, — анонимно и без регистрации.</p>
-    <a class="btn" href="../#chat">Попробовать бесплатно</a>
+    <div class="cta-btns"><a class="btn" href="../#chat">Попробовать бесплатно</a><a class="btn ghost" href="https://www.rustore.ru/catalog/app/com.example.aitherapist" target="_blank" rel="noopener" data-goal="cta">Скачать в RuStore</a></div>
   </div>
 
   <h2 id="faq">Частые вопросы</h2>
@@ -286,7 +294,7 @@
  ]
 }
 </script>
-<script src="../assets/quiz.js?v=20260819" defer></script>
+<script src="../assets/quiz.js?v=20260831" defer></script>
 
 <!-- Yandex.Metrika -->
 <script type="text/javascript">

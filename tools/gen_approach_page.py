@@ -90,6 +90,7 @@ def build(a):
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../assets/fonts/spectral-600-cyrillic.woff2">
 <link rel="icon" type="image/webp" href="../assets/apps/aitherapist.webp">
 <link rel="stylesheet" href="../assets/legal.css?v={ASSET_V}">
+<script src="../assets/goals.js?v={ASSET_V}" defer></script>
 <script type="application/ld+json">
 {ld}
 </script>
@@ -127,7 +128,7 @@ def build(a):
 
   <div class="cta-box">
     <p>{cta}</p>
-    <a class="btn" href="../#chat">Попробовать бесплатно</a>
+    <div class="cta-btns"><a class="btn" href="../#chat">Попробовать бесплатно</a><a class="btn ghost" href="https://www.rustore.ru/catalog/app/com.example.aitherapist" target="_blank" rel="noopener" data-goal="cta">Скачать в RuStore</a></div>
   </div>
 
   <h2 id="faq">Частые вопросы</h2>
