@@ -1,6 +1,16 @@
 {
  "articles": [
   {
+   "title": "Ребёнок не хочет идти в школу: почему и что делать родителю",
+   "description": "Что стоит за отказом идти в школу: тревога, травля, страх ошибки или истощение. Как отличить от лени, что сказать ребёнку сегодня и когда нужен специалист.",
+   "image": "https://aitherapist.ru/assets/blog/rebenok-ne-hochet-v-shkolu-cover.webp",
+   "url": "https://aitherapist.ru/blog/rebenok-ne-hochet-v-shkolu.html",
+   "date": "2026-09-01",
+   "minutes": 18,
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Личные границы: 8 шагов, чтобы перестать всем угождать",
    "description": "Что такое личные границы, как понять, что их не хватает, чем граница отличается от ультиматума и 8 шагов, чтобы говорить «нет» без вины и скандалов.",
    "image": "https://aitherapist.ru/assets/blog/lichnye-granitsy-cover.webp",
@@ -176,7 +186,7 @@
    "image": "https://aitherapist.ru/assets/blog/navyazchivye-mysli-cover.webp",
    "url": "https://aitherapist.ru/blog/navyazchivye-mysli.html",
    "date": "2026-07-01",
-   "minutes": 10,
+   "minutes": 11,
    "w": 900,
    "h": 600
   },
