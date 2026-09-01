@@ -366,6 +366,36 @@ def main():
             warn('интент', 'заголовки начинаются с одного и того же («%s…»): %s'
                  % (key, ', '.join(sorted(fs))))
 
+    # --- статья дублирует инструмент, у которого есть своя страница ---
+    # 01.09.2026 из индекса выпала testy/trevozhnost-gad-7.html при 12 входящих
+    # и риске 13080: гид по тревоге давал сам опросник — пункты, подсчёт, пороги
+    # и ТУ ЖЕ картинку, что на странице теста. Общая картинка — самый надёжный
+    # признак: у выжившего PHQ-9 статья пересказывает симптомы своими словами.
+    illust = {}
+    for f, s in src.items():
+        top = f.split('/')[0]
+        if top not in ('blog', 'testy', 'podhody'):
+            continue
+        for m in re.findall(r'<img[^>]*src="([^"]+)"', s):
+            if 'mc.yandex.ru' in m or m.startswith('http') or 'apps/' in m:
+                continue
+            key = os.path.basename(m.split('?')[0])
+            # обложка и миниатюра, общие у статьи и теста, — это переиспользование
+            # иллюстрации, а не дубль инструмента: у выжившего PHQ-9 обложка общая
+            # со статьёй о депрессии. Ловим только содержательные схемы.
+            if key.endswith(('-cover.webp', '-thumb.webp')):
+                continue
+            illust.setdefault(key, set()).add(top)
+            illust.setdefault('#' + key, set()).add(f)
+    for key, tops in sorted(illust.items()):
+        if key.startswith('#'):
+            continue
+        if 'blog' in tops and ({'testy', 'podhody'} & tops):
+            warn('дубль инструмента',
+                 'картинка %s стоит и в статье, и на странице теста/подхода (%s) — '
+                 'признак, что статья заменяет собой страницу, а не отсылает к ней'
+                 % (key, ', '.join(sorted(illust['#' + key]))))
+
     # --- дубли title / description ---
     for label, d in (('title', titles), ('description', descs)):
         for v, fs in d.items():
