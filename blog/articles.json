@@ -1,6 +1,16 @@
 {
  "articles": [
   {
+   "title": "Ревность: почему возникает и как перестать себя мучить",
+   "description": "Почему возникает ревность, как перестать себя накручивать и где она переходит в контроль. Что делать прямо сейчас, 7 шагов, ревность к прошлому и ревность без причины.",
+   "image": "https://aitherapist.ru/assets/blog/revnost-cover.webp",
+   "url": "https://aitherapist.ru/blog/revnost.html",
+   "date": "2026-09-03",
+   "minutes": 14,
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Подростковая депрессия: как отличить от переходного возраста",
    "description": "Чем депрессия у подростка отличается от переходного возраста: признаки, которые принимают за характер, как поговорить, что делать родителю и когда нужен врач.",
    "image": "https://aitherapist.ru/assets/blog/podrostkovaya-depressiya-cover.webp",
@@ -116,7 +126,7 @@
    "image": "https://aitherapist.ru/assets/blog/trevozhnoe-rasstroystvo-cover.webp",
    "url": "https://aitherapist.ru/blog/trevoga-polnyy-gid.html",
    "date": "2026-07-28",
-   "minutes": 12,
+   "minutes": 13,
    "w": 820,
    "h": 470
   },
