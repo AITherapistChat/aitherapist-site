@@ -39,6 +39,12 @@ SKIP_DIRS = {".git", ".github", ".claude", "tools", "supabase", "yandex", "__pyc
 SKIP_FILES = {"CLAUDE.md", "BRIEF.md", "VK.md", ".gitignore", ".nojekyll", "CNAME",
               "assets/og-card.html"}
 
+# Живёт только в бакете, в репозитории этого нет и быть не должно (сто с лишним
+# мегабайт голосовых моделей в git не нужны). Заливается tools/upload_tts_models.py.
+# Без этой брони --prune снёс бы модели при ближайшем деплое сайта, и озвучка
+# в приложении молча перестала бы скачиваться.
+PRUNE_KEEP_PREFIXES = ("tts/",)
+
 # Content-Type для того, что mimetypes на Windows угадывает неверно или никак.
 TYPES = {
     ".webp": "image/webp",
@@ -130,7 +136,10 @@ def main() -> int:
         return print(f"Не читается бакет {BUCKET}: {e}") or 1
 
     changed = [rel for rel, p in sorted(local.items()) if remote.get(rel) != etag(p)]
-    extra = sorted(set(remote) - set(local)) if args.prune else []
+    extra = sorted(
+        rel for rel in set(remote) - set(local)
+        if not rel.startswith(PRUNE_KEEP_PREFIXES)
+    ) if args.prune else []
 
     print(f"Бакет {BUCKET}: в репо {len(local)} файлов, в бакете {len(remote)}.")
     print(f"К заливке {len(changed)}" + (f", к удалению {len(extra)}" if args.prune else ""))
