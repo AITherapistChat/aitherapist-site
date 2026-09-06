@@ -1,0 +1,136 @@
+{
+ "tests": [
+  {
+   "title": "Тест на ревность",
+   "description": "15 вопросов о мыслях, чувствах и поступках — и понятная граница между обычной ревностью и контролем.",
+   "image": "https://aitherapist.ru/assets/testy/revnost-cover.webp",
+   "url": "https://aitherapist.ru/testy/revnost.html",
+   "date": "2026-09-03",
+   "scale": "Три стороны ревности",
+   "questions": 15,
+   "minutes_text": "3 минуты",
+   "w": 1200,
+   "h": 630
+  },
+  {
+   "title": "Тест на тип личности (Большая пятёрка)",
+   "description": "20 вопросов и пять шкал вместо одного ярлыка из четырёх букв. Научная модель личности, а не типология из соцсетей.",
+   "image": "https://aitherapist.ru/assets/testy/big-five-cover.webp",
+   "url": "https://aitherapist.ru/testy/tip-lichnosti-big-five.html",
+   "date": "2026-08-21",
+   "scale": "Модель «Большая пятёрка», версия Mini-IPIP",
+   "questions": 20,
+   "minutes_text": "4 минуты",
+   "w": 1200,
+   "h": 630
+  },
+  {
+   "title": "Тест на употребление алкоголя (AUDIT)",
+   "description": "10 вопросов теста ВОЗ, результат сразу: где проходит граница между привычкой и риском — и что с этим делать.",
+   "image": "https://aitherapist.ru/assets/testy/alkogol-cover.webp",
+   "url": "https://aitherapist.ru/testy/alkogol-audit.html",
+   "date": "2026-08-10",
+   "scale": "Шкала AUDIT",
+   "questions": 10,
+   "minutes_text": "3 минуты",
+   "w": 1200,
+   "h": 630
+  },
+  {
+   "title": "Тест на постоянное беспокойство (шкала PSWQ)",
+   "description": "16 вопросов о том, как устроено ваше беспокойство: почему мысли не выключаются и что с этим делают.",
+   "image": "https://aitherapist.ru/assets/testy/bespokoystvo-cover.webp",
+   "url": "https://aitherapist.ru/testy/bespokoystvo-pswq.html",
+   "date": "2026-08-10",
+   "scale": "Шкала PSWQ",
+   "questions": 16,
+   "minutes_text": "3 минуты",
+   "w": 1200,
+   "h": 630
+  },
+  {
+   "title": "Что со мной: депрессия, тревога или стресс? (шкала DASS-21)",
+   "description": "Когда плохо, но непонятно что именно: 21 вопрос и три отдельных результата вместо одного общего «всё плохо».",
+   "image": "https://aitherapist.ru/assets/testy/dass-cover.webp",
+   "url": "https://aitherapist.ru/testy/depressiya-trevoga-stress-dass-21.html",
+   "date": "2026-08-10",
+   "scale": "Шкала DASS-21",
+   "questions": 21,
+   "minutes_text": "4 минуты",
+   "w": 1200,
+   "h": 630
+  },
+  {
+   "title": "Тест на детские травмы (шкала ACE)",
+   "description": "10 вопросов международной шкалы ACE о детском опыте, результат сразу и честная расшифровка — без запугивания прогнозами.",
+   "image": "https://aitherapist.ru/assets/testy/travmy-detstva-cover.webp",
+   "url": "https://aitherapist.ru/testy/travmy-detstva-ace.html",
+   "date": "2026-08-10",
+   "scale": "Шкала ACE",
+   "questions": 10,
+   "minutes_text": "3 минуты",
+   "w": 1200,
+   "h": 630
+  },
+  {
+   "title": "Тест на депрессию (шкала PHQ-9)",
+   "description": "9 вопросов международной шкалы PHQ-9, результат сразу и понятная расшифровка: что означает ваш балл и что с ним делать.",
+   "image": "https://aitherapist.ru/assets/testy/depressiya-cover.webp",
+   "url": "https://aitherapist.ru/testy/depressiya-phq-9.html",
+   "date": "2026-08-09",
+   "scale": "Шкала PHQ-9",
+   "questions": 9,
+   "minutes_text": "2 минуты",
+   "w": 1200,
+   "h": 630
+  },
+  {
+   "title": "Тест на самооценку (шкала Розенберга)",
+   "description": "10 утверждений классической шкалы самооценки Розенберга и понятная расшифровка результата.",
+   "image": "https://aitherapist.ru/assets/testy/samootsenka-cover.webp",
+   "url": "https://aitherapist.ru/testy/samootsenka-rozenberga.html",
+   "date": "2026-08-09",
+   "scale": "Шкала Розенберга",
+   "questions": 10,
+   "minutes_text": "3 минуты",
+   "w": 1200,
+   "h": 630
+  },
+  {
+   "title": "Тест на стресс: узнать свой уровень (шкала PSS-10)",
+   "description": "10 вопросов шкалы воспринимаемого стресса PSS-10 и понятная расшифровка: насколько высок ваш уровень стресса и что с ним делать.",
+   "image": "https://aitherapist.ru/assets/testy/stress-cover.webp",
+   "url": "https://aitherapist.ru/testy/stress-pss-10.html",
+   "date": "2026-08-09",
+   "scale": "Шкала PSS-10",
+   "questions": 10,
+   "minutes_text": "3 минуты",
+   "w": 1200,
+   "h": 630
+  },
+  {
+   "title": "Тест на эмоциональное выгорание (шкала CBI)",
+   "description": "6 вопросов Копенгагенской шкалы выгорания и понятная расшифровка: насколько вы истощены и что с этим делать.",
+   "image": "https://aitherapist.ru/assets/testy/vygoranie-cover.webp",
+   "url": "https://aitherapist.ru/testy/vygoranie-cbi.html",
+   "date": "2026-08-09",
+   "scale": "Копенгагенская шкала CBI",
+   "questions": 6,
+   "minutes_text": "2 минуты",
+   "w": 1200,
+   "h": 630
+  },
+  {
+   "title": "Тест на тревожность (шкала GAD-7)",
+   "description": "7 вопросов международной шкалы GAD-7, результат сразу и понятная расшифровка: что означает ваш балл и что с ним делать.",
+   "image": "https://aitherapist.ru/assets/testy/trevozhnost-cover.webp",
+   "url": "https://aitherapist.ru/testy/trevozhnost-gad-7.html",
+   "date": "2026-08-08",
+   "scale": "Шкала GAD-7",
+   "questions": 7,
+   "minutes_text": "2 минуты",
+   "w": 1200,
+   "h": 630
+  }
+ ]
+}
