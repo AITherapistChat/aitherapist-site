@@ -44,14 +44,22 @@ MITROKUN = "https://raw.githubusercontent.com/mitrokun/espeak-ng-data/main/espea
 # (ключ в бакете, откуда качать). Голоса — те же имена, что в PiperTTS.Voice.
 FILES = [
     ("espeak-ng-data.tar.bz2", f"{SHERPA}/espeak-ng-data.tar.bz2"),
-    ("vits-piper-ru_RU-irina-medium-int8.tar.bz2",
-     f"{SHERPA}/vits-piper-ru_RU-irina-medium-int8.tar.bz2"),
-    ("vits-piper-ru_RU-dmitri-medium-int8.tar.bz2",
-     f"{SHERPA}/vits-piper-ru_RU-dmitri-medium-int8.tar.bz2"),
-] + [
-    (f"ru_dict/{name}", f"{MITROKUN}/{name}")
-    for name in ("ru_dict", "phondata", "phondata-manifest", "phonindex", "phontab")
+    # Полные модели (fp32, 67 МБ), не int8: на сжатых слышно, как «съедаются»
+    # согласные. fp16 не брать — onnxruntime внутри sherpa их не грузит.
+    # ⚠️ Перепаковываются в .tar.gz (см. RECOMPRESS): ждёт человек не столько
+    # загрузку, сколько распаковку, а bzip2 на 67 МБ жуётся на телефоне минуты.
+    ("vits-piper-ru_RU-irina-medium.tar.gz",
+     f"{SHERPA}/vits-piper-ru_RU-irina-medium.tar.bz2"),
+    # Мужской голос выбран на слух из трёх (dmitri/denis/ruslan) — ruslan
+    ("vits-piper-ru_RU-ruslan-medium.tar.gz",
+     f"{SHERPA}/vits-piper-ru_RU-ruslan-medium.tar.bz2"),
 ]
+
+# 🚫 Правленый русский словарь (MITROKUN) отсюда УБРАН. Ставился ради ударений,
+# но на слух ломает произношение: пропадает мягкий знак, глотается «ш», местами
+# «т». phondata/phonindex/phontab — скомпилированные таблицы фонем, привязанные
+# к версии espeak-ng, под которую собирались; внутри sherpa своя сборка, и звуки
+# разъезжаются. Возвращать только вместе со сборкой espeak-ng той же версии.
 
 # Модели неизменны и версионированы именем — год кэша безопасен.
 CACHE = "public, max-age=31536000, immutable"
@@ -63,6 +71,20 @@ def download(url: str, dest: Path) -> None:
     with urllib.request.urlopen(req) as resp, dest.open("wb") as out:
         while chunk := resp.read(1 << 20):
             out.write(chunk)
+
+
+def recompress_bz2_to_gz(src: Path) -> Path:
+    """bzip2 -> gzip: файл чуть больше, зато распаковка на телефоне в разы быстрее."""
+    import bz2
+    import gzip
+    dst = src.with_suffix("")           # снимаем .bz2
+    dst = dst.with_name(dst.name + ".gz")
+    print(f"  перепаковываю в gzip: {dst.name}")
+    with bz2.open(src, "rb") as fin, gzip.open(dst, "wb", compresslevel=6) as fout:
+        while chunk := fin.read(1 << 20):
+            fout.write(chunk)
+    src.unlink()
+    return dst
 
 
 def main() -> int:
@@ -97,7 +119,12 @@ def main() -> int:
                 continue
             print(f"  up  {target}")
             local = Path(tmp) / key.replace("/", "_")
-            download(url, local)
+            if key.endswith(".tar.gz") and url.endswith(".tar.bz2"):
+                downloaded = local.with_name(local.name[:-3] + ".bz2")
+                download(url, downloaded)
+                local = recompress_bz2_to_gz(downloaded)
+            else:
+                download(url, local)
             s3.upload_file(str(local), BUCKET, target, ExtraArgs={
                 "ContentType": "application/octet-stream",
                 "CacheControl": CACHE,
