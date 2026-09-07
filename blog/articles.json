@@ -1,6 +1,16 @@
 {
  "articles": [
   {
+   "title": "Эмоциональная зависимость: почему не получается уйти",
+   "description": "Почему не получается уйти, даже когда плохо: 9 признаков эмоциональной зависимости, чем она отличается от любви и токсичных отношений, и 8 шагов, чтобы вернуть себе опору.",
+   "image": "https://aitherapist.ru/assets/blog/emotsionalnaya-zavisimost-cover.webp",
+   "url": "https://aitherapist.ru/blog/emotsionalnaya-zavisimost.html",
+   "date": "2026-09-07",
+   "minutes": 14,
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Ревность: почему возникает и как перестать себя мучить",
    "description": "Почему возникает ревность, как перестать себя накручивать и где она переходит в контроль. Что делать прямо сейчас, 7 шагов, ревность к прошлому и ревность без причины.",
    "image": "https://aitherapist.ru/assets/blog/revnost-cover.webp",
@@ -106,7 +116,7 @@
    "image": "https://aitherapist.ru/assets/blog/toksichnye-cover.webp",
    "url": "https://aitherapist.ru/blog/toksichnye-otnosheniya.html",
    "date": "2026-07-31",
-   "minutes": 22,
+   "minutes": 23,
    "w": 960,
    "h": 640
   },
