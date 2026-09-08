@@ -1,6 +1,18 @@
 {
  "tests": [
   {
+   "title": "Тест на ПТСР по шкале PCL-5",
+   "description": "20 вопросов шкалы PCL-5: как отличить нормальное восстановление после тяжёлого события от ПТСР — и что делать с результатом.",
+   "image": "https://aitherapist.ru/assets/testy/ptsr-cover.webp",
+   "url": "https://aitherapist.ru/testy/ptsr-pcl-5.html",
+   "date": "2026-09-08",
+   "scale": "Шкала PCL-5",
+   "questions": 20,
+   "minutes_text": "5 минут",
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Тест на ревность",
    "description": "15 вопросов о мыслях, чувствах и поступках — и понятная граница между обычной ревностью и контролем.",
    "image": "https://aitherapist.ru/assets/testy/revnost-cover.webp",
