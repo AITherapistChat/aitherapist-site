@@ -1,6 +1,18 @@
 {
  "tests": [
   {
+   "title": "Тест на СДВГ у взрослых (шкала ASRS)",
+   "description": "Шесть вопросов скрининговой шкалы ASRS. Результат сразу — с объяснением, что он значит и, главное, чего не значит.",
+   "image": "https://aitherapist.ru/assets/testy/sdvg-cover.webp",
+   "url": "https://aitherapist.ru/testy/sdvg-asrs.html",
+   "date": "2026-09-09",
+   "scale": "Шкала ASRS v1.1",
+   "questions": 6,
+   "minutes_text": "2 минуты",
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Тест на ПТСР по шкале PCL-5",
    "description": "20 вопросов шкалы PCL-5: как отличить нормальное восстановление после тяжёлого события от ПТСР — и что делать с результатом.",
    "image": "https://aitherapist.ru/assets/testy/ptsr-cover.webp",

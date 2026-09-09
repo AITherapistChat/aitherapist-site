@@ -1,6 +1,16 @@
 {
  "articles": [
   {
+   "title": "СДВГ у взрослых: 12 признаков и что с этим делать",
+   "description": "Как проявляется СДВГ у взрослых: 12 признаков, отличие от выгорания, депрессии и тревоги, диагностика и лечение — с поправкой на то, что доступно в России.",
+   "image": "https://aitherapist.ru/assets/blog/sdvg-u-vzroslyh-cover.webp",
+   "url": "https://aitherapist.ru/blog/sdvg-u-vzroslyh.html",
+   "date": "2026-09-09",
+   "minutes": 23,
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "ПТСР: 12 признаков, почему возникает и как его лечат",
    "description": "Что такое ПТСР: 12 признаков и проявлений, после чего оно развивается, чем отличается от нормальной реакции, как ставят диагноз и что лечит — КПТ, EMDR, лекарства.",
    "image": "https://aitherapist.ru/assets/blog/ptsr-cover.webp",
@@ -176,7 +186,7 @@
    "image": "https://aitherapist.ru/assets/blog/apatiya-cover.webp",
    "url": "https://aitherapist.ru/blog/apatiya.html",
    "date": "2026-07-18",
-   "minutes": 10,
+   "minutes": 11,
    "w": 531,
    "h": 391
   },
