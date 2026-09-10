@@ -1,6 +1,16 @@
 {
  "articles": [
   {
+   "title": "ОКР: как устроено обсессивно-компульсивное расстройство",
+   "description": "Чем ОКР отличается от любви к порядку, какие бывают виды и скрытые ритуалы, что помогает по доказательствам и с чего начать, если ритуалы съедают день.",
+   "image": "https://aitherapist.ru/assets/blog/okr-cover.webp",
+   "url": "https://aitherapist.ru/blog/okr-obsessivno-kompulsivnoe-rasstroystvo.html",
+   "date": "2026-09-10",
+   "minutes": 21,
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Психосоматика: что из этого правда, а что миф",
    "description": "Как стресс на самом деле влияет на тело, почему симптомы настоящие, даже когда анализы в норме, и чем доказанная психосоматика отличается от таблиц «болезнь — обида».",
    "image": "https://aitherapist.ru/assets/blog/psihosomatika-cover.webp",
@@ -116,7 +126,7 @@
    "image": "https://aitherapist.ru/assets/blog/alkogol-i-trevoga-cover.webp",
    "url": "https://aitherapist.ru/blog/alkogol-i-trevoga.html",
    "date": "2026-08-19",
-   "minutes": 12,
+   "minutes": 13,
    "w": 1200,
    "h": 630
   },
