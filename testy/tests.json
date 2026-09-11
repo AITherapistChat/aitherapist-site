@@ -1,6 +1,18 @@
 {
  "tests": [
   {
+   "title": "Тест на одиночество (шкала UCLA)",
+   "description": "20 вопросов самой используемой в мире шкалы одиночества. Результат сразу — с честным объяснением, что он значит и чего не значит.",
+   "image": "https://aitherapist.ru/assets/testy/odinochestvo-cover.webp",
+   "url": "https://aitherapist.ru/testy/odinochestvo-ucla.html",
+   "date": "2026-09-11",
+   "scale": "Шкала UCLA, версия 3",
+   "questions": 20,
+   "minutes_text": "4 минуты",
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Тест на СДВГ у взрослых (шкала ASRS)",
    "description": "Шесть вопросов скрининговой шкалы ASRS. Результат сразу — с объяснением, что он значит и, главное, чего не значит.",
    "image": "https://aitherapist.ru/assets/testy/sdvg-cover.webp",
