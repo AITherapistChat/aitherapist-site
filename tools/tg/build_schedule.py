@@ -46,6 +46,22 @@ ANCHORS = {
     'testy/stress-pss-10.html':          'Пройти PSS-10 — бесплатно, без регистрации',
     'testy/samootsenka-rozenberga.html': 'Пройти шкалу Розенберга — бесплатно, без регистрации',
     'testy/depressiya-trevoga-stress-dass-21.html': 'Пройти DASS-21 — бесплатно, без регистрации',
+    'blog/revnost.html':                 'Разбор целиком — про ревность',
+    'blog/psihosomatika.html':           'Разбор целиком — что в психосоматике правда, а что миф',
+    'blog/chuvstvo-viny.html':           'Разбор целиком — про чувство вины',
+    'testy/sdvg-asrs.html':              'Пройти тест ASRS — бесплатно, без регистрации',
+    'blog/socialnaya-trevozhnost.html':  'Разбор целиком — про социальную тревожность',
+    'blog/strah-smerti.html':            'Разбор целиком — про страх смерти',
+    'blog/lichnye-granitsy.html':        'Разбор целиком — про личные границы',
+    'testy/trevozhnost-gad-7.html':      'Пройти GAD-7 — бесплатно, без регистрации',
+    'blog/emotsionalnaya-zavisimost.html': 'Разбор целиком — про эмоциональную зависимость',
+    'blog/poslerodovaya-depressiya.html': 'Разбор целиком — про послеродовую депрессию',
+    'podhody/shema-terapiya.html':       'Подробно про схема-терапию',
+    'testy/vygoranie-cbi.html':          'Пройти тест на выгорание — бесплатно, без регистрации',
+    'blog/okr-obsessivno-kompulsivnoe-rasstroystvo.html': 'Разбор целиком — про ОКР',
+    'blog/podrostkovaya-depressiya.html': 'Разбор целиком — про подростковую депрессию',
+    'testy/bespokoystvo-pswq.html':      'Пройти шкалу PSWQ — бесплатно, без регистрации',
+    'testy/tip-lichnosti-big-five.html': 'Пройти тест «Большая пятёрка» — бесплатно, без регистрации',
 }
 
 URL_RE = re.compile(r'(?:^|\s)aitherapist\.ru/(\S+?)(?=[\s]|$)')

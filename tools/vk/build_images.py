@@ -33,6 +33,24 @@ PLAN = {
     'osennyaya':         ('blog/osennyaya-depressiya-cover.webp', '59.png'),
     'cft':               ('podhody/cft-cover.webp',               '89.png'),
     'act':               ('podhody/act-cover.webp',               '85.png'),
+
+    # пачка 20.09–16.10.2026
+    'revnost':           ('blog/revnost-cover.webp',              None),
+    'psihosomatika':     ('blog/psihosomatika-cover.webp',        None),
+    'vina-pirog':        ('blog/chuvstvo-viny-otvetstvennost.webp', None),
+    'test-asrs':         ('testy/sdvg-cover.webp',                None),
+    'socialnaya':        ('blog/socialnaya-trevozhnost-cover.webp', None),
+    'strah-smerti':      ('blog/strah-smerti-cover.webp',         None),
+    'granitsy':          ('blog/lichnye-granitsy-cover.webp',     None),
+    'test-gad7':         ('testy/trevozhnost-cover.webp',         None),
+    'zavisimost':        ('blog/emotsionalnaya-zavisimost-cover.webp', None),
+    'poslerodovaya':     ('blog/poslerodovaya-depressiya-cover.webp', '229.png'),
+    'shema':             ('podhody/shema-terapiya-cover.webp',    None),
+    'test-cbi':          ('testy/vygoranie-cover.webp',           None),
+    'okr':               ('blog/okr-cover.webp',                  None),
+    'podrostki':         ('blog/podrostkovaya-depressiya-cover.webp', None),
+    'vremya-trevogi':    ('testy/bespokoystvo-cover.webp',        None),
+    'test-big5':         ('testy/big-five-cover.webp',            None),
 }
 
 MAXW = 1500
@@ -71,6 +89,7 @@ def prepare(key):
 if __name__ == '__main__':
     import sys
     sys.stdout.reconfigure(encoding='utf-8')
-    for k in PLAN:
+    keys = sys.argv[1:] or list(PLAN)
+    for k in keys:
         p, size, how = prepare(k)
         print('%-18s %-12s %s' % (k, '%dx%d' % size, how))
