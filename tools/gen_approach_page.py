@@ -19,6 +19,7 @@ import io, json, os, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from gen_test_page import METRIKA, strip_tags, SITE, ASSET_V  # noqa: E402
+from cmp_tables import label_tables  # noqa: E402
 
 OUT = "podhody"
 
@@ -171,7 +172,7 @@ def write(items):
     if not os.path.isdir(OUT):
         os.makedirs(OUT)
     for a in items:
-        io.open(os.path.join(OUT, a["slug"]), "w", encoding="utf-8", newline="\n").write(build(a))
+        io.open(os.path.join(OUT, a["slug"]), "w", encoding="utf-8", newline="\n").write(label_tables(build(a)))
         print("sobrano:", OUT + "/" + a["slug"])
 
 

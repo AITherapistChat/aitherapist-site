@@ -22,8 +22,8 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../assets/fonts/manrope-400-800-cyrillic.woff2">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../assets/fonts/spectral-600-cyrillic.woff2">
 <link rel="icon" type="image/webp" href="../assets/apps/aitherapist.webp">
-<link rel="stylesheet" href="../assets/legal.css?v=20260907">
-<script src="../assets/goals.js?v=20260907" defer></script>
+<link rel="stylesheet" href="../assets/legal.css?v=20260913">
+<script src="../assets/goals.js?v=20260913" defer></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -170,14 +170,14 @@
   <p>Чего тест не делает: он не диагностирует тревожное расстройство и не отличает рабочую перегрузку от последствий утраты. Это термометр, а не разбор причин. Разбор причин рабочей перегрузки — в статье о <a href="../blog/stress-na-rabote.html">стрессе на работе</a>.</p>
 
   <h2 id="rasshifrovka">Расшифровка результата</h2>
-  <table class="cmp">
+  <table class="cmp stack">
     <thead>
-      <tr><th>Баллы</th><th>Уровень стресса</th><th>Что это обычно значит</th></tr>
+      <tr class="cmp-head"><th>Баллы</th><th>Уровень стресса</th><th>Что это обычно значит</th></tr>
     </thead>
     <tbody>
-      <tr><td><strong>0–13</strong></td><td>Низкий</td><td>Нагрузка ощущается управляемой, ресурсов пока хватает</td></tr>
-      <tr><td><strong>14–26</strong></td><td>Умеренный</td><td>Обычный уровень для взрослого человека; стоит следить, чтобы не рос</td></tr>
-      <tr><td><strong>27–40</strong></td><td>Высокий</td><td>Ощущение потери контроля; риск бессонницы, выгорания и телесных симптомов</td></tr>
+      <tr><td data-label="Баллы"><strong>0–13</strong></td><td data-label="Уровень стресса">Низкий</td><td data-label="Что это обычно значит">Нагрузка ощущается управляемой, ресурсов пока хватает</td></tr>
+      <tr><td data-label="Баллы"><strong>14–26</strong></td><td data-label="Уровень стресса">Умеренный</td><td data-label="Что это обычно значит">Обычный уровень для взрослого человека; стоит следить, чтобы не рос</td></tr>
+      <tr><td data-label="Баллы"><strong>27–40</strong></td><td data-label="Уровень стресса">Высокий</td><td data-label="Что это обычно значит">Ощущение потери контроля; риск бессонницы, выгорания и телесных симптомов</td></tr>
     </tbody>
   </table>
   <p>Важная оговорка: у PSS-10 нет клинического порога, после которого ставят диагноз, — потому что «расстройства воспринимаемого стресса» не существует. Шкалу используют, чтобы сравнить себя с собой же месяц назад и увидеть направление движения. Один замер говорит мало; два замера с интервалом в месяц — уже кое-что.</p>
@@ -197,15 +197,15 @@
   <h2 id="stress-trevoga">Стресс, тревога и выгорание — это три разные вещи</h2>
   <p>Слова используют как синонимы, и из-за этого люди годами меняют не то. Разница проходит по источнику и по тому, что происходит, когда источник исчезает.</p>
 
-  <table class="cmp">
+  <table class="cmp stack">
     <thead>
-      <tr><th></th><th>Стресс</th><th>Тревога</th><th>Выгорание</th></tr>
+      <tr class="cmp-head"><th></th><th>Стресс</th><th>Тревога</th><th>Выгорание</th></tr>
     </thead>
     <tbody>
-      <tr><td><strong>Откуда</strong></td><td>Конкретная нагрузка здесь и сейчас</td><td>Источник размыт или в будущем</td><td>Накопленное истощение от долгой нагрузки</td></tr>
-      <tr><td><strong>Если убрать причину</strong></td><td>Отпускает за дни</td><td>Находит новый повод</td><td>Не отпускает: восстановление занимает месяцы</td></tr>
-      <tr><td><strong>Главное ощущение</strong></td><td>«Не справляюсь с объёмом»</td><td>«Сейчас что-то случится»</td><td>«Мне всё равно»</td></tr>
-      <tr><td><strong>Чем измерить</strong></td><td>PSS-10, этот тест</td><td><a href="trevozhnost-gad-7.html">GAD-7</a></td><td><a href="vygoranie-cbi.html">CBI</a></td></tr>
+      <tr><td><strong>Откуда</strong></td><td data-label="Стресс">Конкретная нагрузка здесь и сейчас</td><td data-label="Тревога">Источник размыт или в будущем</td><td data-label="Выгорание">Накопленное истощение от долгой нагрузки</td></tr>
+      <tr><td><strong>Если убрать причину</strong></td><td data-label="Стресс">Отпускает за дни</td><td data-label="Тревога">Находит новый повод</td><td data-label="Выгорание">Не отпускает: восстановление занимает месяцы</td></tr>
+      <tr><td><strong>Главное ощущение</strong></td><td data-label="Стресс">«Не справляюсь с объёмом»</td><td data-label="Тревога">«Сейчас что-то случится»</td><td data-label="Выгорание">«Мне всё равно»</td></tr>
+      <tr><td><strong>Чем измерить</strong></td><td data-label="Стресс">PSS-10, этот тест</td><td data-label="Тревога"><a href="trevozhnost-gad-7.html">GAD-7</a></td><td data-label="Выгорание"><a href="vygoranie-cbi.html">CBI</a></td></tr>
     </tbody>
   </table>
 
@@ -326,7 +326,7 @@
  ]
 }
 </script>
-<script src="../assets/quiz.js?v=20260907" defer></script>
+<script src="../assets/quiz.js?v=20260913" defer></script>
 
 <!-- Yandex.Metrika -->
 <script type="text/javascript">

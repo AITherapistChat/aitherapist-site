@@ -465,9 +465,22 @@ footer a:hover{color:var(--green); border:0}
   .opts{grid-template-columns:1fr}
   .res .score{font-size:52px}
   .res .lvl{font-size:23px}
-  /* таблицы на телефоне листаются вбок, страница не едет */
+  /* таблицы на телефоне листаются вбок, страница не едет —
+     это запасной вариант для таблиц без подписей (без класса stack) */
   .cmp{display:block; overflow-x:auto; white-space:nowrap; font-size:14.5px}
   .cmp td, .cmp th{white-space:normal; min-width:150px}
+  /* таблица со подписями колонок (tools/cmp_tables.py) — каждая строка карточкой:
+     первая ячейка — заголовок, остальные с подписью колонки над текстом.
+     Листание вбок ничем не было видно — читатель видел обрезанный текст. */
+  .cmp.stack{display:block; overflow:visible; white-space:normal; font-size:15px}
+  .cmp.stack thead, .cmp.stack tbody, .cmp.stack tr, .cmp.stack td{display:block; width:auto}
+  .cmp.stack .cmp-head{display:none}
+  .cmp.stack tr{border-top:1px solid var(--rule-soft); padding:14px 0 6px}
+  .cmp.stack thead + tbody tr:first-child, .cmp.stack tr.cmp-head + tr{border-top:2px solid var(--ink)}
+  .cmp.stack td{min-width:0; border:0; padding:0 0 10px; white-space:normal}
+  .cmp.stack td:first-child{font-size:16px}
+  .cmp.stack td[data-label]::before{content:attr(data-label); display:block; margin-bottom:3px;
+    font-size:var(--fs-micro); font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-faint)}
   footer .row{flex-direction:column; gap:16px}
 }
 @media (max-width:430px){

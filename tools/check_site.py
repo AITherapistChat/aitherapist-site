@@ -204,6 +204,13 @@ def main():
         if len(re.findall(r'<h1[\s>]', s)) != 1:
             err(f, 'h1 должен быть ровно один, найдено %d' % len(re.findall(r'<h1[\s>]', s)))
 
+        # --- таблицы на телефоне: без подписей колонок .cmp не складывается в карточки ---
+        # 13.09.2026: широкие таблицы на телефоне листались вбок, но выглядели обрезанными.
+        # Подписи ставит tools/cmp_tables.py (генераторы тестов и подходов — сами).
+        bare = [t for t in re.findall(r'<table class="(cmp[^"]*)"', s) if 'stack' not in t.split()]
+        if bare:
+            err(f, '%d таблиц .cmp без подписей для телефона — python tools/cmp_tables.py' % len(bare))
+
         # --- og:image: ширина и наличие файла ---
         mo = re.search(r'property="og:image"\s+content="([^"]+)"', s)
         if mo and have_pil:

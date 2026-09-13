@@ -12,7 +12,10 @@
 
 Запуск:  python tools/gen_test_page.py
 """
-import io, json, os, re
+import io, json, os, re, sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from cmp_tables import label_tables  # noqa: E402
 
 SITE = "https://aitherapist.ru"
 OUT = "testy"
@@ -31,7 +34,7 @@ FOOTER_LINKS = [
 # ⚠️ Меняя его, менять и в 31 странице, написанной руками (блог, юр-страницы,
 # главная, testy/trevozhnost-gad-7.html) — check_site.py следит, чтобы версия
 # на всём сайте была одна.
-ASSET_V = '20260907'
+ASSET_V = '20260913'
 
 CRISIS = ('Опросник не ставит диагноз и не заменяет консультацию. Если вам прямо сейчас '
           'невыносимо тяжело или появляются мысли о том, чтобы причинить себе вред, позвоните: '
@@ -218,7 +221,7 @@ def write(tests):
     if not os.path.isdir(OUT):
         os.makedirs(OUT)
     for t in tests:
-        io.open(os.path.join(OUT, t["slug"]), "w", encoding="utf-8", newline="\n").write(build(t))
+        io.open(os.path.join(OUT, t["slug"]), "w", encoding="utf-8", newline="\n").write(label_tables(build(t)))
         print("собрано:", OUT + "/" + t["slug"])
 
 
