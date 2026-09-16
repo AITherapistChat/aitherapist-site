@@ -13,6 +13,42 @@
    "h": 630
   },
   {
+   "title": "Тест на ОКР: есть ли у вас признаки навязчивостей",
+   "description": "15 вопросов о навязчивых мыслях и ритуалах: где заканчивается привычка к порядку и начинаются признаки ОКР.",
+   "image": "https://aitherapist.ru/assets/testy/okr-cover.webp",
+   "url": "https://aitherapist.ru/testy/okr.html",
+   "date": "2026-09-16",
+   "scale": "Самопроверка на признаки ОКР",
+   "questions": 15,
+   "minutes_text": "3 минуты",
+   "w": 1200,
+   "h": 630
+  },
+  {
+   "title": "Тест на ПРЛ: есть ли у вас черты пограничного расстройства",
+   "description": "15 вопросов о перепадах эмоций, отношениях и отношении к себе — и честный разбор, что результат значит, а чего не значит.",
+   "image": "https://aitherapist.ru/assets/testy/prl-cover.webp",
+   "url": "https://aitherapist.ru/testy/prl.html",
+   "date": "2026-09-16",
+   "scale": "Самопроверка на пограничные черты",
+   "questions": 15,
+   "minutes_text": "3 минуты",
+   "w": 1200,
+   "h": 630
+  },
+  {
+   "title": "Тест на РПП: есть ли у вас признаки расстройства пищевого поведения",
+   "description": "15 вопросов об отношениях с едой, весом и телом — и разбор, когда это уже не диета, а расстройство пищевого поведения.",
+   "image": "https://aitherapist.ru/assets/testy/rpp-cover.webp",
+   "url": "https://aitherapist.ru/testy/rpp.html",
+   "date": "2026-09-16",
+   "scale": "Самопроверка на признаки РПП",
+   "questions": 15,
+   "minutes_text": "3 минуты",
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Тест на одиночество (шкала UCLA)",
    "description": "20 вопросов самой используемой в мире шкалы одиночества. Результат сразу — с честным объяснением, что он значит и чего не значит.",
    "image": "https://aitherapist.ru/assets/testy/odinochestvo-cover.webp",
