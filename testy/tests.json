@@ -1,6 +1,18 @@
 {
  "tests": [
   {
+   "title": "Тест на гнев и раздражительность (шкала IPIP)",
+   "description": "Десять утверждений открытой научной шкалы IPIP: насколько легко вы злитесь и раздражаетесь. Результат сразу, с честным объяснением, что он значит.",
+   "image": "https://aitherapist.ru/assets/testy/gnev-cover.webp",
+   "url": "https://aitherapist.ru/testy/gnev-ipip.html",
+   "date": "2026-09-16",
+   "scale": "Шкала гнева IPIP-NEO (N2)",
+   "questions": 10,
+   "minutes_text": "2 минуты",
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Тест на одиночество (шкала UCLA)",
    "description": "20 вопросов самой используемой в мире шкалы одиночества. Результат сразу — с честным объяснением, что он значит и чего не значит.",
    "image": "https://aitherapist.ru/assets/testy/odinochestvo-cover.webp",
