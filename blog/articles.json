@@ -1,6 +1,16 @@
 {
  "articles": [
   {
+   "title": "Вспышки гнева: как перестать срываться на близких",
+   "description": "Почему накрывает злость, что делать в первые минуты, как перестать срываться на близких и когда вспышки гнева — симптом депрессии, СДВГ или ПТСР.",
+   "image": "https://aitherapist.ru/assets/blog/vspyshki-gneva-cover.webp",
+   "url": "https://aitherapist.ru/blog/vspyshki-gneva.html",
+   "date": "2026-09-16",
+   "minutes": 24,
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Послеродовая депрессия: как узнать и что делать",
    "description": "Как отличить послеродовую депрессию от бэби-блюза, что значат страшные мысли о ребёнке, как её лечат при грудном вскармливании и когда нужна срочная помощь.",
    "image": "https://aitherapist.ru/assets/blog/poslerodovaya-depressiya-cover.webp",
