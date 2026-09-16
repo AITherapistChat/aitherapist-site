@@ -1,6 +1,16 @@
 {
  "articles": [
   {
+   "title": "РПП: как понять, что отношения с едой стали проблемой",
+   "description": "Что такое РПП, как распознать симптомы анорексии, булимии и компульсивного переедания, почему возникает расстройство, чем оно опасно и как его лечат.",
+   "image": "https://aitherapist.ru/assets/blog/rpp-cover.webp",
+   "url": "https://aitherapist.ru/blog/rasstroystva-pishchevogo-povedeniya.html",
+   "date": "2026-09-16",
+   "minutes": 20,
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Вспышки гнева: как перестать срываться на близких",
    "description": "Почему накрывает злость, что делать в первые минуты, как перестать срываться на близких и когда вспышки гнева — симптом депрессии, СДВГ или ПТСР.",
    "image": "https://aitherapist.ru/assets/blog/vspyshki-gneva-cover.webp",
@@ -126,7 +136,7 @@
    "image": "https://aitherapist.ru/assets/blog/lichnye-granitsy-cover.webp",
    "url": "https://aitherapist.ru/blog/lichnye-granitsy.html",
    "date": "2026-08-29",
-   "minutes": 18,
+   "minutes": 19,
    "w": 1200,
    "h": 630
   },
@@ -286,7 +296,7 @@
    "image": "https://aitherapist.ru/assets/blog/stress-cover.webp",
    "url": "https://aitherapist.ru/blog/stress-na-rabote.html",
    "date": "2026-07-02",
-   "minutes": 9,
+   "minutes": 10,
    "w": 960,
    "h": 640
   },
