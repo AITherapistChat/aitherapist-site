@@ -1,6 +1,16 @@
 {
  "articles": [
   {
+   "title": "ПРЛ: как понять, что дело в пограничном расстройстве",
+   "description": "ПРЛ — расстройство, при котором нестабильны эмоции, отношения и образ себя. Признаки и 9 критериев, причины, отличия от БАР и ПТСР, диагностика, лечение и прогноз.",
+   "image": "https://aitherapist.ru/assets/blog/prl-cover.webp",
+   "url": "https://aitherapist.ru/blog/pogranichnoe-rasstroystvo-lichnosti.html",
+   "date": "2026-09-20",
+   "minutes": 26,
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "РПП: как понять, что отношения с едой стали проблемой",
    "description": "Что такое РПП, как распознать симптомы анорексии, булимии и компульсивного переедания, почему возникает расстройство, чем оно опасно и как его лечат.",
    "image": "https://aitherapist.ru/assets/blog/rpp-cover.webp",
@@ -96,7 +106,7 @@
    "image": "https://aitherapist.ru/assets/blog/emotsionalnaya-zavisimost-cover.webp",
    "url": "https://aitherapist.ru/blog/emotsionalnaya-zavisimost.html",
    "date": "2026-09-07",
-   "minutes": 14,
+   "minutes": 15,
    "w": 1200,
    "h": 630
   },
@@ -216,7 +226,7 @@
    "image": "https://aitherapist.ru/assets/blog/depressiya-cover.webp",
    "url": "https://aitherapist.ru/blog/depressiya-priznaki-chto-delat.html",
    "date": "2026-07-29",
-   "minutes": 19,
+   "minutes": 20,
    "w": 960,
    "h": 640
   },
