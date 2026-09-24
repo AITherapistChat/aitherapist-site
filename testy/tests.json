@@ -1,6 +1,18 @@
 {
  "tests": [
   {
+   "title": "Тест на кризис среднего возраста (шкала CMCM)",
+   "description": "Одиннадцать утверждений научной шкалы CMCM о сомнениях, сожалениях и желании перемен в середине жизни. Результат сразу, с честным объяснением, что он значит.",
+   "image": "https://aitherapist.ru/assets/testy/krizis-cover.webp",
+   "url": "https://aitherapist.ru/testy/krizis-srednego-vozrasta-cmcm.html",
+   "date": "2026-09-24",
+   "scale": "Краткая шкала кризиса среднего возраста (CMCM)",
+   "questions": 11,
+   "minutes_text": "3 минуты",
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Тест на гнев и раздражительность (шкала IPIP)",
    "description": "Десять утверждений открытой научной шкалы IPIP: насколько легко вы злитесь и раздражаетесь. Результат сразу, с честным объяснением, что он значит.",
    "image": "https://aitherapist.ru/assets/testy/gnev-cover.webp",
