@@ -13,6 +13,18 @@
    "h": 630
   },
   {
+   "title": "Тест на удовлетворённость жизнью (шкала Динера SWLS)",
+   "description": "Пять утверждений самой известной в мире шкалы удовлетворённости жизнью. Результат сразу, с расшифровкой автора шкалы Эда Динера.",
+   "image": "https://aitherapist.ru/assets/testy/udovletvorennost-cover.webp",
+   "url": "https://aitherapist.ru/testy/udovletvorennost-zhiznyu-swls.html",
+   "date": "2026-09-24",
+   "scale": "Шкала удовлетворённости жизнью Динера (SWLS)",
+   "questions": 5,
+   "minutes_text": "1 минута",
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Тест на гнев и раздражительность (шкала IPIP)",
    "description": "Десять утверждений открытой научной шкалы IPIP: насколько легко вы злитесь и раздражаетесь. Результат сразу, с честным объяснением, что он значит.",
    "image": "https://aitherapist.ru/assets/testy/gnev-cover.webp",
