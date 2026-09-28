@@ -1,6 +1,16 @@
 {
  "articles": [
   {
+   "title": "Как простить обиду и не делать вид, что ничего не было",
+   "description": "Почему обида не проходит годами и как её отпустить, даже если человек не извинился: что значит простить, 8 шагов, упражнение и что делать с обидчивостью.",
+   "image": "https://aitherapist.ru/assets/blog/kak-prostit-obidu-cover.webp",
+   "url": "https://aitherapist.ru/blog/kak-prostit-obidu.html",
+   "date": "2026-09-28",
+   "minutes": 21,
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Кризис среднего возраста: что в нём правда, а что миф",
    "description": "Кризис среднего возраста: когда начинается, признаки у мужчин и женщин, чем отличается от депрессии и выгорания и что помогает пройти его без необратимых решений.",
    "image": "https://aitherapist.ru/assets/blog/krizis-srednego-vozrasta-cover.webp",
@@ -86,7 +96,7 @@
    "image": "https://aitherapist.ru/assets/blog/psihosomatika-cover.webp",
    "url": "https://aitherapist.ru/blog/psihosomatika.html",
    "date": "2026-09-09",
-   "minutes": 17,
+   "minutes": 18,
    "w": 1200,
    "h": 630
   },
