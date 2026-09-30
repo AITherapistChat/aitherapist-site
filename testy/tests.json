@@ -1,6 +1,18 @@
 {
  "tests": [
   {
+   "title": "Тест на тип привязанности в отношениях",
+   "description": "17 вопросов о том, как вы ведёте себя в близких отношениях, — и честный разбор результата по двум шкалам вместо одного ярлыка.",
+   "image": "https://aitherapist.ru/assets/testy/tip-privyazannosti-cover.webp",
+   "url": "https://aitherapist.ru/testy/tip-privyazannosti.html",
+   "date": "2026-09-30",
+   "scale": "Самопроверка по двум шкалам привязанности",
+   "questions": 17,
+   "minutes_text": "3 минуты",
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Тест на кризис среднего возраста (шкала CMCM)",
    "description": "Одиннадцать утверждений научной шкалы CMCM о сомнениях, сожалениях и желании перемен в середине жизни. Результат сразу, с честным объяснением, что он значит.",
    "image": "https://aitherapist.ru/assets/testy/krizis-cover.webp",
