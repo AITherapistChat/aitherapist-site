@@ -35,7 +35,14 @@
         "max":42,
         "ticks":"<span>0</span>…",
         "levels":[…], "scale":[…]}
-     ]
+     ],
+     "profile": {                     // необязательно, только вместе с subscales:
+       "subs":[0,1], "cut":[16,16],   //   итоговая область по двум подшкалам
+       "band":2,                      //   (тип привязанности). Ключ areas — "00",
+       "title":"…",                   //   "10", "01", "11": выше ли сумма порога.
+       "areas":{"00":{"name":"…","html":"…"}, …},
+       "near":"<p>…</p>"              //   оговорка, если сумма близко к порогу
+     }
    }
 
    Ответы никуда не отправляются: подсчёт целиком в браузере.
@@ -167,10 +174,25 @@
                '</div>';
       }).join("");
       var mScales = multi.querySelectorAll(".scale");
-      SUBS.forEach(function (s, k) {
-        var sum = s.items.reduce(function (a, i) { return a + pts[i]; }, 0) * (s.mult || 1);
-        light(mScales[k], s.levels, levelFor(s.levels, sum));
+      var sums = SUBS.map(function (s) {
+        return s.items.reduce(function (a, i) { return a + pts[i]; }, 0) * (s.mult || 1);
       });
+      SUBS.forEach(function (s, k) { light(mScales[k], s.levels, levelFor(s.levels, sums[k])); });
+
+      /* Профиль по двум подшкалам (тип привязанности: тревога × избегание).
+         Ключ области — "00"/"10"/"01"/"11": выше ли каждая сумма своего порога.
+         Если хоть одна сумма в пределах band от порога, добавляется оговорка:
+         профиль смешанный, а не чистый тип. */
+      var P = cfg.profile;
+      if (P) {
+        var key = P.subs.map(function (k, j) { return sums[k] > P.cut[j] ? "1" : "0"; }).join("");
+        var area = P.areas[key];
+        var near = P.subs.some(function (k, j) { return Math.abs(sums[k] - P.cut[j]) <= (P.band || 0); });
+        multi.insertAdjacentHTML("afterbegin",
+          '<div class="sub"><div class="sub-h"><b>' + P.title + '</b></div>' +
+          '<div class="lvl">' + area.name + '</div>' +
+          '<div class="sub-t">' + area.html + (near && P.near ? P.near : "") + '</div></div>');
+      }
       document.getElementById("res-text").innerHTML = alertHtml;
     } else {
       var score = pts.reduce(function (a, b) { return a + b; }, 0) + OFFSET;
