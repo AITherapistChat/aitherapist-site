@@ -1,6 +1,16 @@
 {
  "articles": [
   {
+   "title": "Газлайтинг: когда вас убеждают, что вы всё придумали",
+   "description": "Газлайтинг простыми словами: чем он отличается от обычного спора, 15 типичных фраз газлайтера, признаки, что на вас давят, и как вернуть доверие к себе.",
+   "image": "https://aitherapist.ru/assets/blog/gazlayting-cover.webp",
+   "url": "https://aitherapist.ru/blog/gazlayting.html",
+   "date": "2026-10-01",
+   "minutes": 21,
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Типы привязанности: почему в отношениях повторяется один и тот же сценарий",
    "description": "Надёжный, тревожный, избегающий и тревожно-избегающий тип привязанности: признаки в отношениях, как определить свой тип и можно ли его изменить.",
    "image": "https://aitherapist.ru/assets/blog/tipy-privyazannosti-cover.webp",
@@ -226,7 +236,7 @@
    "image": "https://aitherapist.ru/assets/blog/detskie-travmy-cover.webp",
    "url": "https://aitherapist.ru/blog/detskie-travmy.html",
    "date": "2026-08-19",
-   "minutes": 13,
+   "minutes": 14,
    "w": 1200,
    "h": 630
   },
@@ -326,7 +336,7 @@
    "image": "https://aitherapist.ru/assets/blog/samoocenka-cover.webp",
    "url": "https://aitherapist.ru/blog/kak-povysit-samootsenku.html",
    "date": "2026-07-04",
-   "minutes": 15,
+   "minutes": 16,
    "w": 860,
    "h": 518
   },
