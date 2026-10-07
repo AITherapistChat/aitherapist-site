@@ -1,6 +1,18 @@
 {
  "tests": [
   {
+   "title": "Тест на лудоманию (шкала PGSI)",
+   "description": "9 вопросов международной шкалы PGSI: где проходит граница между игрой ради интереса и игровой зависимостью — и с чего начать, если вы её перешли.",
+   "image": "https://aitherapist.ru/assets/testy/ludomaniya-cover.webp",
+   "url": "https://aitherapist.ru/testy/ludomaniya-pgsi.html",
+   "date": "2026-10-07",
+   "scale": "Шкала PGSI",
+   "questions": 9,
+   "minutes_text": "2 минуты",
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Тест на тип привязанности в отношениях",
    "description": "17 вопросов о том, как вы ведёте себя в близких отношениях, — и честный разбор результата по двум шкалам вместо одного ярлыка.",
    "image": "https://aitherapist.ru/assets/testy/tip-privyazannosti-cover.webp",
