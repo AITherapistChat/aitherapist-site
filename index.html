@@ -1045,7 +1045,9 @@ const RUSTORE_URL = "https://www.rustore.ru/catalog/app/com.example.aitherapist"
    (в РФ доступ к *.supabase.co нестабилен) — через Яндекс-прокси */
 const SUPA_BASE = "https://efniwpfjdfktfczgdpxm.functions.supabase.co";
 const CHAT_DIRECT = SUPA_BASE + "/chat-web";
-const YANDEX_PROXY = "https://functions.yandexcloud.net/d4enpb1jd6ok1i1p6ffd";
+/* Запасной путь: прокси на нашем VPS в Рег.облаке (с 11.10.2026 — Yandex Cloud Functions легли).
+   Код тот же, что был в яндекс-функции: yandex/chat-web-proxy/index.js. Имя константы оставлено. */
+const YANDEX_PROXY = "https://web-proxy.aitherapist.ru/";
 let preferProxy = false; // станет true, если прямой доступ к Supabase не прошёл (на сессию)
 const FORCE_PROXY = new URLSearchParams(location.search).get("proxy") === "1"; // ?proxy=1 — тест прокси
 if(FORCE_PROXY) preferProxy = true;
