@@ -19,27 +19,33 @@
 // =====================================================================
 var https = require('https');
 
-var ALLOW_ORIGIN   = 'https://aitherapist.ru';
+// Апекс — главное зеркало; www отдаёт тот же сайт (CDN без 301), и без него
+// посетитель на www при недоступном прямом Supabase получал CORS-ошибку.
+// Браузеру отдаём ровно его Origin, если он из списка, иначе апекс.
+var ALLOW_ORIGINS  = ['https://aitherapist.ru', 'https://www.aitherapist.ru'];
 var ALLOWED_HOST   = 'efniwpfjdfktfczgdpxm.functions.supabase.co';
 // vk-auth / pay-web убраны 02.08.2026 вместе с веб-логином и оплатой на сайте.
 var ALLOWED_PATHS  = ['/chat-web'];
 
-function corsHeaders() {
+function allowOrigin(origin) {
+  return ALLOW_ORIGINS.indexOf(origin) !== -1 ? origin : ALLOW_ORIGINS[0];
+}
+function corsHeaders(origin) {
   return {
-    'Access-Control-Allow-Origin': ALLOW_ORIGIN,
+    'Access-Control-Allow-Origin': allowOrigin(origin),
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'content-type',
     'Access-Control-Expose-Headers': 'X-Remaining, X-Plan-Until',
     'Vary': 'Origin'
   };
 }
-function json(statusCode, obj) {
-  var h = corsHeaders();
+function json(statusCode, obj, origin) {
+  var h = corsHeaders(origin);
   h['Content-Type'] = 'application/json; charset=utf-8';
   return { statusCode: statusCode, headers: h, body: JSON.stringify(obj) };
 }
 
-function proxyRequest(hostname, path, method, headers, body) {
+function proxyRequest(hostname, path, method, headers, body, origin) {
   return new Promise(function (resolve) {
     var opts = { hostname: hostname, path: path, method: method, headers: headers };
     if (body) opts.headers['Content-Length'] = String(Buffer.byteLength(body));
@@ -48,7 +54,7 @@ function proxyRequest(hostname, path, method, headers, body) {
       res.on('data', function (c) { chunks.push(c); });
       res.on('end', function () {
         var data = Buffer.concat(chunks).toString('utf-8');
-        var h = corsHeaders();
+        var h = corsHeaders(origin);
         if (res.headers['content-type']) h['Content-Type'] = res.headers['content-type'];
         if (res.headers['x-remaining'])   h['X-Remaining']  = res.headers['x-remaining'];
         if (res.headers['x-plan-until'])  h['X-Plan-Until'] = res.headers['x-plan-until'];
@@ -56,7 +62,7 @@ function proxyRequest(hostname, path, method, headers, body) {
       });
     });
     req.on('error', function (e) {
-      resolve(json(502, { error: 'proxy_error', reason: e.message }));
+      resolve(json(502, { error: 'proxy_error', reason: e.message }, origin));
     });
     if (body) req.write(body);
     req.end();
@@ -65,10 +71,12 @@ function proxyRequest(hostname, path, method, headers, body) {
 
 module.exports.handler = function (event) {
   var method = (event.httpMethod || 'POST').toUpperCase();
+  var inHeaders = event.headers || {};
+  var origin = inHeaders['origin'] || inHeaders['Origin'];
 
   // CORS preflight
   if (method === 'OPTIONS') {
-    return Promise.resolve({ statusCode: 204, headers: corsHeaders(), body: '' });
+    return Promise.resolve({ statusCode: 204, headers: corsHeaders(origin), body: '' });
   }
 
   // тело
@@ -80,15 +88,15 @@ module.exports.handler = function (event) {
   // целевой URL из ?t=
   var queryParams = event.queryStringParameters || {};
   var targetUrl = queryParams.t || null;
-  if (!targetUrl) return Promise.resolve(json(400, { error: 'missing_target', hint: 'pass ?t=<url>' }));
+  if (!targetUrl) return Promise.resolve(json(400, { error: 'missing_target', hint: 'pass ?t=<url>' }, origin));
 
   var parsed;
   try { parsed = new URL(decodeURIComponent(targetUrl)); }
-  catch (e) { return Promise.resolve(json(400, { error: 'invalid_url' })); }
+  catch (e) { return Promise.resolve(json(400, { error: 'invalid_url' }, origin)); }
 
   // whitelist: только наши веб-эндпоинты
   if (parsed.hostname !== ALLOWED_HOST || ALLOWED_PATHS.indexOf(parsed.pathname) === -1) {
-    return Promise.resolve(json(403, { error: 'target_not_allowed' }));
+    return Promise.resolve(json(403, { error: 'target_not_allowed' }, origin));
   }
 
   var body = (method !== 'GET' && rawBody) ? rawBody : null;
@@ -100,10 +108,8 @@ module.exports.handler = function (event) {
 
   var headers = { 'Content-Type': 'application/json', 'Accept-Encoding': 'identity' };
   // пробрасываем Origin (на всякий случай — для серверной логики апстрима)
-  var inHeaders = event.headers || {};
-  var origin = inHeaders['origin'] || inHeaders['Origin'];
   if (origin) headers['Origin'] = origin;
   // IP клиента апстриму НЕ пробрасываем: он там не нужен и не хранится.
 
-  return proxyRequest(parsed.hostname, parsed.pathname + parsed.search, method, headers, body);
+  return proxyRequest(parsed.hostname, parsed.pathname + parsed.search, method, headers, body, origin);
 };
