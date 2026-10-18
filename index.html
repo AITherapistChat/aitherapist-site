@@ -1353,8 +1353,13 @@ async function send(){
 
   try{
     // Отправляем только диалог: system-промпт персоны подставляет сервер.
-    const reqBody = JSON.stringify({ persona:p.key, stream:true, adult:true, messages:history });
-    const { res } = await apiFetch(CHAT_DIRECT, reqBody);
+    // stream:false — ответ целиком: с 18.10.2026 ТСПУ морозит соединение с
+    // *.supabase.co после ~13 пакетов, и SSE-стрим замирал посреди ответа
+    // навсегда. Целый ответ — 2–3 пакета, печатаем его сами (fakeStream).
+    // Заголовки теперь приходят только с готовым ответом, поэтому таймаут
+    // 30 с; недоступность прямого пути ловит быстрая probeDirect при загрузке.
+    const reqBody = JSON.stringify({ persona:p.key, stream:false, adult:true, messages:history });
+    const { res } = await apiFetch(CHAT_DIRECT, reqBody, 30000);
     if(res.status === 429){ if(typing.parentNode) typing.remove(); showLimit(); return; }
     if(res.status === 403){
       if(typing.parentNode) typing.remove();
