@@ -1,6 +1,18 @@
 {
  "tests": [
   {
+   "title": "Тест на созависимость в отношениях",
+   "description": "Не ярлык «есть созависимость или нет», а профиль: где вы живёте жизнью другого, спасаете, отказываетесь от себя или молчите, — и с чего начать.",
+   "image": "https://aitherapist.ru/assets/testy/sozavisimost-cover.webp",
+   "url": "https://aitherapist.ru/testy/sozavisimost.html",
+   "date": "2026-10-21",
+   "scale": "Самопроверка по четырём сторонам созависимости",
+   "questions": 21,
+   "minutes_text": "4 минуты",
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Тест на лудоманию (шкала PGSI)",
    "description": "9 вопросов международной шкалы PGSI: где проходит граница между игрой ради интереса и игровой зависимостью — и с чего начать, если вы её перешли.",
    "image": "https://aitherapist.ru/assets/testy/ludomaniya-cover.webp",

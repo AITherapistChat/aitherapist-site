@@ -61,6 +61,15 @@ def strip_tags(s):
     return re.sub(r"<[^>]+>", "", s)
 
 
+def questions_word(n):
+    # «21 вопрос», «22 вопроса», «20 вопросов» — у DASS-21 стояло «21 вопросов»
+    if n % 10 == 1 and n % 100 != 11:
+        return "%d вопрос" % n
+    if 2 <= n % 10 <= 4 and not 12 <= n % 100 <= 14:
+        return "%d вопроса" % n
+    return "%d вопросов" % n
+
+
 def build(t):
     url = "%s/%s/%s" % (SITE, OUT, t["slug"])
     faq_html = "\n".join(
@@ -142,7 +151,7 @@ def build(t):
 
   <!-- ym-hide-content: ответы на тест не попадают в записи Вебвизора -->
   <section class="quiz ym-hide-content" id="quiz" aria-labelledby="quiz-stem">
-    <p class="lead">{scale_name} · {nq} вопросов</p>
+    <p class="lead">{scale_name} · {nq_word}</p>
     <p class="stem" id="quiz-stem">{stem}</p>
     <form id="quiz-form"></form>
     <div class="qbar">
@@ -210,7 +219,7 @@ def build(t):
 """.format(title=t["title"], desc=t["desc"], ogdesc=t.get("ogdesc", t["desc"]),
            url=url, SITE=SITE, ld=json.dumps(ld, ensure_ascii=False, indent=2),
            crumb=t["crumb"], h1=t["h1"], mod_ru=t["mod_ru"], mins=t["mins"],
-           intro=t["intro"], cover=t["cover"], cover_alt=t["cover_alt"], scale_name=t["scale_name"], nq=len(t["data"]["questions"]),
+           intro=t["intro"], cover=t["cover"], cover_alt=t["cover_alt"], scale_name=t["scale_name"], nq=len(t["data"]["questions"]), nq_word=questions_word(len(t["data"]["questions"])),
            stem=t["stem"], max=t["data"].get("max", 0), ticks=t.get("ticks", ""), crisis=CRISIS, ASSET_V=ASSET_V,
            body=t["body"], cta=t["cta"], faq_html=faq_html, eeat=t["eeat"],
            sources=t["sources"], flinks=flinks,
