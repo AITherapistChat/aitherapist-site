@@ -62,6 +62,20 @@ ANCHORS = {
     'blog/podrostkovaya-depressiya.html': 'Разбор целиком — про подростковую депрессию',
     'testy/bespokoystvo-pswq.html':      'Пройти шкалу PSWQ — бесплатно, без регистрации',
     'testy/tip-lichnosti-big-five.html': 'Пройти тест «Большая пятёрка» — бесплатно, без регистрации',
+    'testy/sozavisimost.html':           'Пройти тест на созависимость — бесплатно, без регистрации',
+    'blog/gazlayting.html':              'Разбор целиком — про газлайтинг',
+    'blog/kak-prostit-obidu.html':       'Подробно — как отпустить обиду',
+    'testy/tip-privyazannosti.html':     'Пройти тест на тип привязанности — бесплатно, без регистрации',
+    'blog/derealizaciya.html':           'Разбор целиком — про дереализацию',
+    'testy/gnev-ipip.html':              'Пройти тест на гнев — бесплатно, без регистрации',
+    'blog/ekzistencialnyy-krizis.html':  'Разбор целиком — про экзистенциальный кризис',
+    'blog/vspyshki-gneva.html':          'Подробно — что делать со вспышками гнева',
+    'testy/odinochestvo-ucla.html':      'Пройти шкалу одиночества UCLA — бесплатно, без регистрации',
+    'blog/krizis-srednego-vozrasta.html': 'Разбор целиком — про кризис среднего возраста',
+    'testy/udovletvorennost-zhiznyu-swls.html': 'Пройти шкалу Динера — бесплатно, без регистрации',
+    'blog/ludomaniya.html':              'Разбор целиком — про лудоманию',
+    'blog/alkogol-i-trevoga.html':       'Разбор целиком — про алкоголь и тревогу',
+    'testy/alkogol-audit.html':          'Пройти AUDIT — бесплатно, без регистрации',
 }
 
 URL_RE = re.compile(r'(?:^|\s)aitherapist\.ru/(\S+?)(?=[\s]|$)')

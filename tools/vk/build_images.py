@@ -51,6 +51,24 @@ PLAN = {
     'podrostki':         ('blog/podrostkovaya-depressiya-cover.webp', None),
     'vremya-trevogi':    ('testy/bespokoystvo-cover.webp',        None),
     'test-big5':         ('testy/big-five-cover.webp',            None),
+
+    # пачка 23.10–27.11.2026 (три в неделю)
+    'test-sozavisimost': ('testy/sozavisimost-cover.webp',        '362.png'),
+    'gazlayting':        ('blog/gazlayting-cover.webp',           None),
+    'obida-pismo':       ('blog/kak-prostit-obidu-pismo.webp',    None),
+    'test-privyazannost': ('testy/tip-privyazannosti-cover.webp', None),
+    'derealizaciya':     ('blog/derealizaciya-cover.webp',        None),
+    'derealizaciya-pristup': ('blog/derealizaciya-pristup.webp',  None),
+    'test-gnev':         ('testy/gnev-cover.webp',                None),
+    'ekzistencialnyy':   ('blog/ekzistencialnyy-krizis-cover.webp', None),
+    'gnev-taymaut':      ('blog/vspyshki-gneva-shagi.webp',       None),
+    'test-ucla':         ('testy/odinochestvo-cover.webp',        None),
+    'krizis-srednego':   ('blog/krizis-srednego-vozrasta-cover.webp', None),
+    'kompas':            ('blog/ekzistencialnyy-krizis-kompas.webp', None),
+    'test-swls':         ('testy/udovletvorennost-cover.webp',    None),
+    'ludomaniya':        ('blog/ludomaniya-cover.webp',           None),
+    'alkogol-zamena':    ('blog/alkogol-i-trevoga-zamena.webp',   None),
+    'test-audit':        ('testy/alkogol-cover.webp',             None),
 }
 
 MAXW = 1500
