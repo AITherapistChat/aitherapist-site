@@ -1,6 +1,18 @@
 {
  "tests": [
   {
+   "title": "Тест на эмоциональный интеллект (шкала Шутте)",
+   "description": "33 утверждения научной шкалы Шутте о том, как вы замечаете, понимаете и направляете эмоции — свои и чужие. Результат сразу, с честной расшифровкой.",
+   "image": "https://aitherapist.ru/assets/testy/emotsionalnyy-intellekt-cover.webp",
+   "url": "https://aitherapist.ru/testy/emotsionalnyy-intellekt-sseit.html",
+   "date": "2026-10-22",
+   "scale": "Шкала эмоционального интеллекта Шутте (SSEIT)",
+   "questions": 33,
+   "minutes_text": "5 минут",
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Тест на созависимость в отношениях",
    "description": "Не ярлык «есть созависимость или нет», а профиль: где вы живёте жизнью другого, спасаете, отказываетесь от себя или молчите, — и с чего начать.",
    "image": "https://aitherapist.ru/assets/testy/sozavisimost-cover.webp",
