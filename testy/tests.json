@@ -1,6 +1,18 @@
 {
  "tests": [
   {
+   "title": "Тест на агорафобию: насколько страх мест управляет вашей жизнью",
+   "description": "Не ярлык, а карта: какие места пугают, какие мысли держат страх, какие страховки и насколько сузилась жизнь — и с какой ступени начать.",
+   "image": "https://aitherapist.ru/assets/testy/agorafobiya-cover.webp",
+   "url": "https://aitherapist.ru/testy/agorafobiya.html",
+   "date": "2026-10-24",
+   "scale": "Самопроверка по четырём сторонам агорафобии",
+   "questions": 21,
+   "minutes_text": "4 минуты",
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Тест на эмоциональный интеллект (шкала Шутте)",
    "description": "33 утверждения научной шкалы Шутте о том, как вы замечаете, понимаете и направляете эмоции — свои и чужие. Результат сразу, с честной расшифровкой.",
    "image": "https://aitherapist.ru/assets/testy/emotsionalnyy-intellekt-cover.webp",
