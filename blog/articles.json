@@ -1,6 +1,16 @@
 {
  "articles": [
   {
+   "title": "Агорафобия: когда страшно выйти из дома",
+   "description": "Агорафобия — страх мест, откуда трудно уйти или где не помогут: транспорт, очереди, толпа, дорога из дома. Почему она сужает жизнь и как её лечат.",
+   "image": "https://aitherapist.ru/assets/blog/agorafobiya-cover.webp",
+   "url": "https://aitherapist.ru/blog/agorafobiya.html",
+   "date": "2026-10-24",
+   "minutes": 21,
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Эмоциональный интеллект: что это и как его развить",
    "description": "Эмоциональный интеллект — умение замечать, понимать и направлять эмоции, свои и чужие. Из чего он состоит, признаки высокого и низкого ЭИ и 8 упражнений для развития.",
    "image": "https://aitherapist.ru/assets/blog/emotsionalnyy-intellekt-cover.webp",
