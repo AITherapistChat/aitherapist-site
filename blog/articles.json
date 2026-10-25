@@ -1,6 +1,16 @@
 {
  "articles": [
   {
+   "title": "«Лёгкий дофамин»: почему после ленты всё пресное",
+   "description": "Дофамин — не «гормон счастья», а прежде всего мотивация. Почему затягивает лента, работает ли дофаминовый детокс и как вернуть интерес к обычным делам.",
+   "image": "https://aitherapist.ru/assets/blog/dofamin-cover.webp",
+   "url": "https://aitherapist.ru/blog/dofamin.html",
+   "date": "2026-10-25",
+   "minutes": 21,
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Агорафобия: когда страшно выйти из дома",
    "description": "Агорафобия — страх мест, откуда трудно уйти или где не помогут: транспорт, очереди, толпа, дорога из дома. Почему она сужает жизнь и как её лечат.",
    "image": "https://aitherapist.ru/assets/blog/agorafobiya-cover.webp",
@@ -36,7 +46,7 @@
    "image": "https://aitherapist.ru/assets/blog/derealizaciya-cover.webp",
    "url": "https://aitherapist.ru/blog/derealizaciya.html",
    "date": "2026-10-17",
-   "minutes": 20,
+   "minutes": 21,
    "w": 1200,
    "h": 630
   },
