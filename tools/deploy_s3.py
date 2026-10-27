@@ -36,14 +36,14 @@ BUCKET = os.environ.get("YC_S3_BUCKET", "aitherapist.ru")
 
 # Папки и файлы, которых на проде быть не должно.
 SKIP_DIRS = {".git", ".github", ".claude", "tools", "supabase", "yandex", "__pycache__"}
-SKIP_FILES = {"CLAUDE.md", "BRIEF.md", "VK.md", ".gitignore", ".nojekyll", "CNAME",
+SKIP_FILES = {"CLAUDE.md", "BRIEF.md", "VK.md", "INSTAGRAM.md", ".gitignore", ".nojekyll", "CNAME",
               "assets/og-card.html"}
 
 # Живёт только в бакете, в репозитории этого нет и быть не должно (сто с лишним
 # мегабайт голосовых моделей в git не нужны). Заливается tools/upload_tts_models.py.
 # Без этой брони --prune снёс бы модели при ближайшем деплое сайта, и озвучка
 # в приложении молча перестала бы скачиваться.
-PRUNE_KEEP_PREFIXES = ("tts/",)
+PRUNE_KEEP_PREFIXES = ("tts/", "ig/")
 
 # Content-Type для того, что mimetypes на Windows угадывает неверно или никак.
 TYPES = {

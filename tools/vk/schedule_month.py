@@ -28,21 +28,26 @@ def ts(date, hhmm):
     return int(time.mktime(d.timetuple()))
 
 
-ok = 0
-START = int(sys.argv[1]) if len(sys.argv) > 1 else 0
-for date, hhmm, key, text in PLAN[START:]:
-    img = os.path.join(IMGDIR, key + '.jpg')
-    if not os.path.exists(img):
-        print(date, 'НЕТ КАРТИНКИ', key)
-        continue
-    att = upload_retry(img)
-    r = call('group', 'wall.post', {
-        'owner_id': GROUP, 'from_group': 1, 'message': text,
-        'attachments': att, 'publish_date': ts(date, hhmm)})
-    good = 'response' in r
-    ok += good
-    print('%s %s  %-16s %s' % (date, hhmm, key,
-                               'ок' if good else json.dumps(r, ensure_ascii=False)[:150]))
-    time.sleep(3)
+def main():
+    ok = 0
+    START = int(sys.argv[1]) if len(sys.argv) > 1 else 0
+    for date, hhmm, key, text in PLAN[START:]:
+        img = os.path.join(IMGDIR, key + '.jpg')
+        if not os.path.exists(img):
+            print(date, 'НЕТ КАРТИНКИ', key)
+            continue
+        att = upload_retry(img)
+        r = call('group', 'wall.post', {
+            'owner_id': GROUP, 'from_group': 1, 'message': text,
+            'attachments': att, 'publish_date': ts(date, hhmm)})
+        good = 'response' in r
+        ok += good
+        print('%s %s  %-16s %s' % (date, hhmm, key,
+                                   'ок' if good else json.dumps(r, ensure_ascii=False)[:150]))
+        time.sleep(3)
 
-print('поставлено в отложку:', ok, 'из', len(PLAN))
+    print('поставлено в отложку:', ok, 'из', len(PLAN))
+
+
+if __name__ == '__main__':
+    main()
