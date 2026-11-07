@@ -1,6 +1,16 @@
 {
  "articles": [
   {
+   "title": "Почему я прокручиваю разговоры в голове и как остановиться",
+   "description": "Прокручиваете разговоры в голове и вспоминаете неловкие фразы? Почему так бывает, чем полезный разбор отличается от руминации и что делать прямо сейчас.",
+   "image": "https://aitherapist.ru/assets/blog/prokruchivayu-razgovory-v-golove-cover.webp",
+   "url": "https://aitherapist.ru/blog/prokruchivayu-razgovory-v-golove.html",
+   "date": "2026-11-07",
+   "minutes": 18,
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Ипохондрия и тревога за здоровье: как перестать бояться болезней",
    "description": "Что такое тревога за здоровье, чем она отличается от ипохондрии, нозофобии и киберхондрии. Как перестать проверять симптомы и когда обратиться за помощью.",
    "image": "https://aitherapist.ru/assets/blog/trevoga-za-zdorove-cover.webp",
