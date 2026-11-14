@@ -1,6 +1,16 @@
 {
  "articles": [
   {
+   "title": "Почему я постоянно извиняюсь, даже когда не виноват",
+   "description": "Постоянно извиняетесь даже без вины? Разбираем причины привычки, как отличить вежливость от тревоги и говорить о просьбах и границах без лишних извинений.",
+   "image": "https://aitherapist.ru/assets/blog/pochemu-ya-postoyanno-izvinyayus-cover.webp",
+   "url": "https://aitherapist.ru/blog/pochemu-ya-postoyanno-izvinyayus.html",
+   "date": "2026-11-14",
+   "minutes": 15,
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Почему я прокручиваю разговоры в голове и как остановиться",
    "description": "Прокручиваете разговоры в голове и вспоминаете неловкие фразы? Почему так бывает, чем полезный разбор отличается от руминации и что делать прямо сейчас.",
    "image": "https://aitherapist.ru/assets/blog/prokruchivayu-razgovory-v-golove-cover.webp",
@@ -16,7 +26,7 @@
    "image": "https://aitherapist.ru/assets/blog/trevoga-za-zdorove-cover.webp",
    "url": "https://aitherapist.ru/blog/trevoga-za-zdorove.html",
    "date": "2026-11-02",
-   "minutes": 10,
+   "minutes": 11,
    "w": 1200,
    "h": 800
   },
@@ -26,7 +36,7 @@
    "image": "https://aitherapist.ru/assets/blog/pochemu-ne-zamechaem-krasnye-flagi-cover.webp",
    "url": "https://aitherapist.ru/blog/pochemu-ne-zamechaem-krasnye-flagi.html",
    "date": "2026-10-31",
-   "minutes": 20,
+   "minutes": 21,
    "w": 1200,
    "h": 630
   },
@@ -96,7 +106,7 @@
    "image": "https://aitherapist.ru/assets/blog/derealizaciya-cover.webp",
    "url": "https://aitherapist.ru/blog/derealizaciya.html",
    "date": "2026-10-17",
-   "minutes": 21,
+   "minutes": 20,
    "w": 1200,
    "h": 630
   },
@@ -456,7 +466,7 @@
    "image": "https://aitherapist.ru/assets/blog/samoocenka-cover.webp",
    "url": "https://aitherapist.ru/blog/kak-povysit-samootsenku.html",
    "date": "2026-07-04",
-   "minutes": 16,
+   "minutes": 15,
    "w": 860,
    "h": 518
   },
