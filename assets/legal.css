@@ -129,7 +129,7 @@ figcaption{font-size:var(--fs-micro); font-weight:800; letter-spacing:.13em; tex
   font-family:"Spectral",Georgia,serif; font-size:21px; line-height:1.4; max-width:44ch}
 .cta-box .btn, .nf .btn{display:inline-flex; align-items:center; gap:9px; border-radius:2px;
   background:var(--green); color:var(--paper); border:1px solid var(--green);
-  font-weight:700; font-size:15px; line-height:1; padding:15px 27px;
+  font-weight:700; font-size:15px; line-height:1.25; padding:15px 27px; max-width:100%;
   transition:background .2s ease, border-color .2s ease}
 .cta-box .btn:hover, .nf .btn:hover{background:var(--ink); border-color:var(--ink)}
 .cta-box .btn.ghost, .nf .btn.ghost{background:transparent; color:var(--ink); border-color:var(--rule)}
