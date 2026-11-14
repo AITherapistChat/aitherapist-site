@@ -11,6 +11,10 @@ OPTS_FREQ = ["Ни разу", "Несколько дней", "Больше по�
 
 TESTS = []
 
+# PHQ-15 lives in its own module so the clinical scoring rules stay easy to audit.
+from phq15_data import PHQ15
+TESTS.append(PHQ15)
+
 # ─────────────────────────────── PHQ-9 ───────────────────────────────
 TESTS.append(dict(
     slug="depressiya-phq-9.html",

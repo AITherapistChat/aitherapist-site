@@ -1,6 +1,18 @@
 {
  "tests": [
   {
+   "title": "Тест на телесные симптомы (PHQ-15)",
+   "description": "15 вопросов PHQ-15 о телесных симптомах. Подсчёт баллов в браузере и понятная расшифровка без попытки поставить диагноз.",
+   "image": "https://aitherapist.ru/assets/testy/telesnye-simptomy-cover.webp",
+   "url": "https://aitherapist.ru/testy/telesnye-simptomy-phq-15.html",
+   "date": "2026-11-14",
+   "scale": "Шкала PHQ-15",
+   "questions": 15,
+   "minutes_text": "4 минуты",
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Тест на агорафобию: насколько страх мест управляет вашей жизнью",
    "description": "Не ярлык, а карта: какие места пугают, какие мысли держат страх, какие страховки и насколько сузилась жизнь — и с какой ступени начать.",
    "image": "https://aitherapist.ru/assets/testy/agorafobiya-cover.webp",
