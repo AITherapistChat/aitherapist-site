@@ -1,6 +1,16 @@
 {
  "articles": [
   {
+   "title": "Почему к концу года нет сил, даже если я ничего особенного не делал",
+   "description": "К концу года нет сил даже после выходных? Разбираем возможные причины усталости, как отличить перегрузку от проблем со здоровьем и с чего начать восстановление.",
+   "image": "https://aitherapist.ru/assets/blog/net-sil-k-kontsu-goda-cover.webp",
+   "url": "https://aitherapist.ru/blog/net-sil-k-kontsu-goda.html",
+   "date": "2026-11-16",
+   "minutes": 15,
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Почему я постоянно извиняюсь, даже когда не виноват",
    "description": "Постоянно извиняетесь даже без вины? Разбираем причины привычки, как отличить вежливость от тревоги и говорить о просьбах и границах без лишних извинений.",
    "image": "https://aitherapist.ru/assets/blog/pochemu-ya-postoyanno-izvinyayus-cover.webp",
