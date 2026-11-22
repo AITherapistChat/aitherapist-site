@@ -1,6 +1,16 @@
 {
  "articles": [
   {
+   "title": "Сепарация от родителей: стать взрослым, не исчезая из семьи",
+   "description": "Что такое сепарация от родителей простыми словами, признаки, что она не завершилась, почему мешает вина и как отделиться за 8 шагов — без ссор и разрыва.",
+   "image": "https://aitherapist.ru/assets/blog/separaciya-ot-roditeley-cover.webp",
+   "url": "https://aitherapist.ru/blog/separaciya-ot-roditeley.html",
+   "date": "2026-11-22",
+   "minutes": 20,
+   "w": 1200,
+   "h": 630
+  },
+  {
    "title": "Почему к концу года нет сил, даже если я ничего особенного не делал",
    "description": "К концу года нет сил даже после выходных? Разбираем возможные причины усталости, как отличить перегрузку от проблем со здоровьем и с чего начать восстановление.",
    "image": "https://aitherapist.ru/assets/blog/net-sil-k-kontsu-goda-cover.webp",
