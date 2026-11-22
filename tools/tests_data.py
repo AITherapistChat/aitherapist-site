@@ -3295,3 +3295,8 @@ TESTS.append(dict(
         ],
     ),
 ))
+
+
+# Перфекционизм, сепарация, эмпатия (22.11.2026) — отдельный модуль, лицензии описаны в его шапке.
+from tests_nov2026_data import PERFEKCIONIZM, SEPARACIYA, EMPATIYA
+TESTS.extend([PERFEKCIONIZM, SEPARACIYA, EMPATIYA])
