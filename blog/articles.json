@@ -1,6 +1,16 @@
 {
  "articles": [
   {
+   "title": "Почему люди изменяют, даже если любят: психология измены",
+   "description": "Почему изменяют любимым? Разбираем мотивы и самооправдания, страх повторной измены, первые шаги после предательства и условия восстановления доверия.",
+   "image": "https://aitherapist.ru/assets/blog/pochemu-lyudi-izmenyayut-cover.webp",
+   "url": "https://aitherapist.ru/blog/pochemu-lyudi-izmenyayut.html",
+   "date": "2026-11-28",
+   "minutes": 15,
+   "w": 1536,
+   "h": 1024
+  },
+  {
    "title": "Сепарация от родителей: стать взрослым, не исчезая из семьи",
    "description": "Что такое сепарация от родителей простыми словами, признаки, что она не завершилась, почему мешает вина и как отделиться за 8 шагов — без ссор и разрыва.",
    "image": "https://aitherapist.ru/assets/blog/separaciya-ot-roditeley-cover.webp",
@@ -486,7 +496,7 @@
    "image": "https://aitherapist.ru/assets/blog/samoocenka-cover.webp",
    "url": "https://aitherapist.ru/blog/kak-povysit-samootsenku.html",
    "date": "2026-07-04",
-   "minutes": 15,
+   "minutes": 16,
    "w": 860,
    "h": 518
   },
